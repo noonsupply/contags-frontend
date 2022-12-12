@@ -1,32 +1,23 @@
-import { StatusBar } from "expo-status-bar";
-import {
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-  Image,
-  TouchableOpacity,
-} from "react-native";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, Text, View } from 'react-native';
+import HomeLoadContact from './screens/HomeLoadContact'
+
+import { Provider } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
+import users from './reducers/users';
+
+const store = configureStore({
+  reducer: { users },
+ });
+ 
 
 export default function App() {
   return (
+    <Provider store={store}>
     <View style={styles.container}>
-      <Image style={styles.logo} source={require("./assets/logo.png")}></Image>
-      <View style={styles.inputText}>
-        <Text style={styles.text}>Saisissez votre adresse mail</Text>
-        <TextInput style={styles.input} placeholder={"Email"}></TextInput>
-      </View>
-      <View style={styles.caseButton}>
-        <TouchableOpacity style={styles.button}>
-          <FontAwesome color="#0031B8" name="chevron-left" />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button2}>
-          <FontAwesome color="#0031B8" name="chevron-right" />
-        </TouchableOpacity>
-      </View>
-      <StatusBar style="auto" />
+    <HomeLoadContact/>
     </View>
+    </Provider>
   );
 }
 
