@@ -12,7 +12,7 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 export default function MailScreen() {
   return (
     <View style={styles.container}>
-      <Image style={styles.logo} source={require("./assets/logo.png")}></Image>
+      <Image style={styles.logo} source={require("../assets/logo.png")}></Image>
       <View style={styles.inputText}>
         <Text style={styles.text}>Saisissez votre adresse mail</Text>
         <TextInput style={styles.input} placeholder={"Email"}></TextInput>
