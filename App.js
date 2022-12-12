@@ -1,10 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+      <Image style={styles.image} source={require("./assets/contags_logo_white.png")}/>
+      <Text style={styles.text}>Bienvenue, faisons connaissance !</Text>
       <StatusBar style="auto" />
     </View>
   );
@@ -12,9 +13,16 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
+    backgroundColor: '#0031B8',
+    flex: 1,
     justifyContent: 'center',
   },
+  image: {
+    length: "50px",
+    width: "500px",
+  },
+  text: {
+    color: "#FFFFFF",
+  }
 });
