@@ -30,15 +30,17 @@ export default function PasswordScreen({ navigation }) {
       <View style={styles.pass}>
         <Text style={styles.text}>Saisissez votre mot de passe</Text>
         <TextInput
-          style={styles.input}
+          placeholder="Password"
           secureTextEntry={true}
-          placeholder={"Password"}
-        ></TextInput>
+          icon={<Text>Show</Text>}
+          iconPosition="right"
+          style={styles.input}
+        />
         <Text style={styles.text}>Saisir de nouveau</Text>
         <TextInput
           style={styles.input}
           secureTextEntry={true}
-          placeholder={"Password"}
+          placeholder="Password"
         ></TextInput>
       </View>
       <View style={styles.caseButton}>
@@ -77,7 +79,7 @@ const styles = StyleSheet.create({
   },
   input: {
     width: "70%",
-    height: "15%",
+    height: 35,
     marginLeft: "10%",
     borderRadius: 5,
     backgroundColor: "#ffffff",
@@ -89,7 +91,7 @@ const styles = StyleSheet.create({
   caseButton: {
     flexWrap: "wrap",
     flexDirection: "row",
-    marginTop: "10%",
+    marginTop: "75%",
     justifyContent: "space-between",
   },
   button: {
