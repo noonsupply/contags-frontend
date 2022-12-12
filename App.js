@@ -1,6 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-import HomeLoadContact from './screens/HomeLoadContact'
+import HomeLoadContact from './screens/HomeLoadContact';
+import ProfileCreation from './screens/ProfileCreation';
+import TagCreation from './screens/TagCreation';
 
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
@@ -14,9 +16,16 @@ const store = configureStore({
 export default function App() {
   return (
     <Provider store={store}>
-    <View style={styles.container}>
-    <HomeLoadContact/>
-    </View>
+    <TagCreation/>
     </Provider>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
