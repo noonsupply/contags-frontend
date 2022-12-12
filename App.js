@@ -4,7 +4,7 @@ import { Image, StyleSheet, Text, View } from 'react-native';
 export default function App() {
   return (
     <View style={styles.container}>
-      <Image style={styles.image} source={require("./assets/contags_logo_white.png")}/>
+      <Image style={styles.image} source="./assets/contags_logo_white.png"/>
       <Text style={styles.text}>Bienvenue, faisons connaissance !</Text>
       <StatusBar style="auto" />
     </View>
