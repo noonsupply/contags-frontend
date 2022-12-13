@@ -5,17 +5,19 @@ import HomeLoadContact from './screens/HomeLoadContact'
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import users from './reducers/users';
+import contacts from './reducers/contacts';
 
 const store = configureStore({
-  reducer: { users },
+  reducer: { users, contacts},
  });
  
 
 export default function App() {
+    console.log('one')
   return (
     <Provider store={store}>
     <View style={styles.container}>
-    <HomeLoadContact/>
+     <HomeLoadContact/>
     </View>
     </Provider>
   );
