@@ -1,4 +1,3 @@
-// import { StatusBar } from "expo-status-bar";
 import {
   Image,
   Text,
@@ -13,6 +12,7 @@ import {
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 export default function ProfileCreation() {
+
   return (
     <SafeAreaView style={styles.safeAreaView}>
       <StatusBar backgroundColor={"#0031B8"} />
@@ -54,11 +54,11 @@ export default function ProfileCreation() {
           </View>
 
           <View style={styles.navigationContainer}>
-            <TouchableOpacity style={styles.btnBack}>
+            {/* <TouchableOpacity style={styles.btnBack}>
               <FontAwesome color="#FFFFFF" name="chevron-left" />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <TouchableOpacity style={styles.btnForward}>
-              <FontAwesome color="#FFFFFF" name="chevron-right" />
+              <FontAwesome color="#FFFFFF" name="chevron-right"/>
             </TouchableOpacity>
           </View>
         </View>
@@ -70,7 +70,7 @@ export default function ProfileCreation() {
 const styles = StyleSheet.create({
 
   //  Views & Global container
-  
+
   safeAreaView: {
     flex: 1,
     height: "100%",

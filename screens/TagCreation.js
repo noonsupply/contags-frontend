@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
-const TagCreation = () => {
+export default function TagCreation() {
   return (
     <SafeAreaView style={styles.safeAreaView}>
       <ScrollView style={styles.scrollView}>
@@ -436,5 +436,3 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 });
-
-export default TagCreation;
