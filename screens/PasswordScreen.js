@@ -9,16 +9,44 @@ import {
   Pressable,
 } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import { Entypo } from "@expo/vector-icons";
 import { useState } from "react";
 import { useTogglePasswordVisibility } from "./useTogglePasswordVisibility";
+import { useTogglePasswordVisibility2 } from "./useTogglePasswordVisibility2";
 
 export default function PasswordScreen({ navigation }) {
   const handleSubmit = () => {
     navigation.navigate("Mail");
   };
+
+  // const handleInput = () => {
+  //   if(){
+
+  //   }else{
+
+  //   }
+  // };
   const { passwordVisibility, rightIcon, handlePasswordVisibility } =
     useTogglePasswordVisibility();
-  const [password, setPassword] = useState("");
+  const { passwordVisibility2, rightIcon2, handlePasswordVisibility2 } =
+    useTogglePasswordVisibility2();
+  const [gab, setGab] = useState("");
+  const [nico, setNico] = useState("");
+
+  let iconV = (
+    <View>
+      <Text style={styles.textInfoX}>Mots de passe différents</Text>
+      <Entypo name="cross" size={25} color="#ff0000" style={styles.icon} />
+    </View>
+  );
+  if (gab === nico) {
+    iconV = (
+      <View>
+        <Text style={styles.textInfoV}>Mots de passe indentique</Text>
+        <Entypo name="check" size={20} color="#00ff00" style={styles.icon} />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -35,7 +63,6 @@ export default function PasswordScreen({ navigation }) {
       </View>
       <View style={styles.pass}>
         <Text style={styles.text}>Saisissez votre mot de passe</Text>
-
         <View style={styles.passwordContainer}>
           <TextInput
             placeholder="Password"
@@ -44,27 +71,38 @@ export default function PasswordScreen({ navigation }) {
             autoCorrect={false}
             textContentType="newPassword"
             secureTextEntry={passwordVisibility}
-            value={password}
-            enablesReturnKeyAutomatically
-            onChangeText={(text) => setPassword(text)}
+            value={gab}
+            onChangeText={(text) => {
+              setGab(text);
+            }}
           />
           <Pressable onPress={handlePasswordVisibility}>
             <FontAwesome name={rightIcon} size={22} color="#ffffff" />
           </Pressable>
         </View>
-
         <Text style={styles.text}>Saisir de nouveau</Text>
-        <TextInput
-          style={styles.input}
-          secureTextEntry={true}
-          placeholder="Password"
-        ></TextInput>
+        <View style={styles.passwordContainer}>
+          <TextInput
+            placeholder="Password"
+            style={styles.input}
+            autoCapitalize="none"
+            autoCorrect={false}
+            textContentType="newPassword"
+            secureTextEntry={passwordVisibility2}
+            value={nico}
+            onChangeText={(text) => setNico(text)}
+          />
+          <Pressable onPress={handlePasswordVisibility2}>
+            <FontAwesome name={rightIcon2} size={22} color="#ffffff" />
+          </Pressable>
+        </View>
+        {iconV}
       </View>
       <View style={styles.caseButton}>
         <TouchableOpacity style={styles.button} onPress={() => handleSubmit()}>
           <FontAwesome color="#0031B8" name="chevron-left" />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button2}>
+        <TouchableOpacity style={styles.button2} onPress={() => handleInput()}>
           <FontAwesome color="#0031B8" name="chevron-right" />
         </TouchableOpacity>
       </View>
@@ -94,6 +132,16 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     alignItems: "center",
   },
+  textInfoV: {
+    color: "#ffffff",
+    marginLeft: 50,
+    color: "#00ff00",
+  },
+  textInfoX: {
+    color: "#ffffff",
+    marginLeft: 50,
+    color: "#ff0000",
+  },
   text: {
     color: "#ffffff",
     marginLeft: "5%",
@@ -108,12 +156,12 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
   },
   icon: {
-    color: "#ffffff",
+    marginLeft: 280,
   },
   caseButton: {
     flexWrap: "wrap",
     flexDirection: "row",
-    marginTop: "75%",
+    marginTop: "60%",
     justifyContent: "space-between",
   },
   button: {

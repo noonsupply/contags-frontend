@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Feather } from "@expo/vector-icons";
 
 export const useTogglePasswordVisibility = () => {
   const [passwordVisibility, setPasswordVisibility] = useState(true);
