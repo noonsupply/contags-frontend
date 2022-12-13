@@ -6,13 +6,19 @@ import {
   View,
   Image,
   TouchableOpacity,
+  Pressable,
 } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import { useState } from "react";
+import { useTogglePasswordVisibility } from "./useTogglePasswordVisibility";
 
 export default function PasswordScreen({ navigation }) {
   const handleSubmit = () => {
     navigation.navigate("Mail");
   };
+  const { passwordVisibility, rightIcon, handlePasswordVisibility } =
+    useTogglePasswordVisibility();
+  const [password, setPassword] = useState("");
 
   return (
     <View style={styles.container}>
@@ -29,13 +35,24 @@ export default function PasswordScreen({ navigation }) {
       </View>
       <View style={styles.pass}>
         <Text style={styles.text}>Saisissez votre mot de passe</Text>
-        <TextInput
-          placeholder="Password"
-          secureTextEntry={true}
-          icon={<Text>Show</Text>}
-          iconPosition="right"
-          style={styles.input}
-        />
+
+        <View style={styles.passwordContainer}>
+          <TextInput
+            placeholder="Password"
+            style={styles.input}
+            autoCapitalize="none"
+            autoCorrect={false}
+            textContentType="newPassword"
+            secureTextEntry={passwordVisibility}
+            value={password}
+            enablesReturnKeyAutomatically
+            onChangeText={(text) => setPassword(text)}
+          />
+          <Pressable onPress={handlePasswordVisibility}>
+            <FontAwesome name={rightIcon} size={22} color="#ffffff" />
+          </Pressable>
+        </View>
+
         <Text style={styles.text}>Saisir de nouveau</Text>
         <TextInput
           style={styles.input}
@@ -71,6 +88,11 @@ const styles = StyleSheet.create({
   },
   pass: {
     marginTop: "20%",
+  },
+  passwordContainer: {
+    flexDirection: "row",
+    paddingBottom: 10,
+    alignItems: "center",
   },
   text: {
     color: "#ffffff",
