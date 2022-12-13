@@ -10,8 +10,12 @@ import {
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
+import PasswordScreen from "./PasswordScreen";
 
-import { updateMailPerso } from "../reducers/users";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+const Stack = createNativeStackNavigator();
+import { updateMailPrincipal } from "../reducers/users";
 
 const EMAIL_REGEX =
   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -24,8 +28,8 @@ export default function MailScreen({ navigation }) {
 
   const handleSubmit = () => {
     if (EMAIL_REGEX.test(email)) {
-      dispatch(updateMailPerso(email));
-      navigation.navigate("Password");
+      dispatch(updateMailPrincipal(email));
+      navigation.navigate("PasswordScreen");
     } else {
       setEmailError(true);
     }
@@ -66,7 +70,7 @@ export default function MailScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#0031B8",
+    backgroundColor: "#ffffff",
   },
   divImage: {
     alignItems: "center",
@@ -90,6 +94,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     backgroundColor: "#ffffff",
     paddingLeft: 15,
+    borderColor: "#0031B8",
   },
   icon: {
     color: "#ffffff",

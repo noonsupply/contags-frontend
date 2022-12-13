@@ -16,7 +16,7 @@ import { useTogglePasswordVisibility2 } from "../module/useTogglePasswordVisibil
 
 export default function PasswordScreen({ navigation }) {
   const handleSubmit = () => {
-    navigation.navigate("Mail");
+    navigation.navigate("MailScreen");
   };
 
   // const handleInput = () => {
