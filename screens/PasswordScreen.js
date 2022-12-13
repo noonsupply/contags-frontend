@@ -30,8 +30,8 @@ export default function PasswordScreen({ navigation }) {
     useTogglePasswordVisibility();
   const { passwordVisibility2, rightIcon2, handlePasswordVisibility2 } =
     useTogglePasswordVisibility2();
-  const [gab, setGab] = useState("");
-  const [nico, setNico] = useState("");
+  const [motDePasse1, setMotDePasse1] = useState("");
+  const [motDePasse2, setMotDePasse2] = useState("");
 
   let iconV = (
     <View>
@@ -39,7 +39,7 @@ export default function PasswordScreen({ navigation }) {
       <Entypo name="cross" size={25} color="#ff0000" style={styles.icon} />
     </View>
   );
-  if (gab === nico) {
+  if (motDePasse1 === motDePasse2) {
     iconV = (
       <View>
         <Text style={styles.textInfoV}>Mots de passe indentique</Text>
@@ -47,6 +47,10 @@ export default function PasswordScreen({ navigation }) {
       </View>
     );
   }
+
+  const handleInput = () => {
+    navigation.navigate("ProfilCreation");
+  };
 
   return (
     <View style={styles.container}>
@@ -71,13 +75,16 @@ export default function PasswordScreen({ navigation }) {
             autoCorrect={false}
             textContentType="newPassword"
             secureTextEntry={passwordVisibility}
-            value={gab}
+            value={motDePasse1}
             onChangeText={(text) => {
-              setGab(text);
+              setMotDePasse1(text);
             }}
           />
-          <Pressable onPress={handlePasswordVisibility}>
-            <FontAwesome name={rightIcon} size={22} color="#ffffff" />
+          <Pressable
+            style={styles.iconDivEye}
+            onPress={handlePasswordVisibility}
+          >
+            <FontAwesome name={rightIcon} size={22} color="#0031b8" />
           </Pressable>
         </View>
         <Text style={styles.text}>Saisir de nouveau</Text>
@@ -89,21 +96,24 @@ export default function PasswordScreen({ navigation }) {
             autoCorrect={false}
             textContentType="newPassword"
             secureTextEntry={passwordVisibility2}
-            value={nico}
-            onChangeText={(text) => setNico(text)}
+            value={motDePasse2}
+            onChangeText={(text) => setMotDePasse2(text)}
           />
-          <Pressable onPress={handlePasswordVisibility2}>
-            <FontAwesome name={rightIcon2} size={22} color="#ffffff" />
+          <Pressable
+            style={styles.iconDivEye}
+            onPress={handlePasswordVisibility2}
+          >
+            <FontAwesome name={rightIcon2} size={22} color="#0031b8" />
           </Pressable>
         </View>
         {iconV}
       </View>
       <View style={styles.caseButton}>
         <TouchableOpacity style={styles.button} onPress={() => handleSubmit()}>
-          <FontAwesome color="#0031B8" name="chevron-left" />
+          <FontAwesome color="#ffffff" name="chevron-left" />
         </TouchableOpacity>
         <TouchableOpacity style={styles.button2} onPress={() => handleInput()}>
-          <FontAwesome color="#0031B8" name="chevron-right" />
+          <FontAwesome color="#ffffff" name="chevron-right" />
         </TouchableOpacity>
       </View>
       <StatusBar style="auto" />
@@ -114,7 +124,7 @@ export default function PasswordScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#0031B8",
+    backgroundColor: "#ffffff",
   },
   divImage: {
     alignItems: "center",
@@ -143,7 +153,7 @@ const styles = StyleSheet.create({
     color: "#ff0000",
   },
   text: {
-    color: "#ffffff",
+    color: "#0031B8",
     marginLeft: "5%",
     marginRight: "5%",
   },
@@ -151,9 +161,20 @@ const styles = StyleSheet.create({
     width: "70%",
     height: 35,
     marginLeft: "10%",
-    borderRadius: 5,
     backgroundColor: "#ffffff",
     paddingLeft: 10,
+    borderColor: "#0031B8",
+    borderWidth: 1.5,
+    borderTopLeftRadius: 5,
+    borderBottomLeftRadius: 5,
+  },
+  iconDivEye: {
+    borderColor: "#0031B8",
+    borderColor: "#0031B8",
+    borderWidth: 1.5,
+    padding: 5,
+    borderTopRightRadius: 5,
+    borderBottomRightRadius: 5,
   },
   icon: {
     marginLeft: 280,
@@ -165,7 +186,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   button: {
-    backgroundColor: "#ffffff",
+    backgroundColor: "#0031B8",
     height: 50,
     width: 50,
     alignItems: "center",
@@ -174,7 +195,7 @@ const styles = StyleSheet.create({
     marginLeft: "5%",
   },
   button2: {
-    backgroundColor: "#ffffff",
+    backgroundColor: "#0031B8",
     height: 50,
     width: 50,
     alignItems: "center",

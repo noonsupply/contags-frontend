@@ -11,7 +11,10 @@ import {
 } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
-export default function ProfileCreation() {
+export default function ProfileCreation({ navigation }) {
+  const handleTag = () => {
+    navigation.navigate("TagCreation");
+  };
 
   return (
     <SafeAreaView style={styles.safeAreaView}>
@@ -57,8 +60,11 @@ export default function ProfileCreation() {
             {/* <TouchableOpacity style={styles.btnBack}>
               <FontAwesome color="#FFFFFF" name="chevron-left" />
             </TouchableOpacity> */}
-            <TouchableOpacity style={styles.btnForward}>
-              <FontAwesome color="#FFFFFF" name="chevron-right"/>
+            <TouchableOpacity
+              style={styles.btnForward}
+              onPress={() => handleTag()}
+            >
+              <FontAwesome color="#FFFFFF" name="chevron-right" />
             </TouchableOpacity>
           </View>
         </View>
@@ -68,7 +74,6 @@ export default function ProfileCreation() {
 }
 
 const styles = StyleSheet.create({
-
   //  Views & Global container
 
   safeAreaView: {

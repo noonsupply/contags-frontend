@@ -59,7 +59,7 @@ export default function MailScreen({ navigation }) {
       </View>
       <View style={styles.caseButton}>
         <TouchableOpacity style={styles.button2} onPress={() => handleSubmit()}>
-          <FontAwesome color="#0031B8" name="chevron-right" />
+          <FontAwesome color="#ffffff" name="chevron-right" />
         </TouchableOpacity>
       </View>
       <StatusBar style="auto" />
@@ -86,18 +86,16 @@ const styles = StyleSheet.create({
     marginRight: 25,
   },
   text: {
-    color: "#ffffff",
+    color: "#0031B8",
     marginBottom: 10,
   },
   input: {
     height: 60,
     borderRadius: 5,
-    backgroundColor: "#ffffff",
     paddingLeft: 15,
+    borderRadius: 5,
     borderColor: "#0031B8",
-  },
-  icon: {
-    color: "#ffffff",
+    borderWidth: 1.5,
   },
   caseButton: {
     flexWrap: "wrap",
@@ -107,7 +105,7 @@ const styles = StyleSheet.create({
     marginLeft: "80%",
   },
   button2: {
-    backgroundColor: "#ffffff",
+    backgroundColor: "#0031b8",
     height: 50,
     width: 50,
     alignItems: "center",

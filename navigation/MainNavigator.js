@@ -5,6 +5,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 import SplashScreen from "../screens/SplashScreen";
 import MailScreen from "../screens/MailScreen";
 import PasswordScreen from "../screens/PasswordScreen";
+import ProfileCreation from "../screens/ProfileCreation";
+import TagCreation from "../screens/TagCreation";
 
 const Stack = createStackNavigator();
 
@@ -26,6 +28,16 @@ const MainNavigator = () => {
           name="PasswordScreen"
           options={{ animationEnabled: true, header: () => null }}
           component={PasswordScreen}
+        />
+        <Stack.Screen
+          name="ProfilCreation"
+          options={{ animationEnabled: true, header: () => null }}
+          component={ProfileCreation}
+        />
+        <Stack.Screen
+          name="TagCreation"
+          options={{ animationEnabled: true, header: () => null }}
+          component={TagCreation}
         />
       </Stack.Navigator>
     </NavigationContainer>
