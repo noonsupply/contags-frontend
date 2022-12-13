@@ -5,6 +5,7 @@ import { StyleSheet, Text, View, SafeAreaView, ScrollView } from 'react-native';
 import * as Contacts from 'expo-contacts';
 import { useEffect, useState } from 'react';
 
+
 export default function App() {
   let [error, setError] = useState(undefined);
   let [contacts, setContacts] = useState(undefined);
@@ -56,13 +57,13 @@ export default function App() {
       return <Text>Awaiting contacts...</Text>
     }
   }
-
+ 
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
         {getContactRows()}
       </ScrollView>
-      <Text>{error}</Text>
+      <Text>Nico</Text>
       <StatusBar style="auto" />
     </SafeAreaView>
   );
