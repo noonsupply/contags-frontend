@@ -1,62 +1,82 @@
-import React, { useEffect, useState } from "react";
-import {
-  Image,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  Button,
-  Pressable,
-} from 'react-native';
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+// expo install expo-contacts
+
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, Text, View, SafeAreaView, ScrollView } from 'react-native';
 import * as Contacts from 'expo-contacts';
+import { useEffect, useState } from 'react';
 
 
-export default function HomeLoadContact() {
+export default function App() {
+  let [error, setError] = useState(undefined);
+  let [contacts, setContacts] = useState(undefined);
 
-const [contacts, setContacts] = useState([]);
+  useEffect(() => {
+    (async () => {
+      const { status } = await Contacts.requestPermissionsAsync();
+      if (status === "granted") {
+        const { data } = await Contacts.getContactsAsync({
+          fields: [ Contacts.Fields.Birthday, Contacts.Fields.Emails, Contacts.Fields.FirstName, Contacts.Fields.LastName, Contacts.Fields.PhoneNumbers]
+        });
 
-    useEffect(() => {
-        (async () => {
-          const { status } = await Contacts.requestPermissionsAsync();
-          if (status === 'granted') {
-            const { data } = await Contacts.getContactsAsync({
-              fields: [Contacts.Fields.PhoneNumbers],
-              
-            });
-      
-            if (data.length > 0) {
-              const contact = data[0];
-              console.log(data);
-            }
-          }
-        })();
-      }, []);
+        if (data.length > 0) {
+          setContacts(data);
+        } else {
+          setError("No contacts found");
+        }
+      } else {
+        setError("Permission to access contacts denied.");
+      }
+    })();
+  }, []);
 
+  let getContactData = (data, property) => {
+    if (data) {
+      return data.map((data, index) => {
+        return (
+          <View key={index}>
+            <Text>{data.label}: {data[property]}</Text>
+          </View>
+        )
+      });
+    }
+  }
+
+  let getContactRows = () => {
+    if (contacts !== undefined) {
+      return contacts.map((contact, index) => {
+        return (
+          <View key={index} style={styles.contact}>
+            <Text>Name: {contact.firstName} {contact.lastName}</Text>
+            {contact.birthday ? <Text>Birthday: {contact.birthday.month}/{contact.birthday.day}/{contact.birthday.year}</Text> : undefined}
+            {getContactData(contact.phoneNumbers, "number")}
+            {getContactData(contact.emails, "email")}
+          </View>
+        );
+      });
+    } else {
+      return <Text>Awaiting contacts...</Text>
+    }
+  }
+ 
   return (
-<TouchableOpacity onPress={() => console.log('Button pressed!')}>
-  <Text>Press me!</Text>
-</TouchableOpacity>
+    <SafeAreaView style={styles.container}>
+      <ScrollView>
+        {getContactRows()}
+      </ScrollView>
+      <Text>Nico</Text>
+      <StatusBar style="auto" />
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-
   container: {
     flex: 1,
-    height: "100%",
-    width: "100%",
+    backgroundColor: '#fff',
     alignItems: 'center',
-    backgroundColor: '#0031B8'
+    justifyContent: 'center',
   },
-
-  logo: {
-    width : "100%",
-    height: "20%",
-    flex:0.1,
-    display: "flex",
-    marginTop: "35%"
+  contact: {
+    marginVertical: 8
   }
 });

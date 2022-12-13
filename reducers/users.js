@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-    value: {name : "", firstName: "", token: "", emailPro: "", emailPerso: "", phonePerso: "", phonePro: "", birthday: null, lastConnection: null},
+    value: {name : "", firstName: "", token: "", emailPrincipal: "", emails: [], phones: [], birthday: null, lastConnection: null},
    };
 
 export const usersSlice = createSlice({
@@ -9,12 +9,12 @@ export const usersSlice = createSlice({
    
      initialState,
     reducers: {
-updateMailPerso: (state, action) => {
-    state.value.emailPerso=action.payload
+updateMailPrincipal: (state, action) => {
+    state.value.emailPrincipal=action.payload
 },
 
-updateMailPro: (state, action) => {
-    state.value.emailPro=action.payload
+addEmail: (state, action) => {
+    state.value.emails.push(action.payload);
 },
 
 updateName: (state, action) => {
@@ -29,12 +29,8 @@ updateToken: (state, action) => {
     state.value.token=action.payload
 },
 
-updatePhonePerso: (state, action) => {
-    state.value.phonePerso=action.payload
-},
-
-updatePhonePro: (state, action) => {
-    state.value.phonePro=action.payload
+addPhone: (state, action) => {
+    state.value.phones.push(action.payload);
 },
 
 updateBirthday: (state, action) => {
@@ -48,5 +44,5 @@ updateLastConnection: (state, action) => {
     },
    });
 
-export const {updateMailPerso, updateMailPro, updateName, updateFirstName, updateToken, updatePhonePerso, updatePhonePro, updateBirthday, updateLastConnection} = usersSlice.actions;
+export const {updateMailPrincipal, addEmail, updateName, updateFirstName, updateToken, addPhone, updateBirthday, updateLastConnection} = usersSlice.actions;
 export default usersSlice.reducer;
