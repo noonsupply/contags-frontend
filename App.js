@@ -3,34 +3,30 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import MailScreen from "./screens/MailScreen";
 import PasswordScreen from "./screens/PasswordScreen";
-import users from "./reducers/users";
 
 import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 
-
-
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import HomeLoadContact from './screens/HomeLoadContact'
+import { StatusBar } from "expo-status-bar";
+import { StyleSheet, Text, View } from "react-native";
+import HomeLoadContact from "./screens/HomeLoadContact";
 
-import users from './reducers/users';
-import contacts from './reducers/contacts';
+import users from "./reducers/users";
+import contacts from "./reducers/contacts";
 
 const store = configureStore({
-  reducer: { users, contacts},
- });
- 
+  reducer: { users, contacts },
+});
 
 export default function App() {
-    console.log('one')
+  console.log("one");
   return (
     <Provider store={store}>
-    <View style={styles.container}>
-     <HomeLoadContact/>
-    </View>
+      <View style={styles.container}>
+        <HomeLoadContact />
+      </View>
     </Provider>
   );
 }
