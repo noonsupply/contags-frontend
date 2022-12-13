@@ -11,8 +11,8 @@ import {
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { Entypo } from "@expo/vector-icons";
 import { useState } from "react";
-import { useTogglePasswordVisibility } from "./useTogglePasswordVisibility";
-import { useTogglePasswordVisibility2 } from "./useTogglePasswordVisibility2";
+import { useTogglePasswordVisibility } from "../module/useTogglePasswordVisibility";
+import { useTogglePasswordVisibility2 } from "../module/useTogglePasswordVisibility2";
 
 export default function PasswordScreen({ navigation }) {
   const handleSubmit = () => {
