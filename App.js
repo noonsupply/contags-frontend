@@ -1,93 +1,78 @@
-import React from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, Text, View } from 'react-native';
+import HomeLoadContact from './screens/HomeLoadContact'
 
-const TagsInput = props => {
-  const [tags, setTags] = React.useState(props.tags);
-  const removeTags = indexToRemove => {
-    setTags([...tags.filter((_, index) => index !== indexToRemove)]);
-  };
-  const addTags = event => {
-    if (event.nativeEvent.text !== '') {
-      setTags([...tags, event.nativeEvent.text]);
-      props.selectedTags([...tags, event.nativeEvent.text]);
-      event.nativeEvent.text = '';
-    }
-  };
+import { Provider } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
+import users from './reducers/users';
+
+const store = configureStore({
+  reducer: { users },
+ });
+ 
+
+export default function App() {
   return (
-    <View style={styles.tagsInput}>
-      <View id="tags" style={styles.tagsList}>
-        {tags.map((tag, index) => (
-          <View key={index} style={styles.tag}>
-            <Text style={styles.tagTitle}>{tag}</Text>
-            <TouchableOpacity
-              onPress={() => removeTags(index)}
-              style={styles.tagCloseIcon}
-            >
-              <Text>x</Text>
-            </TouchableOpacity>
-          </View>
-        ))}
-      </View>
-      <TextInput
-        style={styles.tagsInputField}
-        onSubmitEditing={addTags}
-        placeholder="Press enter to add tags"
-      />
-    </View>
-  );
-};
-
-
-export default function App(){
-  const selectedTags = tags => {
-    console.log(tags);
-  };
-  return (
+    <Provider store={store}>
     <View style={styles.container}>
-      <TagsInput selectedTags={selectedTags} tags={['Nodejs', 'MongoDB']} />
+    <HomeLoadContact/>
     </View>
-  )
-};   
-
-
-
-
+    </Provider>
+  );
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "blue",
+    backgroundColor: "#0031B8",
+    display: "flex",
+  },
+  logo: {
+    width: 293,
+    height: 102,
+    left: 50,
+    top: 96,
+  },
+  inputText: {
+    marginTop: 250,
+    marginLeft: 25,
+    marginRight: 25,
+  },
+  text: {
+    color: "#ffffff",
+    marginBottom: 10,
+  },
+  input: {
+    height: 60,
+    borderRadius: 5,
+    backgroundColor: "#ffffff",
+    paddingLeft: 15,
+  },
+  icon: {
+    color: "#ffffff",
+  },
+  caseButton: {
+    flexWrap: "wrap",
+    flexDirection: "row",
+    marginTop: 320,
+    justifyContent: "space-between",
+    marginLeft: 30,
+    marginRight: 30,
+  },
+  button: {
+    backgroundColor: "#ffffff",
+    height: 50,
+    width: 50,
     alignItems: "center",
     justifyContent: "center",
-    width:"100%",
-    height:"100%",
+    borderRadius: 50,
   },
-  tagsInput: {
-    backgroundColor : "white",
-    height : "10%",
-    width: "80%",
-  },
-  tagsList: {
-    flexDirection : "row",
-  },
-  tag: {
-    backgroundColor : "green",
-    width: 80,
-    flexDirection : "row",
-    justifyContent : "space-between",
-    alignItems : "center",
-    marginRight:15,
-    paddingLeft: 5,
-    borderRadius : 8,
-  },
-  tagTitle: {
-    marginTop: 3,
-
-  },
-  tagCloseIcon: {
-    margin : 5,
-  },
-  tagsInputField: {
-    // Styles here...
+  button2: {
+    backgroundColor: "#ffffff",
+    height: 50,
+    width: 50,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 50,
   },
 });
