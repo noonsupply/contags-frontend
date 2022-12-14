@@ -1,5 +1,5 @@
-import React, {useRef, useState, useEffect} from 'react';
-import {View, StyleSheet, Text, Image} from 'react-native';
+import React, { useRef, useState, useEffect } from "react";
+import { View, StyleSheet, Text, Image } from "react-native";
 
 const SplashScreen = props => {
 
@@ -13,44 +13,35 @@ const SplashScreen = props => {
 
   useEffect(() => {
     if (authLoaded) {
-      props.navigation.replace('Home');
+      props.navigation.replace("MailScreen");
     }
   }, [authLoaded, props.navigation]);
 
   return (
     <View style={styles.container}>
-      <Image
-          style={styles.logo}
-          source={require('../assets/logo.png')}
-        />
-      <Image
-          style={styles.loader}
-          source={require('../assets/loader.gif')}
-        />
-
+      <Image style={styles.logo} source={require("../assets/logo.png")} />
+      <Image style={styles.loader} source={require("../assets/loader.gif")} />
     </View>
-
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     backgroundColor: "#0031B8",
   },
 
-  loader:{
+  loader: {
     width: 50,
     height: 50,
   },
 
-  logo:{
+  logo: {
     width: 300,
     height: 100,
-  }
-
+  },
 });
 
 export default SplashScreen;
