@@ -14,8 +14,10 @@ import {
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
-export default function ProfileCreation() {
-  // Datepicker for Date of Birth
+export default function ProfileCreation({ navigation }) {
+  const handleTag = () => {
+    navigation.navigate("TagCreation");
+  };
 
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
@@ -88,7 +90,10 @@ export default function ProfileCreation() {
             {/* <TouchableOpacity style={styles.btnBack}>
               <FontAwesome color="#FFFFFF" name="chevron-left" />
             </TouchableOpacity> */}
-            <TouchableOpacity style={styles.btnForward}>
+            <TouchableOpacity
+              style={styles.btnForward}
+              onPress={() => handleTag()}
+            >
               <FontAwesome color="#FFFFFF" name="chevron-right" />
             </TouchableOpacity>
           </View>

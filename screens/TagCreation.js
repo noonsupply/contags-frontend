@@ -12,7 +12,11 @@ import {
 } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
-export default function TagCreation() {
+export default function TagCreation({ navigation }) {
+  const handleCreation = () => {
+    navigation.navigate("ProfilCreation");
+  };
+
   return (
     <SafeAreaView style={styles.safeAreaView}>
       <ScrollView style={styles.scrollView}>
@@ -73,26 +77,28 @@ export default function TagCreation() {
           </View>
 
           <View style={styles.navigationContainer}>
-          <TouchableOpacity style={styles.btnBack}>
-            <FontAwesome color="#FFFFFF" name="chevron-left" />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.btnSkip}>
-            <Text style={styles.btnText}>Passer cette étape</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.btnForward}>
-            <FontAwesome color="#FFFFFF" name="chevron-right" />
-          </TouchableOpacity>
-        </View>
+            <TouchableOpacity
+              style={styles.btnBack}
+              onPress={() => handleCreation()}
+            >
+              <FontAwesome color="#FFFFFF" name="chevron-left" />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.btnSkip}>
+              <Text style={styles.btnText}>Passer cette étape</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.btnForward}>
+              <FontAwesome color="#FFFFFF" name="chevron-right" />
+            </TouchableOpacity>
+          </View>
 
           <StatusBar backgroundColor={"#0031B8"} />
         </View>
       </ScrollView>
     </SafeAreaView>
   );
-};
+}
 
 const styles = StyleSheet.create({
-
   //  Views & Global container
 
   safeAreaView: {
@@ -282,7 +288,7 @@ const styles = StyleSheet.create({
     paddingRight: 12.5,
   },
 
-    // tagGray: {
+  // tagGray: {
   //   alignItems: "center",
   //   backgroundColor: "#FFFFFF",
   //   borderColor: "#5A5A5F",
