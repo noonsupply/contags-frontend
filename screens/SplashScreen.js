@@ -2,6 +2,7 @@ import React, {useRef, useState, useEffect} from 'react';
 import {View, StyleSheet, Text, Image} from 'react-native';
 
 const SplashScreen = props => {
+
   const [authLoaded, setAuthLoaded] = useState(false);
 
   useEffect(() => {

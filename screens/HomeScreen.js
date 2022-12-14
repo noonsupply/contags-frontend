@@ -14,7 +14,7 @@ const suffix = (
   />
 );
 
-const onSearch = console.log(value);
+
 
 const HomeScreen = () => {
 
@@ -22,7 +22,6 @@ const HomeScreen = () => {
   return (
     <View style={styles.root}>
       <Text>Home Screen</Text>
-      <Search placeholder="input search text" onSearch={onSearch} style={{ width: 200 }} />
     </View>
   );
 };

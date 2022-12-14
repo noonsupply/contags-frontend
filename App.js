@@ -12,13 +12,12 @@ const store = configureStore({
   reducer: { users, contacts},
  });
  
-
 export default function App() {
     console.log('one')
   return (
     <Provider store={store}>
     <View style={styles.container}>
-    <MainNavigator />
+    <HomeLoadContact />
     </View>
     </Provider>
   );
