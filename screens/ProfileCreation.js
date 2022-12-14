@@ -21,12 +21,12 @@ export default function ProfileCreation({ navigation }) {
       <StatusBar backgroundColor={"#0031B8"} />
       <ScrollView style={styles.scrollView}>
         <View style={styles.globalContainer}>
-          <View style={styles.logoContainer}>
+          {/* <View style={styles.logoContainer}>
             <Image
               style={styles.logo}
               source={require("../assets/contags_logo_white.png")}
             />
-          </View>
+          </View> */}
 
           <View style={styles.mainContainer}>
             <View style={styles.welcomeTextContainer}>

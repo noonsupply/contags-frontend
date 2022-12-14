@@ -17,6 +17,7 @@ export const contactsSlice = createSlice({
    addContact: (state, action) => {
     state.value.push(action.payload);
    },
+
    // replaceAllTags permet de remplacer le tableau de tags à un contact : 
    //action.payload doit être de la forme {contact : obj_contact, tags: tableau_tags}
    replaceAllTags: (state, action) => {
@@ -28,6 +29,7 @@ export const contactsSlice = createSlice({
         console.log('error in replaceAllTags : contact not find')
     }
     },
+
     // addOneTag permet d'ajouter un tag au tableau de tag d'un contact
     // action.payload doit être de la forme {contact : obj_contact, tag : objet_tag}
     addOneTag: (state, action) => {
@@ -39,6 +41,7 @@ export const contactsSlice = createSlice({
             console.log('error in addOneTag : contact not find')
         }
     },
+
     //updateTags permet de fusionner le tableau de tags d'un contact avec un nouveau tableau de tag
     //action.payload doit être de la forme {contact : obj_contact, tags: tableau_tags}
     updateTags: (state, action) => {
@@ -59,6 +62,7 @@ export const contactsSlice = createSlice({
             console.log('error in addOneTag : contact not find')
         }
     },
+
     //updateContact permet de modifier les données d'un contact
     //action.payload doit être de la forme {contact : obj_contact, newDatas: obj_donnee_à_changer}
     // la donnée à changer doit être du bon format tableau avec le bon type d'objet dedans...
@@ -74,6 +78,7 @@ export const contactsSlice = createSlice({
             console.log('error in updateContact : contact not find')
         }
     },
+
     //addEmail permet d'ajouter un email à  un contact
     //action.payload doit être de la forme {contact : obj_contact, email: obj_email}
     addEmail : (state, action) => {
@@ -85,33 +90,7 @@ export const contactsSlice = createSlice({
             console.log('error in addEmail : contact not find')
         }
     },
-    //addPhone permet d'ajouter un email à  un contact
-    //action.payload doit être de la forme {contact : obj_contact, phone : obj_phone}
-    addPhone : (state, action) => {
-        // on recherche le contact dans le tableau des contacts selon 2 critères : name, firstname (considère que l'utilisateur enregistre sur des noms différents)
-        const indexContact = state.value.findIndex(elt => elt.name === action.payload.contact.name && elt.firstName === action.payload.contact.firstName);
-        if(indexContact !== -1){
-            state.value[indexContact].phones.push(action.payload.phone)
-        }else{
-            console.log('error in addPhone : contact not find')
-        }
-    },
-    //updatePhone permet de modifier un objet téléphone (numéro et/ou country, et/ou area) selon son type
-    //action.payload doit être de la forme {contact : obj_contact, phone :obj_phone}
-    updatePhone : (state, action) => {
-        // on recherche le contact dans le tableau des contacts selon 2 critères : name, firstname (considère que l'utilisateur enregistre sur des noms différents)
-        const indexContact = state.value.findIndex(elt => elt.name === action.payload.contact.name && elt.firstName === action.payload.contact.firstName);
-        if(indexContact !== -1){
-            state.value[indexContact].phones= state.value[indexContact].phones.map((elt,index)=>{
-                if(elt.type === action.payload.phone.type){
-                    return action.payload.phone
-                }
-                return elt;
-            })
-        }else{
-            console.log('error in updatePhone : contact not find')
-        }
-    },
+
     //updateEmail permet de modifier un email selon son type
     //action.payload doit être de la forme {contact : obj_contact, email :obj_email}
     updateEmail : (state, action) => {
@@ -128,6 +107,36 @@ export const contactsSlice = createSlice({
             console.log('error in updateEmail : contact not find')
         }
     },
+
+    //addPhone permet d'ajouter un email à  un contact
+    //action.payload doit être de la forme {contact : obj_contact, phone : obj_phone}
+    addPhone : (state, action) => {
+        // on recherche le contact dans le tableau des contacts selon 2 critères : name, firstname (considère que l'utilisateur enregistre sur des noms différents)
+        const indexContact = state.value.findIndex(elt => elt.name === action.payload.contact.name && elt.firstName === action.payload.contact.firstName);
+        if(indexContact !== -1){
+            state.value[indexContact].phones.push(action.payload.phone)
+        }else{
+            console.log('error in addPhone : contact not find')
+        }
+    },
+
+    //updatePhone permet de modifier un objet téléphone (numéro et/ou country, et/ou area) selon son type
+    //action.payload doit être de la forme {contact : obj_contact, phone :obj_phone}
+    updatePhone : (state, action) => {
+        // on recherche le contact dans le tableau des contacts selon 2 critères : name, firstname (considère que l'utilisateur enregistre sur des noms différents)
+        const indexContact = state.value.findIndex(elt => elt.name === action.payload.contact.name && elt.firstName === action.payload.contact.firstName);
+        if(indexContact !== -1){
+            state.value[indexContact].phones= state.value[indexContact].phones.map((elt,index)=>{
+                if(elt.type === action.payload.phone.type){
+                    return action.payload.phone
+                }
+                return elt;
+            })
+        }else{
+            console.log('error in updatePhone : contact not find')
+        }
+    },
+
  },
 });
 

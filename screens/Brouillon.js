@@ -34,6 +34,9 @@ export default function Brouillon() {
         <View>
             <Text style={styles.titles}>Étape 3 : visualiser les tags crées</Text>
         </View>
+        <TouchableOpacity style={styles.btnBack}>
+              <Text>Valider</Text>
+          </TouchableOpacity>
     </SafeAreaView>
   );
 }
@@ -60,5 +63,11 @@ const styles = StyleSheet.create({
     color : "#0031B8",
     fontSize : 16,
     //fontFamily : "Poppins",
+  },
+  btnBack:{
+    border: 1,
+    borderRadius: 4,
+    width: 102,
+    height: 36,
   }
 });

@@ -37,12 +37,12 @@ export default function MailScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.divImage}>
+      {/* <View style={styles.divImage}>
         <Image
           style={styles.logo}
           source={require("../assets/logo.png")}
         ></Image>
-      </View>
+      </View> */}
       <View style={styles.inputText}>
         <Text style={styles.text}>Saisissez votre adresse mail personnel</Text>
         <TextInput

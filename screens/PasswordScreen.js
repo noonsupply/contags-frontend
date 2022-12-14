@@ -54,12 +54,12 @@ export default function PasswordScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.divImage}>
+      {/* <View style={styles.divImage}>
         <Image
           style={styles.logo}
           source={require("../assets/logo.png")}
         ></Image>
-      </View>
+      </View> */}
       <View>
         <Text style={styles.text}>
           Pour finaliser votre inscription, veuillez saisir un mot de passe
