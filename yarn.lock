@@ -6705,6 +6705,14 @@ react-shallow-renderer@^16.15.0:
     object-assign "^4.1.1"
     react-is "^16.12.0 || ^17.0.0 || ^18.0.0"
 
+react-transform-hmr@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/react-transform-hmr/-/react-transform-hmr-1.0.4.tgz#e1a40bd0aaefc72e8dfd7a7cda09af85066397bb"
+  integrity sha512-8bK1DWUZynE6swD2jNPbzO5mvhB8fs9Ub5GksoVqYkc9i06FdSLC36qQYjaKOW79KBdsROq2cK0tRKITiEzmyg==
+  dependencies:
+    global "^4.3.0"
+    react-proxy "^1.1.7"
+
 react@^18.2.0:
   version "18.2.0"
   resolved "https://registry.yarnpkg.com/react/-/react-18.2.0.tgz#555bd98592883255fa00de14f1151a917b5d77d5"
@@ -7845,11 +7853,6 @@ url-parse@^1.5.9:
   dependencies:
     querystringify "^2.1.1"
     requires-port "^1.0.0"
-
-use-debouncy@^4.3.0:
-  version "4.4.0"
-  resolved "https://registry.yarnpkg.com/use-debouncy/-/use-debouncy-4.4.0.tgz#b04907e74f3e681beb74cd49784f93376a6511f2"
-  integrity sha512-GnPFLqpObdwNxTOVKd05QlJE92gAHHXkgLZ6Qvc3/VoSWQpny7jT5J5occYOyDBYWKAYA0AcHu327Ei6odCkpg==
 
 use-sync-external-store@^1.0.0:
   version "1.2.0"
