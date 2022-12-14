@@ -1,4 +1,6 @@
+import React, { useState } from "react";
 import {
+  Button,
   Image,
   Text,
   TextInput,
@@ -9,6 +11,7 @@ import {
   StatusBar,
   ScrollView,
 } from "react-native";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 export default function ProfileCreation({ navigation }) {
@@ -16,9 +19,27 @@ export default function ProfileCreation({ navigation }) {
     navigation.navigate("TagCreation");
   };
 
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+  };
+
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
+
+  const handleConfirm = (date) => {
+    console.warn("A date has been picked: ", date);
+    hideDatePicker();
+  };
   return (
     <SafeAreaView style={styles.safeAreaView}>
-      <StatusBar backgroundColor={"#0031B8"} />
+      <StatusBar
+        backgroundColor={"#FFFFFF"}
+        barStyle={"dark-content"}
+        translucent={true}
+      />
       <ScrollView style={styles.scrollView}>
         <View style={styles.globalContainer}>
           <View style={styles.logoContainer}>
@@ -36,18 +57,27 @@ export default function ProfileCreation({ navigation }) {
             </View>
 
             <View style={styles.inputTextContainer}>
-              <Text style={styles.text}>Nom</Text>
-              <TextInput style={styles.input} placeholder={"Jean"}></TextInput>
               <Text style={styles.text}>Prénom</Text>
+              <TextInput style={styles.input} placeholder={"Jean"}></TextInput>
+              <Text style={styles.text}>Nom</Text>
               <TextInput
                 style={styles.input}
                 placeholder={"Dupont"}
               ></TextInput>
               <Text style={styles.text}>Date de naissance</Text>
-              <TextInput
+              {/* <TextInput
                 style={styles.input}
                 placeholder={"01/01/2000"}
-              ></TextInput>
+              ></TextInput> */}
+              <View style={styles.datePickerContainer}>
+                <Button title="Sélectionnez votre date de naissance" onPress={showDatePicker} />
+                <DateTimePickerModal
+                  isVisible={isDatePickerVisible}
+                  mode="date"
+                  onConfirm={handleConfirm}
+                  onCancel={hideDatePicker}
+                />
+              </View>
               <Text style={styles.text}>Numéro de téléphone portable</Text>
               <TextInput
                 style={styles.input}
@@ -122,6 +152,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderColor: "#0031B8",
     borderWidth: 1.5,
+    color: "#5A5A5F",
     height: 45,
     marginBottom: 25,
     marginTop: 5,
@@ -131,7 +162,7 @@ const styles = StyleSheet.create({
   text: {
     color: "#0031B8",
     fontSize: 16,
-    fontWeight: "400",
+    fontWeight: "600",
   },
 
   welcomeTextContainer: {
@@ -145,6 +176,10 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
 
+  datePickerContainer: {
+    marginVertical: 10,
+  },
+
   // Navigation
 
   navigationContainer: {
@@ -153,19 +188,19 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     flexWrap: "wrap",
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "flex-end",
     paddingLeft: 25,
     paddingRight: 25,
   },
 
-  btnBack: {
-    alignItems: "center",
-    backgroundColor: "#0031B8",
-    borderRadius: 50,
-    height: 50,
-    justifyContent: "center",
-    width: 50,
-  },
+  // btnBack: {
+  //   alignItems: "center",
+  //   backgroundColor: "#0031B8",
+  //   borderRadius: 50,
+  //   height: 50,
+  //   justifyContent: "center",
+  //   width: 50,
+  // },
 
   btnForward: {
     alignItems: "center",
@@ -176,9 +211,9 @@ const styles = StyleSheet.create({
     width: 50,
   },
 
-  btnText: {
-    color: "#0031B8",
-    fontSize: 14,
-    fontWeight: "bold",
-  },
+  // btnText: {
+  //   color: "#0031B8",
+  //   fontSize: 14,
+  //   fontWeight: "bold",
+  // },
 });
