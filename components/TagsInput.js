@@ -1,8 +1,7 @@
+import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput} from 'react-native';
 import { useState, useEffect } from 'react';
 
-import { addContact, addTags } from '../reducers/contacts';
-import { useDispatch } from 'react-redux';
 
 function TagsInput(props) {
     const [tags, setTags] = useState(props.tags);
@@ -12,15 +11,13 @@ function TagsInput(props) {
     };
 
     const addTags = (event) => {
+        console.log('ici',event.nativeEvent.text)
         if (event.nativeEvent.text !== '') {
             setTags([...tags, event.nativeEvent.text]);
             props.selectedTags([...tags, event.nativeEvent.text]);
             event.nativeEvent.text = '';
         }
     };
-
-   
-    
     
     return (
             <View style={styles.tagsInput}>
@@ -36,7 +33,7 @@ function TagsInput(props) {
                 </View>
                 <TextInput
                     style={styles.tagsInputField}
-                    onSubmitEditing={event =>{addTags}}
+                    onSubmitEditing={event =>{addTags(event)}}
                     placeholder="Press enter to add tags"
                 />
             </View>
@@ -47,21 +44,26 @@ function TagsInput(props) {
 const styles = StyleSheet.create({
     tagsInput: {
       backgroundColor : "white",
-      height : "10%",
+      height : 50,
       width: "80%",
+      //flexDirection : "row",
+      borderRadius : 5,
     },
     tagsList: {
       flexDirection : "row",
     },
     tag: {
         backgroundColor : "green",
-      width: 80,
-      flexDirection : "row",
-      justifyContent : "space-between",
-      alignItems : "center",
-      marginRight:15,
-      paddingLeft: 5,
-      borderRadius : 8,
+        width: 80,
+        height : "80%",
+        flexDirection : "row",
+        justifyContent : "space-between",
+        alignItems : "center",
+        marginRight:15,
+        marginTop : 5,
+        marginBottom : 5,
+        paddingLeft: 5,
+        borderRadius : 8,
     },
     tagTitle: {
         marginTop: 3,

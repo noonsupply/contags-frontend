@@ -6,6 +6,8 @@ import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import users from './reducers/users';
 import contacts from './reducers/contacts';
+import Brouillon from './screens/Brouillon';
+import TagsInput from './components/TagsInput';
 
 const store = configureStore({
   reducer: { users, contacts},
@@ -13,11 +15,14 @@ const store = configureStore({
  
 
 export default function App() {
-    console.log('one')
+  const selectedTags = tags => {
+    console.log(tags);
+  };
+
   return (
     <Provider store={store}>
     <View style={styles.container}>
-     <HomeLoadContact/>
+
     </View>
     </Provider>
   );
@@ -27,7 +32,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#0031B8",
-    display: "flex",
+    justifyContent :"center",
+    alignItems : 'center',
+   // display: "flex",
   },
   logo: {
     width: 293,
