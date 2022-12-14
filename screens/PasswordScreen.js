@@ -12,10 +12,16 @@ import {
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { Entypo } from "@expo/vector-icons";
 import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { useTogglePasswordVisibility } from "../module/useTogglePasswordVisibility";
 import { useTogglePasswordVisibility2 } from "../module/useTogglePasswordVisibility2";
+import { updateToken } from "../reducers/users";
+
+const BACKEND_ADDRESS = "http://172.17.188.30:3000";
 
 export default function PasswordScreen({ navigation }) {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.users.value);
   const handleReturn = () => {
     navigation.navigate("MailScreen");
   };
@@ -47,7 +53,22 @@ export default function PasswordScreen({ navigation }) {
 
   const handleSubmit = () => {
     if (Password1 === Password2) {
-      navigation.navigate("ProfilCreation");
+      fetch(`${BACKEND_ADDRESS}/users/create`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          emailMain: user.emailMain,
+          password: Password1,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          if (data.result) {
+            dispatch(updateToken(data.token));
+            navigation.navigate("ProfilCreation");
+          }
+        });
     }
   };
 
