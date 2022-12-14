@@ -6,6 +6,7 @@ import {
   View,
   Image,
   TouchableOpacity,
+  KeyboardAvoidingView,
 } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useDispatch } from "react-redux";
@@ -36,7 +37,7 @@ export default function MailScreen({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView behavior="position" style={styles.container}>
       <View style={styles.divImage}>
         <Image
           style={styles.logo}
@@ -63,7 +64,7 @@ export default function MailScreen({ navigation }) {
         </TouchableOpacity>
       </View>
       <StatusBar style="auto" />
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -98,10 +99,6 @@ const styles = StyleSheet.create({
     borderWidth: 1.5,
   },
   caseButton: {
-    flexWrap: "wrap",
-    flexDirection: "row",
-    marginTop: "75%",
-    justifyContent: "space-between",
     marginLeft: "80%",
   },
   button2: {
@@ -111,6 +108,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 50,
+    marginTop: 275,
   },
   error: {
     color: "#ff0000",
