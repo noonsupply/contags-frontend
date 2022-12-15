@@ -11,6 +11,8 @@ import users from "./reducers/users";
 import contacts from "./reducers/contacts";
 import Brouillon from "./screens/Brouillon";
 
+import TagsDefinition from "./components/TagsDefinition";
+
 const store = configureStore({
   reducer: { users, contacts },
 });
@@ -20,7 +22,8 @@ export default function App() {
     <Provider store={store}>
       <View style={styles.container}>
         {/* <MainNavigator /> */}
-        <Brouillon />
+        {/* <Brouillon /> */}
+        <TagsDefinition />
       </View>
     </Provider>
   );

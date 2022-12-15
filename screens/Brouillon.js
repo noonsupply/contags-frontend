@@ -13,12 +13,13 @@ import FontAwesomeIcon from '@expo/vector-icons'
 import { Entypo } from "@expo/vector-icons";
 //import 'font-awesome/css/font-awesome.min.css'
 import { useState } from "react";
+import Tag from "../components/Tag"
 
 export default function Brouillon() {
     const [tag, setTag] = useState("");
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
         <View style={styles.closeContainer}>
             <View><Entypo name="cross" size={25} color="#0031B8" /></View>
         </View>
@@ -56,27 +57,7 @@ export default function Brouillon() {
             <Text style={styles.titles}>Étape 3 : visualiser les tags crées</Text>
             <ScrollView  style={styles.ScrollView}>
                 <View style={styles.validateTagContainer}>
-                    <View style={[styles.tagFinalBlank, styles.tagBlank]}>
-                        <Text style={styles.tagTextBlank}>{tag || "Nom du tag"}</Text>
-                    </View>
-                    <View style={[styles.tagFinalBlank, styles.tagBlank]}>
-                        <Text style={styles.tagTextBlank}>{tag || "Nom du tag"}</Text>
-                    </View>
-                    <View style={[styles.tagFinalBlank, styles.tagBlank]}>
-                        <Text style={styles.tagTextBlank}>{tag || "Nom du tag"}</Text>
-                    </View>
-                    <View style={[styles.tagFinalBlank, styles.tagBlank]}>
-                        <Text style={styles.tagTextBlank}>{tag || "Nom du tag"}</Text>
-                    </View>
-                    <View style={[styles.tagFinalBlank, styles.tagBlank]}>
-                        <Text style={styles.tagTextBlank}>{tag || "Nom du tag"}</Text>
-                    </View>
-                    <View style={[styles.tagFinalBlank, styles.tagBlank]}>
-                        <Text style={styles.tagTextBlank}>{tag || "Nom du tag"}</Text>
-                    </View>
-                    <View style={[styles.tagFinalBlank, styles.tagBlank]}>
-                        <Text style={styles.tagTextBlank}>{tag || "Nom du tag"}</Text>
-                    </View>
+                    <Tag tag={{title : "essai", color : "white", border :"#0031B8"}} />
                 </View>
             </ScrollView>
         </View >
@@ -87,7 +68,7 @@ export default function Brouillon() {
             </TouchableOpacity> 
         </View>
         
-    </SafeAreaView>
+    </View>
   );
 }
 
@@ -238,7 +219,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     flexShrink: 1,
     height: 35,
-    width : 110,
+    // width : 110,
     justifyContent: "flex-end",
     // marginBottom: 8,
     marginLeft: 15,
@@ -255,11 +236,11 @@ const styles = StyleSheet.create({
     fontSize: 12,
     flexShrink: 1,
     height: 35,
-    width : 110,
+    // width : 110,
     justifyContent: "flex-end",
     // marginBottom: 8,
-    marginLeft: 15,
-    marginRight: 15,
+    marginLeft: 5,
+    marginRight: 5,
     marginTop: 5,
     marginBottom : 5,
     paddingLeft: 12.5,
