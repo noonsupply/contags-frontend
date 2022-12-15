@@ -7,6 +7,7 @@ import MailScreen from "../screens/MailScreen";
 import PasswordScreen from "../screens/PasswordScreen";
 import ProfileCreation from "../screens/ProfileCreation";
 import TagCreation from "../screens/TagCreation";
+import HomeScreen from "../screens/HomeScreen";
 
 const Stack = createStackNavigator();
 
@@ -38,6 +39,11 @@ const MainNavigator = () => {
           name="TagCreation"
           options={{ animationEnabled: true, header: () => null }}
           component={TagCreation}
+        />
+        <Stack.Screen
+          name="Home"
+          options={{ animationEnabled: true, header: () => null }}
+          component={HomeScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>

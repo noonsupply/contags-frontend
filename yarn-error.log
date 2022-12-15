@@ -1,25 +1,25 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\Matt\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js start
+  /opt/homebrew/Cellar/node/18.8.0/bin/node /opt/homebrew/bin/yarn start
 
 PATH: 
-  C:\Users\Matt\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\Matt\bin;C:\Python310\Scripts;C:\Python310;C:\Program Files\AdoptOpenJDK\jre-8.0.282.8-hotspot\bin;C:\Program Files\AdoptOpenJDK\jre-11.0.10.9-hotspot\bin;C:\Program Files (x86)\AdoptOpenJDK\jre-8.0.282.8-hotspot\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Windows\System32\OpenSSH;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\nodejs;C:\ProgramData\chocolatey\bin;C:\Program Files\Git\cmd;C:\Users\Matt\AppData\Local\Microsoft\WindowsApps;C:\Users\Matt\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Matt\AppData\Roaming\npm;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
+  /opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/homebrew/bin:/opt/homebrew/sbin
 
 Yarn version: 
   1.22.19
 
 Node version: 
-  16.18.0
+  18.8.0
 
 Platform: 
-  win32 x64
+  darwin arm64
 
 Trace: 
-  SyntaxError: C:\Users\Matt\Documents\Projet La Capsule\Contags\contags-frontend\package.json: Unexpected token < in JSON at position 264
+  SyntaxError: /Users/noomanmiled/Documents/La Capsule formation/Contags/Application/contags-frontend/package.json: Unexpected token < in JSON at position 264
       at JSON.parse (<anonymous>)
-      at C:\Users\Matt\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:1629:59
+      at /opt/homebrew/lib/node_modules/yarn/lib/cli.js:1629:59
       at Generator.next (<anonymous>)
-      at step (C:\Users\Matt\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:310:30)
-      at C:\Users\Matt\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:321:13
+      at step (/opt/homebrew/lib/node_modules/yarn/lib/cli.js:310:30)
+      at /opt/homebrew/lib/node_modules/yarn/lib/cli.js:321:13
 
 npm manifest: 
   {
@@ -49,7 +49,7 @@ npm manifest:
       "expo-font": "^11.0.1",
       "expo-status-bar": "~1.4.2",
       "font-awesome": "^4.7.0",
-      "react": "18.1.0",
+      "react": "^18.2.0",
       "react-dom": "^18.2.0",
       "react-native": "0.70.5",
   <<<<<<< HEAD
@@ -6815,10 +6815,17 @@ Lockfile:
       global "^4.3.0"
       react-proxy "^1.1.7"
   
+<<<<<<< HEAD
   react@18.1.0:
     version "18.1.0"
     resolved "https://registry.yarnpkg.com/react/-/react-18.1.0.tgz#6f8620382decb17fdc5cc223a115e2adbf104890"
     integrity sha512-4oL8ivCz5ZEPyclFQXaNksK3adutVS8l2xzZU0cqEFrE9Sb7fC0EFK5uEk74wIreL1DERyjvsU915j1pcT2uEQ==
+=======
+  react@^18.2.0:
+    version "18.2.0"
+    resolved "https://registry.yarnpkg.com/react/-/react-18.2.0.tgz#555bd98592883255fa00de14f1151a917b5d77d5"
+    integrity sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==
+>>>>>>> 17855f946a7a6b14dcd89e8d474a69633d177c7b
     dependencies:
       loose-envify "^1.1.0"
   

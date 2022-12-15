@@ -7,39 +7,36 @@ import {
   Image,
   TouchableOpacity,
   Pressable,
+  KeyboardAvoidingView,
 } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { Entypo } from "@expo/vector-icons";
 import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { useTogglePasswordVisibility } from "../module/useTogglePasswordVisibility";
 import { useTogglePasswordVisibility2 } from "../module/useTogglePasswordVisibility2";
+import { updateToken } from "../reducers/users";
+
+const BACKEND_ADDRESS = "http://172.16.188.142:3000";
 
 export default function PasswordScreen({ navigation }) {
-  const handleSubmit = () => {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.users.value);
+  const handleReturn = () => {
     navigation.navigate("MailScreen");
   };
 
-  // const handleInput = () => {
-  //   if(){
-
-  //   }else{
-
-  //   }
-  // };
   const { passwordVisibility, rightIcon, handlePasswordVisibility } =
     useTogglePasswordVisibility();
   const { passwordVisibility2, rightIcon2, handlePasswordVisibility2 } =
     useTogglePasswordVisibility2();
-  const [motDePasse1, setMotDePasse1] = useState("");
-  const [motDePasse2, setMotDePasse2] = useState("");
+  const [Password1, setPassword1] = useState("");
+  const [Password2, setPassword2] = useState("");
 
-  let iconV = (
-    <View>
-      <Text style={styles.textInfoX}>Mots de passe différents</Text>
-      <Entypo name="cross" size={25} color="#ff0000" style={styles.icon} />
-    </View>
-  );
-  if (motDePasse1 === motDePasse2) {
+
+
+  let iconV = null;
+  if (Password1 === Password2 && Password1.length > 0) {
     iconV = (
       <View>
         <Text style={styles.textInfoV}>Mots de passe indentique</Text>
@@ -47,13 +44,43 @@ export default function PasswordScreen({ navigation }) {
       </View>
     );
   }
+  if (Password1 !== Password2 && Password1.length > 0) {
+    iconV = (
+      <View>
+        <Text style={styles.textInfoX}>Mots de passe différents</Text>
+        <Entypo name="cross" size={25} color="#ff0000" style={styles.icon} />
+      </View>
+    );
+  }
 
-  const handleInput = () => {
-    navigation.navigate("ProfilCreation");
+  const handleSubmit = () => {
+    console.log("je rentre")
+    if (Password1 === Password2) {
+      fetch(`${BACKEND_ADDRESS}/users/create`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          emailMain: user.emailMain,
+          password: Password1,
+        }),
+        
+      })
+        .then((response) => response.json())
+        
+        .then((data) => {
+          console.log("je rerentre")
+          console.log(data);
+          if (data.result) {
+            dispatch(updateToken(data.token));
+            navigation.navigate("ProfilCreation");
+            console.log("fin")
+          }
+        });
+    }
   };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView behavior="position" style={styles.container}>
       <View style={styles.divImage}>
         <Image
           style={styles.logo}
@@ -75,9 +102,9 @@ export default function PasswordScreen({ navigation }) {
             autoCorrect={false}
             textContentType="newPassword"
             secureTextEntry={passwordVisibility}
-            value={motDePasse1}
+            value={Password1}
             onChangeText={(text) => {
-              setMotDePasse1(text);
+              setPassword1(text);
             }}
           />
           <Pressable
@@ -96,8 +123,8 @@ export default function PasswordScreen({ navigation }) {
             autoCorrect={false}
             textContentType="newPassword"
             secureTextEntry={passwordVisibility2}
-            value={motDePasse2}
-            onChangeText={(text) => setMotDePasse2(text)}
+            value={Password2}
+            onChangeText={(text) => setPassword2(text)}
           />
           <Pressable
             style={styles.iconDivEye}
@@ -109,15 +136,15 @@ export default function PasswordScreen({ navigation }) {
         {iconV}
       </View>
       <View style={styles.caseButton}>
-        <TouchableOpacity style={styles.button} onPress={() => handleSubmit()}>
+        <TouchableOpacity style={styles.button} onPress={() => handleReturn()}>
           <FontAwesome color="#ffffff" name="chevron-left" />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button2} onPress={() => handleInput()}>
+        <TouchableOpacity style={styles.button2} onPress={() => handleSubmit()}>
           <FontAwesome color="#ffffff" name="chevron-right" />
         </TouchableOpacity>
       </View>
       <StatusBar style="auto" />
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 
