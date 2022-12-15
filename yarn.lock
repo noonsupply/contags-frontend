@@ -1791,7 +1791,6 @@
     prompts "^2.4.0"
     semver "^6.3.0"
 
-<<<<<<< HEAD
 "@react-native-community/datetimepicker@^6.7.1":
   version "6.7.1"
   resolved "https://registry.yarnpkg.com/@react-native-community/datetimepicker/-/datetimepicker-6.7.1.tgz#a52eed9512898adef323b2fa78c6ac4611af5502"
@@ -1799,8 +1798,6 @@
   dependencies:
     invariant "^2.2.4"
 
-=======
->>>>>>> 24fde2a4509172e457bc1fa16af338052505327a
 "@react-native-community/masked-view@^0.1.11":
   version "0.1.11"
   resolved "https://registry.yarnpkg.com/@react-native-community/masked-view/-/masked-view-0.1.11.tgz#2f4c6e10bee0786abff4604e39a37ded6f3980ce"
