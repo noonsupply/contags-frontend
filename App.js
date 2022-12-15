@@ -12,6 +12,7 @@ import contacts from "./reducers/contacts";
 import Brouillon from "./screens/Brouillon";
 
 import TagsDefinition from "./components/TagsDefinition";
+import ProfileCreation from "./screens/ProfileCreation";
 
 const store = configureStore({
   reducer: { users, contacts},

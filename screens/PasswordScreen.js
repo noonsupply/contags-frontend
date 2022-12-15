@@ -17,11 +17,12 @@ import { useTogglePasswordVisibility } from "../module/useTogglePasswordVisibili
 import { useTogglePasswordVisibility2 } from "../module/useTogglePasswordVisibility2";
 import { updateToken } from "../reducers/users";
 
-const BACKEND_ADDRESS = "http://172.16.188.142:3000";
+const backendAdress = "http://172.17.188.30:3000";
 
 export default function PasswordScreen({ navigation }) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.users.value);
+  console.log("start", user);
   const handleReturn = () => {
     navigation.navigate("MailScreen");
   };
@@ -32,8 +33,6 @@ export default function PasswordScreen({ navigation }) {
     useTogglePasswordVisibility2();
   const [Password1, setPassword1] = useState("");
   const [Password2, setPassword2] = useState("");
-
-
 
   let iconV = null;
   if (Password1 === Password2 && Password1.length > 0) {
@@ -54,26 +53,26 @@ export default function PasswordScreen({ navigation }) {
   }
 
   const handleSubmit = () => {
-    console.log("je rentre")
+    // console.log("je rentre")
     if (Password1 === Password2) {
-      fetch(`${BACKEND_ADDRESS}/users/create`, {
+      console.log("route", user);
+      fetch(`${backendAdress}/users/create`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           emailMain: user.emailMain,
           password: Password1,
         }),
-        
       })
         .then((response) => response.json())
-        
+
         .then((data) => {
-          console.log("je rerentre")
-          console.log(data);
+          // console.log("je rerentre")
+          // console.log(data);
           if (data.result) {
             dispatch(updateToken(data.token));
             navigation.navigate("ProfilCreation");
-            console.log("fin")
+            console.log("fin");
           }
         });
     }
