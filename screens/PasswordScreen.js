@@ -22,6 +22,7 @@ const BACKEND_ADDRESS = "http://172.17.188.30:3000";
 export default function PasswordScreen({ navigation }) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.users.value);
+  console.log("start", user);
   const handleReturn = () => {
     navigation.navigate("MailScreen");
   };
@@ -53,6 +54,7 @@ export default function PasswordScreen({ navigation }) {
 
   const handleSubmit = () => {
     if (Password1 === Password2) {
+      console.log("route", user);
       fetch(`${BACKEND_ADDRESS}/users/create`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
