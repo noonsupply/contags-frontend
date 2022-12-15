@@ -1,13 +1,21 @@
 Arguments: 
+<<<<<<< HEAD
   /opt/homebrew/Cellar/node/18.8.0/bin/node /opt/homebrew/bin/yarn start
 
 PATH: 
   /opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/homebrew/bin:/opt/homebrew/sbin
+=======
+  C:\Program Files\nodejs\node.exe C:\Users\coach\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js start
+
+PATH: 
+  C:\Users\coach\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\coach\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Windows\System32\OpenSSH;C:\Program Files (x86)\gs\gs9.56.1\bin;C:\Program Files\Git\cmd;C:\Program Files\nodejs;C:\Program Files\MySQL\MySQL Shell 8.0\bin;C:\Users\coach\AppData\Local\Microsoft\WindowsApps;C:\Users\coach\AppData\Local\Programs\MiKTeX\miktex\bin\x64;C:\Users\coach\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\coach\AppData\Roaming\npm;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
+>>>>>>> Nico
 
 Yarn version: 
   1.22.19
 
 Node version: 
+<<<<<<< HEAD
   18.8.0
 
 Platform: 
@@ -20,6 +28,20 @@ Trace:
       at Generator.next (<anonymous>)
       at step (/opt/homebrew/lib/node_modules/yarn/lib/cli.js:310:30)
       at /opt/homebrew/lib/node_modules/yarn/lib/cli.js:321:13
+=======
+  16.18.0
+
+Platform: 
+  win32 x64
+
+Trace: 
+  SyntaxError: C:\Users\coach\OneDrive\Bureau\Contags\contags-frontend\package.json: Unexpected token < in JSON at position 264
+      at JSON.parse (<anonymous>)
+      at C:\Users\coach\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:1629:59
+      at Generator.next (<anonymous>)
+      at step (C:\Users\coach\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:310:30)
+      at C:\Users\coach\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:321:13
+>>>>>>> Nico
 
 npm manifest: 
   {
@@ -49,7 +71,11 @@ npm manifest:
       "expo-font": "^11.0.1",
       "expo-status-bar": "~1.4.2",
       "font-awesome": "^4.7.0",
+<<<<<<< HEAD
       "react": "^18.2.0",
+=======
+      "react": "18.1.0",
+>>>>>>> Nico
       "react-dom": "^18.2.0",
       "react-native": "0.70.5",
   <<<<<<< HEAD
@@ -6815,10 +6841,17 @@ Lockfile:
       global "^4.3.0"
       react-proxy "^1.1.7"
   
+<<<<<<< HEAD
   react@^18.2.0:
     version "18.2.0"
     resolved "https://registry.yarnpkg.com/react/-/react-18.2.0.tgz#555bd98592883255fa00de14f1151a917b5d77d5"
     integrity sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==
+=======
+  react@18.1.0:
+    version "18.1.0"
+    resolved "https://registry.yarnpkg.com/react/-/react-18.1.0.tgz#6f8620382decb17fdc5cc223a115e2adbf104890"
+    integrity sha512-4oL8ivCz5ZEPyclFQXaNksK3adutVS8l2xzZU0cqEFrE9Sb7fC0EFK5uEk74wIreL1DERyjvsU915j1pcT2uEQ==
+>>>>>>> Nico
     dependencies:
       loose-envify "^1.1.0"
   

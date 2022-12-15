@@ -9,6 +9,9 @@ import { StatusBar } from "expo-status-bar";
 
 import users from "./reducers/users";
 import contacts from "./reducers/contacts";
+import Brouillon from "./screens/Brouillon";
+
+import TagsDefinition from "./components/TagsDefinition";
 
 const store = configureStore({
   reducer: { users, contacts},
@@ -28,5 +31,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     display: "flex",
+    backgroundColor : "blue",
+    justifyContent : "center",
+    alignItems : "center",
   },
 });
