@@ -9,6 +9,7 @@ import { StatusBar } from "expo-status-bar";
 
 import users from "./reducers/users";
 import contacts from "./reducers/contacts";
+import ProfileCreation from "./screens/ProfileCreation";
 
 const store = configureStore({
   reducer: { users, contacts},
