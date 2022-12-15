@@ -53,7 +53,7 @@ export default function PasswordScreen({ navigation }) {
   }
 
   const handleSubmit = () => {
-    console.log("je rentre");
+    // console.log("je rentre")
     if (Password1 === Password2) {
       console.log("route", user);
       fetch(`${backendAdress}/users/create`, {
@@ -67,8 +67,8 @@ export default function PasswordScreen({ navigation }) {
         .then((response) => response.json())
 
         .then((data) => {
-          console.log("je rerentre");
-          console.log(data);
+          // console.log("je rerentre")
+          // console.log(data);
           if (data.result) {
             dispatch(updateToken(data.token));
             navigation.navigate("ProfilCreation");

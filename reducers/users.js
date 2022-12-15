@@ -2,13 +2,13 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   value: {
-    name: "",
+    lastName: "",
     firstName: "",
     token: "",
     emailMain: "",
     emails: [],
     phones: [],
-    birthday: null,
+    dob: null,
     lastConnection: null,
   },
 };
@@ -41,8 +41,8 @@ export const usersSlice = createSlice({
       state.value.phones.push(action.payload);
     },
 
-    updateBirthday: (state, action) => {
-      state.value.birthday = action.payload;
+    updateDateOfBirth: (state, action) => {
+      state.value.dob = action.payload;
     },
 
     updateLastConnection: (state, action) => {
@@ -58,7 +58,7 @@ export const {
   updateFirstName,
   updateToken,
   addPhone,
-  updateBirthday,
+  updateDateOfBirth,
   updateLastConnection,
 } = usersSlice.actions;
 export default usersSlice.reducer;
