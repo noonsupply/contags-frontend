@@ -38,7 +38,7 @@ export default function PasswordScreen({ navigation }) {
     iconV = (
       <View>
         <Text style={styles.textInfoV}>Mots de passe indentique</Text>
-        <Entypo name="check" size={20} color="#00ff00" style={styles.icon} />
+        <Entypo name="check" size={20} color="#55cc55" style={styles.icon} />
       </View>
     );
   }
@@ -46,7 +46,7 @@ export default function PasswordScreen({ navigation }) {
     iconV = (
       <View>
         <Text style={styles.textInfoX}>Mots de passe différents</Text>
-        <Entypo name="cross" size={25} color="#ff0000" style={styles.icon} />
+        <Entypo name="cross" size={25} color="#dd3333" style={styles.icon} />
       </View>
     );
   }
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
   logo: {
     width: "80%",
     height: "30%",
-    top: 96,
+    top: "40%",
   },
   pass: {
     marginTop: "20%",
