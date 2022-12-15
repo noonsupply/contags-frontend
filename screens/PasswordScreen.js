@@ -17,7 +17,7 @@ import { useTogglePasswordVisibility } from "../module/useTogglePasswordVisibili
 import { useTogglePasswordVisibility2 } from "../module/useTogglePasswordVisibility2";
 import { updateToken } from "../reducers/users";
 
-const BACKEND_ADDRESS = "http://172.16.188.142:3000";
+const BACKEND_ADDRESS = "http://172.16.188.135:3000";
 
 export default function PasswordScreen({ navigation }) {
   const dispatch = useDispatch();
@@ -54,7 +54,7 @@ export default function PasswordScreen({ navigation }) {
   }
 
   const handleSubmit = () => {
-    console.log("je rentre")
+    
     if (Password1 === Password2) {
       fetch(`${BACKEND_ADDRESS}/users/create`, {
         method: "POST",
