@@ -17,7 +17,7 @@ import { useTogglePasswordVisibility } from "../module/useTogglePasswordVisibili
 import { useTogglePasswordVisibility2 } from "../module/useTogglePasswordVisibility2";
 import { updateToken } from "../reducers/users";
 
-const BACKEND_ADDRESS = "http://172.17.188.30:3000";
+const BACKEND_ADDRESS = "http://172.16.188.142:3000";
 
 export default function PasswordScreen({ navigation }) {
   const dispatch = useDispatch();
@@ -33,6 +33,8 @@ export default function PasswordScreen({ navigation }) {
     useTogglePasswordVisibility2();
   const [Password1, setPassword1] = useState("");
   const [Password2, setPassword2] = useState("");
+
+
 
   let iconV = null;
   if (Password1 === Password2 && Password1.length > 0) {
@@ -53,6 +55,7 @@ export default function PasswordScreen({ navigation }) {
   }
 
   const handleSubmit = () => {
+    console.log("je rentre")
     if (Password1 === Password2) {
       console.log("route", user);
       fetch(`${BACKEND_ADDRESS}/users/create`, {
@@ -62,13 +65,17 @@ export default function PasswordScreen({ navigation }) {
           emailMain: user.emailMain,
           password: Password1,
         }),
+        
       })
         .then((response) => response.json())
+        
         .then((data) => {
+          console.log("je rerentre")
           console.log(data);
           if (data.result) {
             dispatch(updateToken(data.token));
             navigation.navigate("ProfilCreation");
+            console.log("fin")
           }
         });
     }

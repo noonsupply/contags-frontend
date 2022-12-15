@@ -9,17 +9,18 @@ import { StatusBar } from "expo-status-bar";
 
 import users from "./reducers/users";
 import contacts from "./reducers/contacts";
+import ProfileCreation from "./screens/ProfileCreation";
 
 const store = configureStore({
-  reducer: { users, contacts },
-});
-
+  reducer: { users, contacts},
+ });
+ 
 export default function App() {
   return (
     <Provider store={store}>
-      <View style={styles.container}>
-        <MainNavigator />
-      </View>
+    <View style={styles.container}>
+    <MainNavigator />
+    </View>
     </Provider>
   );
 }
