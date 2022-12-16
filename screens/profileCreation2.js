@@ -36,8 +36,27 @@ export default function ProfileCreation({ navigation }) {
   const [firstName, setFirstName] = useState(null);
   const [lastName, setLastName] = useState(null);
   const [phoneNumber, setPhoneNumber] = useState(null);
-  const [validateTyping, setValidateTyping] = useState(false);
+  //   const [validateTyping, setValidateTyping] = useState(false);
   const [dob, setDob] = useState(null);
+
+  // DatePicker (date of birth => dob)
+
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+
+  let today = new Date();
+
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+  };
+
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
+
+  const handleConfirm = (date) => {
+    setDob(date);
+    hideDatePicker();
+  };
 
   // Alertes de remplissage des champs
 
@@ -75,7 +94,7 @@ export default function ProfileCreation({ navigation }) {
     </View>
   );
 
-  const allFieldsAreNotFilled = (
+  const allFieldsNotFilledAlert = (
     <View>
       <Text style={styles.alertMsg}>
         Veuillez indiquer toutes les informations demandées.
@@ -90,104 +109,97 @@ export default function ProfileCreation({ navigation }) {
 
   // Fonctions de vérification du remplissage des champs et de la sélection de date
 
-  const emptyFirstNameFieldCheck = () => {
-    if (!firstName) {
-      return firstNameFieldEmptyAlert;
-    }
-  };
+  //   const emptyFirstNameFieldCheck = () => {
+  //     if (!firstName) {
+  //       return firstNameFieldEmptyAlert;
+  //     }
+  //   };
 
-  const emptyLastNameFieldCheck = () => {
-    if (!lastName) {
-      return lastNameFieldEmptyAlert;
-    }
-  };
+  //   const emptyLastNameFieldCheck = () => {
+  //     if (!lastName) {
+  //       return lastNameFieldEmptyAlert;
+  //     }
+  //   };
 
-  const dobSelectionCheck = () => {
-    if (!dob) {
-      return dateOfBirthNotSelectedAlert;
-    }
-  };
+  //   const dobSelectionCheck = () => {
+  //     if (!dob) {
+  //       return dateOfBirthNotSelectedAlert;
+  //     }
+  //   };
 
-  const phoneNumberFieldCheck = () => {
-    if (!phoneNumber) {
-      return phoneNumberFieldEmptyAlert;
-    } else if (!regExPhoneNum.test(phoneNumber)) {
-      return phoneNumberWrongFormatAlert;
-    } else {
-    }
-  };
+  // Fonction Handle Submit
 
-  const areAllFieldsFilled = () => {
-    return allFieldsAreNotFilled;
-  };
-
-  // DatePicker (date of birth => dob)
-
-  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-
-  let today = new Date();
-
-  const showDatePicker = () => {
-    setDatePickerVisibility(true);
-  };
-
-  const hideDatePicker = () => {
-    setDatePickerVisibility(false);
-  };
-
-  const handleConfirm = (date) => {
-    setDob(date);
-    hideDatePicker();
-  };
-
-  // HANDLE SUBMIT
+  const allFieldsNotFilled = !firstName && !lastName && !dob && !phoneNumber;
 
   const handleSubmit = () => {
-    if (!firstName && !lastName && !dob && !phoneNumber) {
-      areAllFieldsFilled();
+    if (allFieldsNotFilled) {
+      return allFieldsNotFilledAlert;
+    } else if (!firstName) {
+      return firstNameFieldEmptyAlert;
+    } else if (!lastName) {
+      return lastNameFieldEmptyAlert;
+    } else if (!dob) {
+      return dateOfBirthNotSelectedAlert;
+    } else if (!phoneNumber) {
+      phoneNumberFieldEmptyAlert;
     } else {
-      setValidateTyping(true);
-      const formattedPhoneNumber = phoneNumber.split(" ").join("");
-      setPhoneNumber(formattedPhoneNumber);
+      phoneNumberFieldCheck();
+    }
+  };
 
-      if ((firstName, lastName, dob, formattedPhoneNumber)) {
-        fetch(`${BACKEND_ADDRESS}/users/completeProfile`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            token: user.token,
-            firstName: firstName,
-            lastName: lastName,
-            dob: dob,
-            phones: [
-              {
+  // Fonction de vérification du format du numéro de téléphone
+
+  const phoneNumberFieldCheck = () => {
+    if (!regExPhoneNum.test(phoneNumber)) {
+      return phoneNumberWrongFormatAlert;
+    } else {
+      movingToTagCreationScreen();
+    }
+  };
+
+  // Fonction de passage vers la screen suivante
+
+  const movingToTagCreationScreen = () => {
+    const formattedPhoneNumber = phoneNumber.split(" ").join("");
+    setPhoneNumber(formattedPhoneNumber);
+
+    if ((firstName, lastName, dob, formattedPhoneNumber)) {
+      fetch(`${BACKEND_ADDRESS}/users/completeProfile`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          token: user.token,
+          firstName: firstName,
+          lastName: lastName,
+          dob: dob,
+          phones: [
+            {
+              phoneType: "main",
+              number: formattedPhoneNumber,
+              country: null,
+              areaCode: null,
+            },
+          ],
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (date.result) {
+            dispatch(updateName(lastName));
+            dispatch(updateFirstName(firstName));
+            dispatch(
+              addPhone({
                 phoneType: "main",
                 number: formattedPhoneNumber,
                 country: null,
                 areaCode: null,
-              },
-            ],
-          }),
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            if (date.result) {
-              dispatch(updateName(lastName));
-              dispatch(updateFirstName(firstName));
-              dispatch(
-                addPhone({
-                  phoneType: "main",
-                  number: formattedPhoneNumber,
-                  country: null,
-                  areaCode: null,
-                })
-              );
-              dispatch(updateDateOfBirth(dob));
-            }
-          });
-      }
-      navigation.navigate("TagCreation");
+              })
+            );
+            dispatch(updateDateOfBirth(dob));
+          }
+        });
     }
+    navigation.navigate("TagCreation");
   };
 
   return (
@@ -219,7 +231,7 @@ export default function ProfileCreation({ navigation }) {
                   onChangeText={(e) => setFirstName(e)}
                   value={firstName}
                 ></TextInput>
-                {validateTyping && emptyFirstNameFieldCheck()}
+                {firstNameFieldEmptyAlert}
 
                 <Text style={styles.text}>Nom</Text>
                 <TextInput
@@ -228,7 +240,7 @@ export default function ProfileCreation({ navigation }) {
                   onChangeText={(e) => setLastName(e)}
                   value={lastName}
                 ></TextInput>
-                {validateTyping && emptyLastNameFieldCheck()}
+                {lastNameFieldEmptyAlert}
 
                 <Text style={styles.text}>Date de naissance</Text>
                 <View style={styles.datePickerContainer}>
@@ -244,6 +256,7 @@ export default function ProfileCreation({ navigation }) {
                     maximumDate={today}
                   />
                 </View>
+                {phoneNumberFieldEmptyAlert}
 
                 <Text style={styles.text}>Numéro de téléphone portable</Text>
                 <TextInput
@@ -252,8 +265,8 @@ export default function ProfileCreation({ navigation }) {
                   onChangeText={(e) => setPhoneNumber(e)}
                   value={phoneNumber}
                 ></TextInput>
-                {validateTyping && phoneNumberFieldCheck()}
-                {areAllFieldsFilled()}
+                {phoneNumberFieldCheck()}
+                {allFieldsNotFilledAlert}
               </View>
             </View>
 

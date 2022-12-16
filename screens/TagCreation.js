@@ -14,7 +14,7 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 export default function TagCreation({ navigation }) {
   const handleCreation = () => {
-    navigation.navigate("ProfilCreation");
+    navigation.navigate("ProfileCreation");
   };
 
   return (
