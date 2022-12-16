@@ -1,5 +1,4 @@
 import { StyleSheet, Text, View } from "react-native";
-import HomeLoadContact from "./screens/HomeLoadContact";
 import MainNavigator from "./navigation/MainNavigator";
 
 import { Provider } from "react-redux";
@@ -9,15 +8,11 @@ import { StatusBar } from "expo-status-bar";
 
 import users from "./reducers/users";
 import contacts from "./reducers/contacts";
-import Brouillon from "./screens/Brouillon";
-
-import TagsDefinition from "./components/TagsDefinition";
-import ProfileCreation from "./screens/ProfileCreation";
 
 const store = configureStore({
-  reducer: { users, contacts},
- });
- 
+  reducer: { users, contacts },
+});
+
 export default function App() {
   return (
     <Provider store={store}>
