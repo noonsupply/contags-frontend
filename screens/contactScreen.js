@@ -13,7 +13,7 @@ import { Entypo } from "@expo/vector-icons";
 
 export default function PasswordScreen({ navigation }) {
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView behavior="position" style={styles.container}>
       <View style={styles.caseHeader}>
         <View style={styles.header}>
           <FontAwesome name="chevron-left" size={20} color="#0031B8" />
@@ -66,6 +66,7 @@ export default function PasswordScreen({ navigation }) {
             <TextInput
               placeholder="Numéro pro"
               style={styles.inputPrenom}
+              keyboardType="phone-pad"
             ></TextInput>
           </View>
         </View>
@@ -98,7 +99,7 @@ export default function PasswordScreen({ navigation }) {
           </View>
         </View>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -112,7 +113,7 @@ const styles = StyleSheet.create({
   },
   header: {
     flexDirection: "row",
-    marginTop: "15%",
+    marginTop: "5%",
     justifyContent: "space-between",
     width: "90%",
   },

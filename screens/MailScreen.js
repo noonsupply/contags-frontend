@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 50,
-    marginTop: "270%",
+    marginBottom: "500%",
   },
   error: {
     color: "#ff0000",

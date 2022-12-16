@@ -36,17 +36,17 @@ export default function PasswordScreen({ navigation }) {
   let iconV = null;
   if (Password1 === Password2 && Password1.length > 0) {
     iconV = (
-      <View>
+      <View style={styles.Info}>
         <Text style={styles.textInfoV}>Mots de passe indentique</Text>
-        <Entypo name="check" size={20} color="#55cc55" style={styles.icon} />
+        <Entypo name="check" size={20} color="#21AC14" style={styles.icon} />
       </View>
     );
   }
   if (Password1 !== Password2 && Password1.length > 0) {
     iconV = (
-      <View>
+      <View style={styles.Info}>
         <Text style={styles.textInfoX}>Mots de passe différents</Text>
-        <Entypo name="cross" size={25} color="#dd3333" style={styles.icon} />
+        <Entypo name="cross" size={25} color="#D90000" style={styles.icon} />
       </View>
     );
   }
@@ -162,19 +162,20 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     alignItems: "center",
   },
+  Info: {
+    flexDirection: "row",
+  },
   textInfoV: {
-    color: "#ffffff",
-    marginLeft: 50,
-    color: "#00ff00",
+    marginLeft: "10%",
+    color: "#21AC14",
   },
   textInfoX: {
-    color: "#ffffff",
-    marginLeft: 50,
-    color: "#ff0000",
+    marginLeft: "10%",
+    color: "#D90000",
   },
   text: {
     color: "#0031B8",
-    marginLeft: "5%",
+    marginLeft: "10%",
     marginRight: "5%",
   },
   input: {
@@ -197,12 +198,12 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 5,
   },
   icon: {
-    marginLeft: 280,
+    marginLeft: 50,
   },
   caseButton: {
     flexWrap: "wrap",
     flexDirection: "row",
-    marginTop: "60%",
+    marginBottom: "100%",
     justifyContent: "space-between",
   },
   button: {
