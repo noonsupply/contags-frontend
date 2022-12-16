@@ -17,13 +17,12 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import users from "../reducers/users";
 
-const BACKEND_ADDRESS = "http://172.16.191.11:3000";
+const BACKEND_ADDRESS = "http://172.16.188.135:3000";
 
 export default function ProfileCreation({ navigation }) {
-
   // useSelector
 
-  const user = useSelector((state) => state.users.value)
+  const user = useSelector((state) => state.users.value);
 
   // Variables de useState
 
@@ -91,8 +90,6 @@ export default function ProfileCreation({ navigation }) {
   //   }
   // }
 
-
-
   const phoneNumberFieldCheck = () => {
     if (!phoneNumber) {
       return phoneNumberFieldEmptyAlert;
@@ -118,9 +115,9 @@ export default function ProfileCreation({ navigation }) {
   };
 
   const handleConfirm = (date) => {
-    console.log("LA DATE CHOISIE EST:", date)
+    console.log("LA DATE CHOISIE EST:", date);
     // console.log("LA DATE AVANT SETTER EST", date)
-    setDob(date)
+    setDob(date);
     // console.log("LA DATE APRES SETTER EST", date)
 
     hideDatePicker();
@@ -129,12 +126,12 @@ export default function ProfileCreation({ navigation }) {
   const handleSubmit = () => {
     // navigation.navigate("TagCreation");
 
-    console.log("LA DATE A TRANSMETTRE EST:", dob)
+    console.log("LA DATE A TRANSMETTRE EST:", dob);
 
     setValidateTyping(true);
     const formattedPhoneNumber = phoneNumber.split(" ").join("");
     setPhoneNumber(formattedPhoneNumber);
-    console.log(formattedPhoneNumber)
+    console.log(formattedPhoneNumber);
 
     if ((firstName, lastName)) {
       fetch(`${BACKEND_ADDRESS}/users/completeProfile`, {
@@ -154,7 +151,7 @@ export default function ProfileCreation({ navigation }) {
 
           // }
         });
-    };
+    }
   };
 
   return (

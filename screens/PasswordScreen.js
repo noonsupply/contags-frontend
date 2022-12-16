@@ -71,7 +71,7 @@ export default function PasswordScreen({ navigation }) {
           // console.log(data);
           if (data.result) {
             dispatch(updateToken(data.token));
-            navigation.navigate("ProfilCreation");
+            navigation.navigate("ProfileCreation");
             console.log("fin");
           }
         });
