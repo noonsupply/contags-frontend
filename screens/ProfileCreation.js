@@ -17,7 +17,7 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import users from "../reducers/users";
 
-const BACKEND_ADDRESS = "http://172.16.191.11:3000";
+const BACKEND_ADDRESS = "http://172.16.191.9:3000";
 
 export default function ProfileCreation({ navigation }) {
   // useSelector
@@ -152,15 +152,12 @@ export default function ProfileCreation({ navigation }) {
           firstName: firstName,
           lastName: lastName,
           dob: dob,
-          phones: formattedPhoneNumber,
+          // phones: formattedPhoneNumber,
         }),
       })
         .then((response) => response.json())
         .then((data) => {
           console.log("log de data indique:", data);
-          // if (data) {
-
-          // }
         });
     } else {
       // {allFieldsAreNotFilled()};

@@ -31,7 +31,7 @@ const MainNavigator = () => {
           component={PasswordScreen}
         />
         <Stack.Screen
-          name="ProfilCreation"
+          name="ProfileCreation"
           options={{ animationEnabled: true, header: () => null }}
           component={ProfileCreation}
         />
