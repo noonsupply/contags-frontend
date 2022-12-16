@@ -17,7 +17,7 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import users from "../reducers/users";
 
-const BACKEND_ADDRESS = "http://172.16.188.135:3000";
+const BACKEND_ADDRESS = "http://172.17.188.30:3000";
 
 export default function ProfileCreation({ navigation }) {
   // useSelector
