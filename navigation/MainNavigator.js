@@ -8,6 +8,7 @@ import PasswordScreen from "../screens/PasswordScreen";
 import ProfileCreation from "../screens/ProfileCreation";
 import TagCreation from "../screens/TagCreation";
 import HomeScreen from "../screens/HomeScreen";
+import contactScreen from "../screens/contactScreen";
 
 const Stack = createStackNavigator();
 
@@ -15,7 +16,7 @@ const MainNavigator = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Splash">
-        <Stack.Screen
+        {/* <Stack.Screen
           name="Splash"
           options={{ animationEnabled: false, header: () => null }}
           component={SplashScreen}
@@ -44,6 +45,11 @@ const MainNavigator = () => {
           name="Home"
           options={{ animationEnabled: true, header: () => null }}
           component={HomeScreen}
+        /> */}
+        <Stack.Screen
+          name="Contact"
+          options={{ animationEnabled: true, header: () => null }}
+          component={contactScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>
