@@ -7,13 +7,15 @@ import {
     Text,
     TouchableOpacity,
     View,
+    Modal,
 } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesomeIcon from '@expo/vector-icons'
 import { Entypo } from "@expo/vector-icons";
 //import 'font-awesome/css/font-awesome.min.css'
 import { useState } from "react";
-import Tag from "../components/Tag"
+import TagDelete from "./TagDelete";
+import Tag from "./Tag";
 
 const writeColor = "#0031B8"
 const theColors = {blueOne : "#2FBAE5", blueTwo :"#2F6DE5", green : "#21AC14", orange : "#E5712F", yellow : "#EDC808", red : "#D90000", pink : "#E52F92", purple : "#952FE5" }
@@ -50,9 +52,15 @@ function TagsDefinition(props) {
 
     };
 
+    // fonction permettant de supprimer un tag de listTags (donc de l'affichage)
+    const handleDeleteTag =(oneTag) => {
+        const newTagsList = listTags.filter(eltTag => eltTag.title !== oneTag.title);
+        setListTags(newTagsList);
+    };
+
     // affichage des tags à choisir
     const tagsChoiceDisplay = Object.keys(theColors).map((keyColor,index)=>{
-        return (<TouchableOpacity activeOpacity={0.8} style = {{width : "50%"}} onPress={() => handlePressColor(theColors[keyColor])}>
+        return (<TouchableOpacity activeOpacity={0.8} style = {{width : "50%", justifyContent : "center"}} onPress={() => handlePressColor(theColors[keyColor])}>
                     <Tag tag= {{title : inputTag, color : theColors[keyColor], border:"none"}} key={index}/>
                 </TouchableOpacity>)
     })
@@ -63,7 +71,7 @@ function TagsDefinition(props) {
     let tagValidateDisplay = <View><Text style={{color : writeColor}}>Pas de tag crée pour l'instant</Text></View>
     if(listTags.length>0){
         tagValidateDisplay = listTags.map((eltTag, index)=> {
-            return <Tag tag= {eltTag} key={index}/>
+            return (<TagDelete tag= {eltTag} key={index} handleDeleteTag={handleDeleteTag}/>)
         })
     } 
 
@@ -113,6 +121,7 @@ function TagsDefinition(props) {
                 </TouchableOpacity> 
             </View>
         </SafeAreaView>
+        
     );
   }
 
@@ -139,15 +148,16 @@ const styles = StyleSheet.create({
     closeContainer:{
         width:"100%",
         flexDirection : "row",
-        justifyContent : "flex-end",
+        justifyContent : "space-around",
         alignItems : "center",
         marginBottom : 0,
-        paddingLeft : 20,
+        marginLeft:5,
         paddingRight : 5,
     },
 
     closeIcon : {
-        marginleft : 5,
+        marginleft : 15,
+        paddingRight:5,
     },
    
     //  ETAPE 1
@@ -186,8 +196,8 @@ const styles = StyleSheet.create({
         justifyContent: "flex-start",
         marginBottom: 5,
         marginTop: 5,
-        paddingLeft: 10,
-        paddingRight: 10,
+        paddingLeft: 0,
+        paddingRight: 0,
     },
     
     // ETAPE 3 

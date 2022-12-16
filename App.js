@@ -12,6 +12,8 @@ import contacts from "./reducers/contacts";
 import Brouillon from "./screens/Brouillon";
 
 import TagsDefinition from "./components/TagsDefinition";
+import SplashScreen from "./screens/SplashScreen";
+import MailScreen from "./screens/MailScreen";
 
 const store = configureStore({
   reducer: { users, contacts },
@@ -20,11 +22,11 @@ const store = configureStore({
 export default function App() {
   return (
     <Provider store={store}>
-      <View style={styles.container}>
-        {/* <MainNavigator /> */}
-        {/* <Brouillon /> */}
-        <TagsDefinition />
-      </View>
+      
+          {/* <MainNavigator />  */}
+        <Brouillon /> 
+        {/* <SplashScreen /> */}
+        {/* <MailScreen />  */}
     </Provider>
   );
 }

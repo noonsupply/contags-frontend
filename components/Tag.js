@@ -18,10 +18,7 @@ function Tag(props) {
                         props.tag.color !== "white"?{color : "#FFFFFF"} : {color : props.tag.border}]}>
             {props.tag.title || "Nom du tag"}
             </Text>
-            <TouchableOpacity activeOpacity={0.8} onPress={() => handleClose()}>
-                <Entypo name="cross" size={25} color= "#0031B8" />
-                </TouchableOpacity>
-    </View>
+         </View>
     );
 
 }
