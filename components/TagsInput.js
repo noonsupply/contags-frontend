@@ -1,8 +1,6 @@
 import { View, Text, StyleSheet, TouchableOpacity, TextInput} from 'react-native';
 import { useState, useEffect } from 'react';
 
-import { addContact, addTags } from '../reducers/contacts';
-import { useDispatch } from 'react-redux';
 
 function TagsInput(props) {
     const [tags, setTags] = useState(props.tags);
