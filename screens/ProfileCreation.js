@@ -39,11 +39,13 @@ export default function ProfileCreation({ navigation }) {
       <Text style={styles.alertMsg}>Veuillez saisir un prénom</Text>
     </View>
   );
+
   const lastNameFieldEmptyAlert = (
     <View>
       <Text style={styles.alertMsg}>Veuillez saisir un nom</Text>
     </View>
   );
+
   const dateOfBirthNotSelectedAlert = (
     <View>
       <Text style={styles.alertMsg}>
@@ -51,6 +53,7 @@ export default function ProfileCreation({ navigation }) {
       </Text>
     </View>
   );
+
   const phoneNumberFieldEmptyAlert = (
     <View>
       <Text style={styles.alertMsg}>
@@ -62,6 +65,14 @@ export default function ProfileCreation({ navigation }) {
   const phoneNumberWrongFormatAlert = (
     <View>
       <Text style={styles.alertMsg}>Mauvais format de numéro de téléphone</Text>
+    </View>
+  );
+
+  const allFieldsAreNotFilled = (
+    <View>
+      <Text style={styles.alertMsg}>
+        Veuillez indiquer toutes les informations demandées.
+      </Text>
     </View>
   );
 
@@ -84,11 +95,11 @@ export default function ProfileCreation({ navigation }) {
     }
   };
 
-  // const dobSelectionCheck = () => {
-  //   if (!dob) {
-  //     return dateOfBirthNotSelectedAlert;
-  //   }
-  // }
+  const dobSelectionCheck = () => {
+    if (!dob) {
+      return dateOfBirthNotSelectedAlert;
+    }
+  };
 
   const phoneNumberFieldCheck = () => {
     if (!phoneNumber) {
@@ -96,11 +107,16 @@ export default function ProfileCreation({ navigation }) {
     } else if (!regExPhoneNum.test(phoneNumber)) {
       return phoneNumberWrongFormatAlert;
     } else {
-      // console.warn("phoneNumber sent to DB: ", phoneNumber)
     }
   };
 
-  // DatePicker (date of birth)
+  // const allFieldsFilledCheck = () => {
+  //   if(!firstName || !lastName || !dob || !phoneNumber) {
+  //     return allFieldsAreNotFilled
+  //   }
+  // }
+
+  // DatePicker (date of birth => dob)
 
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
@@ -115,25 +131,19 @@ export default function ProfileCreation({ navigation }) {
   };
 
   const handleConfirm = (date) => {
-    console.log("LA DATE CHOISIE EST:", date);
-    // console.log("LA DATE AVANT SETTER EST", date)
     setDob(date);
-    // console.log("LA DATE APRES SETTER EST", date)
-
     hideDatePicker();
   };
 
+  // HANDLE SUBMIT
+
   const handleSubmit = () => {
     // navigation.navigate("TagCreation");
-
-    console.log("LA DATE A TRANSMETTRE EST:", dob);
-
     setValidateTyping(true);
     const formattedPhoneNumber = phoneNumber.split(" ").join("");
     setPhoneNumber(formattedPhoneNumber);
-    console.log(formattedPhoneNumber);
 
-    if ((firstName, lastName)) {
+    if ((firstName, lastName, dob)) {
       fetch(`${BACKEND_ADDRESS}/users/completeProfile`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -142,15 +152,15 @@ export default function ProfileCreation({ navigation }) {
           firstName: firstName,
           lastName: lastName,
           dob: dob,
+          // phones: formattedPhoneNumber,
         }),
       })
         .then((response) => response.json())
         .then((data) => {
           console.log("log de data indique:", data);
-          // if (data) {
-
-          // }
         });
+    } else {
+      // {allFieldsAreNotFilled()};
     }
   };
 
@@ -208,7 +218,6 @@ export default function ProfileCreation({ navigation }) {
                     maximumDate={today}
                   />
                 </View>
-                {/* {dobSelectionCheck()} */}
 
                 <Text style={styles.text}>Numéro de téléphone portable</Text>
                 <TextInput
@@ -218,13 +227,11 @@ export default function ProfileCreation({ navigation }) {
                   value={phoneNumber}
                 ></TextInput>
                 {validateTyping && phoneNumberFieldCheck()}
+                {/* {allFieldsFilledCheck()} */}
               </View>
             </View>
 
             <View style={styles.navigationContainer}>
-              {/* <TouchableOpacity style={styles.btnBack}>
-              <FontAwesome color="#FFFFFF" name="chevron-left" />
-            </TouchableOpacity> */}
               <TouchableOpacity
                 style={styles.btnForward}
                 onPress={() => handleSubmit()}

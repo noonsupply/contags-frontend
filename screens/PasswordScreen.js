@@ -17,7 +17,7 @@ import { useTogglePasswordVisibility } from "../module/useTogglePasswordVisibili
 import { useTogglePasswordVisibility2 } from "../module/useTogglePasswordVisibility2";
 import { updateToken } from "../reducers/users";
 
-const backendAdress = "http://172.17.188.30:3000";
+const backendAdress = "http://172.16.191.9:3000";
 
 export default function PasswordScreen({ navigation }) {
   const dispatch = useDispatch();
