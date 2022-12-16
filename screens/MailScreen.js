@@ -79,19 +79,19 @@ const styles = StyleSheet.create({
   logo: {
     width: "80%",
     height: "30%",
-    top: 96,
+    top: "40%",
   },
   inputText: {
     marginTop: "30%",
-    marginLeft: 25,
-    marginRight: 25,
+    marginLeft: "10%",
+    marginRight: "10%",
   },
   text: {
     color: "#0031B8",
-    marginBottom: 10,
+    marginBottom: "1%",
   },
   input: {
-    height: 60,
+    height: "22%",
     borderRadius: 5,
     paddingLeft: 15,
     borderRadius: 5,
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 50,
-    marginTop: 275,
+    marginBottom: "500%",
   },
   error: {
     color: "#ff0000",
