@@ -8,6 +8,8 @@ import { StatusBar } from "expo-status-bar";
 
 import users from "./reducers/users";
 import contacts from "./reducers/contacts";
+import SplashScreen from "./screens/SplashScreen";
+import MailScreen from "./screens/MailScreen";
 
 const store = configureStore({
   reducer: { users, contacts },
