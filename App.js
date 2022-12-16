@@ -18,16 +18,9 @@ const store = configureStore({
 export default function App() {
   return (
     <Provider store={store}>
-    <View style={styles.container}>
+
     <MainNavigator />
-    </View>
+
     </Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    display: "flex",
-  },
-});
