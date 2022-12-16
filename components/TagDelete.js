@@ -4,7 +4,7 @@ import { Entypo } from "@expo/vector-icons";
 
 
 
-// la props correspondant à un objet tag
+// la props contient un objet tag et une fonction handleDeleteTag qui sert à supprimer le tag
 function TagDelete(props) {
 
   

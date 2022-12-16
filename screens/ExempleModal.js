@@ -13,12 +13,21 @@ import FontAwesomeIcon from '@expo/vector-icons'
 import { Entypo } from "@expo/vector-icons";
 //import 'font-awesome/css/font-awesome.min.css'
 import { useState } from "react";
-import Tag from "../components/TagDelete"
+import { useSelector } from 'react-redux';
+
 import TagsDefinition from "../components/TagsDefinition";
 
-export default function Brouillon() {
+export default function ExempleModal() {
   const [modalVisible, setModalVisible] = useState(false);
 
+  const contacts = useSelector((state) => state.contacts.value);
+  const users = useSelector((state) => state.users.value);
+
+  const handleCloseModal =() =>{
+    setModalVisible(false);
+  }
+  
+  console.log('tags', contacts[2].tags)
   return (
     <View style={styles.container}>
         {/* <TagsDefinition /> */}
@@ -30,7 +39,11 @@ export default function Brouillon() {
           Alert.alert("Modal has been closed.");
           setModalVisible(!modalVisible);
         }}
-      ><View style={styles.modalContainer}><TagsDefinition /></View>
+      ><View style={styles.modalContainer}>
+        <TagsDefinition handleCloseModal={handleCloseModal} 
+                        contact={{"name":"Patulacci","firstName":"Yannick","emails":[{type : 'personnal', email : "Yannick@gmail.com" }],"phones": [{type : 'mobile', number :"0714861783"}],"birthday":"2022-12-12T11:18:57.844Z","tags":[],"contactedTimesCounter":{"phoneCounter":1,"smsCounter":12,"emailCounter":6}}}
+                        user={null}
+      /></View>
       </Modal>
         <Pressable
         style={[styles.button, styles.buttonOpen]}
@@ -55,10 +68,10 @@ const styles = StyleSheet.create({
   },
 
   modalContainer: {
-    backgroundColor : "yellow",
     width: "90%",
-    height: "90%",
+    height: "95%",
     alignItems : "center",
+    marginTop:10,
   },
 
   button: {

@@ -9,7 +9,7 @@ import { StatusBar } from "expo-status-bar";
 
 import users from "./reducers/users";
 import contacts from "./reducers/contacts";
-import Brouillon from "./screens/Brouillon";
+import ExempleModal from "./screens/ExempleModal";
 
 import TagsDefinition from "./components/TagsDefinition";
 import SplashScreen from "./screens/SplashScreen";
@@ -24,7 +24,7 @@ export default function App() {
     <Provider store={store}>
       
           {/* <MainNavigator />  */}
-        <Brouillon /> 
+        <ExempleModal /> 
         {/* <SplashScreen /> */}
         {/* <MailScreen />  */}
     </Provider>
