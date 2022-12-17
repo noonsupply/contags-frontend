@@ -9,6 +9,7 @@ import { StatusBar } from "expo-status-bar";
 
 import users from "./reducers/users";
 import contacts from "./reducers/contacts";
+import ExempleSearchBar from "./screens/ExempleSearchBar";
 import ExempleModal from "./screens/ExempleModal";
 
 import TagsDefinition from "./components/TagsDefinition";
@@ -24,9 +25,8 @@ export default function App() {
     <Provider store={store}>
       
           {/* <MainNavigator />  */}
-        <ExempleModal /> 
-        {/* <SplashScreen /> */}
-        {/* <MailScreen />  */}
+        {/* <ExempleModal />  */}
+          <ExempleSearchBar />
     </Provider>
   );
 }

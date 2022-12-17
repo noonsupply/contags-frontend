@@ -4,11 +4,10 @@ import { Entypo } from "@expo/vector-icons";
 
 // la props correspondant à un objet tag
 function Tag(props) {
-    if(props.tag.border !== "none"){
 
-    }
     return (
         <View style={[
+                    {width:props.size},
                     {backgroundColor: props.tag.color},
                     props.tag.border !== "none"? {borderWidth : 2} : {borderWidth : 0},
                     props.tag.border !== "none"? {borderColor : props.tag.border} : {borderColor : 'white'},
@@ -29,7 +28,6 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         flexShrink: 1,
         height: 30,
-        width : 102,
         justifyContent: "center",
         // marginBottom: 8,
         marginLeft: 10,

@@ -25,6 +25,7 @@
     "react": "18.1.0",
     "react-dom": "18.1.0",
     "react-native": "0.70.5",
+    "react-native-autocomplete-dropdown": "^2.1.0",
     "react-native-datepicker": "^1.7.2",
     "react-native-gesture-handler": "^2.8.0",
     "react-native-loading-gif": "^1.1.3",

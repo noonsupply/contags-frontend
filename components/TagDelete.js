@@ -12,9 +12,14 @@ function TagDelete(props) {
       props.handleDeleteTag(props.tag);
   };
 
-
+  // gestion de la taille du tag le *10 vient de la police et de la fontsize
+  let theWidth=102;
+  if(props.tag.title){
+    theWidth = props.tag.title.length*10;
+  }
     return (
-          <View style = {styles.container}>
+          <View style = {[styles.container,
+                         {width: theWidth}]}>
             <View style={[
                     {backgroundColor: props.tag.color},
                     props.tag.border !== "none"? {borderWidth : 2} : {borderWidth : 0},
@@ -48,7 +53,6 @@ const styles = StyleSheet.create({
       justifyContent : "flex-end",
       alignItems : "flex-start",
       height: 30,
-      width:102,
     },
 
     form: {
@@ -66,7 +70,7 @@ const styles = StyleSheet.create({
         marginBottom : 0,
         paddingLeft: 12,
         paddingRight: 12,
-        width:"100%",
+        // width:"100%",
         //backgroundColor : "#D90000", //props.tag.color ,
       },
 

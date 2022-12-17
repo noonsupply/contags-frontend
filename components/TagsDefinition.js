@@ -78,11 +78,11 @@ function TagsDefinition(props) {
     // affichage des tags à choisir
     const tagsChoiceDisplay = Object.keys(theColors).map((keyColor,index)=>{
         return (<TouchableOpacity activeOpacity={0.8} style = {{width : "50%", justifyContent : "center"}} onPress={() => handlePressColor(theColors[keyColor])}>
-                    <Tag tag= {{title : inputTag, color : theColors[keyColor], border:"none"}} key={index}/>
+                    <Tag tag= {{title : inputTag, color : theColors[keyColor], border:"none"}} size={"80%"} key={index}/>
                 </TouchableOpacity>)
     })
     tagsChoiceDisplay.unshift(<TouchableOpacity activeOpacity={0.8} style = {{width : "50%"}} onPress={() => handlePressColorBlank()}>
-                                <Tag tag= {{title : inputTag, color : "white", border:"#0031B8"}} key = {50} /></TouchableOpacity>)
+                                <Tag tag= {{title : inputTag, color : "white", border:"#0031B8"}} size={"80%"} key = {50} /></TouchableOpacity>)
 
     // affichage des tags crées
     let tagValidateDisplay = <View><Text style={{color : writeColor}} key={0}>Pas de tag crée pour l'instant</Text></View>
