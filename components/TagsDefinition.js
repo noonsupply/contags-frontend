@@ -1,37 +1,50 @@
 import React from "react";
 import {
     TextInput,
+    KeyboardAvoidingView,
     SafeAreaView,
     ScrollView,
     StyleSheet,
     Text,
     TouchableOpacity,
     View,
+    Modal,
 } from 'react-native';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import FontAwesomeIcon from '@expo/vector-icons'
+// import FontAwesome from 'react-native-vector-icons/FontAwesome';
+// import FontAwesomeIcon from '@expo/vector-icons'
 import { Entypo } from "@expo/vector-icons";
 //import 'font-awesome/css/font-awesome.min.css'
 import { useState } from "react";
-import Tag from "../components/Tag"
+import { useDispatch } from "react-redux";
+
+import { updateTags } from "../reducers/contacts";
+import { updateTagsPerso } from "../reducers/users";
+
+import TagDelete from "./TagDelete";
+import Tag from "./Tag";
 
 const writeColor = "#0031B8"
 const theColors = {blueOne : "#2FBAE5", blueTwo :"#2F6DE5", green : "#21AC14", orange : "#E5712F", yellow : "#EDC808", red : "#D90000", pink : "#E52F92", purple : "#952FE5" }
 
 
-// la props contient le user ou le contact
+// la props contient :
+//                     une fonction handleCloseModal qui permet de fermer la modal contenant ce composant
+//                     un objet user qui prend null si non concerné
+//                     un objet contact qui prend null si non concerné
 function TagsDefinition(props) {
     const [inputTag, setInputTag] = useState("");
     const [listTags, setListTags] = useState([]);
 
+    const dispatch = useDispatch();
+
     // fonctions gérant le click sur les couleurs
     const handlePressColor= (colorClick) => {
-        setListTags([...listTags,{title :inputTag, color : colorClick  , border :"none"}]);
+        setListTags([...listTags,{title :inputTag.trim(), color : colorClick  , border :"none"}]); //.trim() permet d'éviter les espaces ajouter par inadvertance
         setInputTag("");
     };
 
     const handlePressColorBlank= () => {
-        setListTags([...listTags,{title :inputTag, color : "white", border:"#0031B8"}]);
+        setListTags([...listTags,{title :inputTag.trim(), color : "white", border:"#0031B8"}]);
         setInputTag("");
     };
 
@@ -39,36 +52,48 @@ function TagsDefinition(props) {
     const handleClose= () => {
         setListTags([]);
         setInputTag("");
-        // fermeture de la modale à faire
+        props.handleCloseModal();
     };
 
     // fonction gérant la validation des tags
     const handleValidate= () => {
-        // on enregistre en DB dans le contact récupéré grâce à la props
+        // on enregistre dans le bon reducer
+        if(props.user !== null || props.user=== undefined){
+            dispatch(updateTagsPerso({tagsPerso: listTags}));
+        }
+        if(props.contact !== null || props.contact === undefined){
+            dispatch(updateTags({contact : props.contact, tags: listTags}));
+        }
+        
+        props.handleCloseModal();
+    };
 
-        // si ok on enregistre dans le réducer
 
+    // fonction permettant de supprimer un tag de listTags (donc de l'affichage)
+    const handleDeleteTag =(oneTag) => {
+        const newTagsList = listTags.filter(eltTag => eltTag.title !== oneTag.title);
+        setListTags(newTagsList);
     };
 
     // affichage des tags à choisir
     const tagsChoiceDisplay = Object.keys(theColors).map((keyColor,index)=>{
-        return (<TouchableOpacity activeOpacity={0.8} style = {{width : "50%"}} onPress={() => handlePressColor(theColors[keyColor])}>
-                    <Tag tag= {{title : inputTag, color : theColors[keyColor], border:"none"}} key={index}/>
+        return (<TouchableOpacity activeOpacity={0.8} style = {{width : "50%", justifyContent : "center"}} onPress={() => handlePressColor(theColors[keyColor])}>
+                    <Tag tag= {{title : inputTag, color : theColors[keyColor], border:"none"}} size={"80%"} key={index}/>
                 </TouchableOpacity>)
     })
     tagsChoiceDisplay.unshift(<TouchableOpacity activeOpacity={0.8} style = {{width : "50%"}} onPress={() => handlePressColorBlank()}>
-                                <Tag tag= {{title : inputTag, color : "white", border:"#0031B8"}} key = {50} /></TouchableOpacity>)
+                                <Tag tag= {{title : inputTag, color : "white", border:"#0031B8"}} size={"80%"} key = {50} /></TouchableOpacity>)
 
     // affichage des tags crées
-    let tagValidateDisplay = <View><Text style={{color : writeColor}}>Pas de tag crée pour l'instant</Text></View>
+    let tagValidateDisplay = <View><Text style={{color : writeColor}} key={0}>Pas de tag crée pour l'instant</Text></View>
     if(listTags.length>0){
         tagValidateDisplay = listTags.map((eltTag, index)=> {
-            return <Tag tag= {eltTag} key={index}/>
+            return (<TagDelete tag= {eltTag} key={index} handleDeleteTag={handleDeleteTag}/>)
         })
     } 
 
     return (
-        <SafeAreaView style={styles.container}>
+        <KeyboardAvoidingView style={styles.container}>
             <View style={styles.closeContainer}>
             <Text style={styles.titles}>C'est parti pour rajouter des tags au contact :</Text><View style={styles.closeIcon} >
             <TouchableOpacity activeOpacity={0.8} onPress={() => handleClose()}>
@@ -112,7 +137,8 @@ function TagsDefinition(props) {
                 <Text style={{color : writeColor }}>Valider</Text>
                 </TouchableOpacity> 
             </View>
-        </SafeAreaView>
+        </KeyboardAvoidingView >
+        
     );
   }
 
@@ -120,8 +146,8 @@ const styles = StyleSheet.create({
 
     container: {
       //flex: 1,
-        height: 550,
-        width: "80%",
+        height: "100%",
+        width: "90%",
         alignItems: 'flex-start',
         backgroundColor: 'white',
         padding : 5,
@@ -139,15 +165,16 @@ const styles = StyleSheet.create({
     closeContainer:{
         width:"100%",
         flexDirection : "row",
-        justifyContent : "flex-end",
+        justifyContent : "space-around",
         alignItems : "center",
         marginBottom : 0,
-        paddingLeft : 20,
+        marginLeft:5,
         paddingRight : 5,
     },
 
     closeIcon : {
-        marginleft : 5,
+        marginleft : 15,
+        paddingRight:5,
     },
    
     //  ETAPE 1
@@ -184,10 +211,10 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         flexWrap: "wrap",
         justifyContent: "flex-start",
-        marginBottom: 5,
-        marginTop: 5,
-        paddingLeft: 10,
-        paddingRight: 10,
+        marginBottom: 0,
+        marginTop: 0,
+        paddingLeft: 0,
+        paddingRight: 0,
     },
     
     // ETAPE 3 

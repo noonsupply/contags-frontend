@@ -10,6 +10,8 @@ import { StatusBar } from "expo-status-bar";
 import users from "./reducers/users";
 import contacts from "./reducers/contacts";
 import Brouillon from "./screens/Brouillon";
+import ExempleModal from "./screens/ExempleModal";
+import ExempleSearchBar from "./screens/ExempleSearchBar";
 
 import TagsDefinition from "./components/TagsDefinition";
 import ProfileCreation from "./screens/ProfileCreation";
@@ -21,7 +23,10 @@ const store = configureStore({
 export default function App() {
   return (
     <Provider store={store}>
-    <MainNavigator />
+    {/* <MainNavigator /> */}
+    {/* <ExempleModal /> */}
+    <ExempleSearchBar />
+    {/* <Brouillon /> */}
     </Provider>
   );
 }
