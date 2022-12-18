@@ -21,9 +21,7 @@ const store = configureStore({
 export default function App() {
   return (
     <Provider store={store}>
-    <View style={styles.container}>
     <MainNavigator />
-    </View>
     </Provider>
   );
 }
