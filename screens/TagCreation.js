@@ -1,5 +1,5 @@
 import React from "react";
-// import { StatusBar } from "expo-status-bar";
+import { useSelector, useDispatch } from "react-redux";
 import {
   Image,
   Text,
@@ -9,93 +9,133 @@ import {
   StyleSheet,
   TouchableOpacity,
   View,
+  KeyboardAvoidingView,
 } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import users from "../reducers/users";
 
 export default function TagCreation({ navigation }) {
-  const handleCreation = () => {
+  const handleSubmit = () => {
+    navigation.navigate("contactScreen");
+  };
+
+  const handleReturn = () => {
     navigation.navigate("ProfileCreation");
+  };
+
+  function UserFirstName() {
+    const userFirstName = useSelector((state) => state.users.value.firstName);
+    console.log("Le PRENOM de l'utilisateur est:", userFirstName);
+    return (
+      <View style={styles.tagFullDarkBlue}>
+        <Text style={styles.tagTextWhite}>{userFirstName}</Text>
+      </View>
+    );
   }
 
+  function UserLastName() {
+    const userLastName = useSelector((state) => state.users.value.name);
+    console.log("Le NOM de l'utilisateur est:", userLastName);
+    return (
+      <View style={styles.tagFullDarkBlue}>
+        <Text style={styles.tagTextWhite}>{userLastName}</Text>
+      </View>
+    );
+  }
+
+  function UserPhoneNumber() {
+    const userPhoneNumber = useSelector((state) => state.users.value.phones[0].number);
+    console.log("Le NUMERO DE TEL de l'utilisateur est:", userPhoneNumber);
+    return (
+      <View style={styles.tagFullDarkBlue}>
+        <Text style={styles.tagTextWhite}>{userPhoneNumber}</Text>
+      </View>
+    );
+  }
+
+  function UserMainEmail() {
+    const userMainEmail = useSelector((state) => state.users.value.emailMain);
+    console.log("Le MAIL de l'utilisateur est:", userMainEmail);
+    return (
+      <View style={styles.tagFullDarkBlue}>
+        <Text style={styles.tagTextWhite}>{userMainEmail}</Text>
+      </View>
+    );
+  }
 
   return (
     <SafeAreaView style={styles.safeAreaView}>
-            <StatusBar backgroundColor={"#FFFFFF"} barStyle={"dark-content"} />
+      <StatusBar backgroundColor={"#FFFFFF"} barStyle={"dark-content"} />
 
       <ScrollView style={styles.scrollView}>
-        <View style={styles.globalContainer}>
-          <View style={styles.logoContainer}>
-            <Image
-              style={styles.logo}
-              source={require("../assets/contags_logo_white.png")}
-            />
+        <KeyboardAvoidingView>
+          <View style={styles.globalContainer}>
+            <View style={styles.mainContainer}>
+              <View style={styles.textContainer}>
+                <Text style={styles.text}>
+                  Vos données essentielles ont été transformées en tags :
+                </Text>
+              </View>
+
+              <View style={styles.tagContainer}>
+                <UserFirstName />
+                <UserLastName />
+                <UserPhoneNumber />
+                <UserMainEmail />
+              </View>
+
+              <View style={styles.textContainer}>
+                <Text style={styles.text}>
+                  Sélectionnez des tags qui vous correspondent parmi les
+                  propositions ou ajoutez directement des tags personnalisés :
+                </Text>
+              </View>
+
+              <View style={styles.tagContainer}>
+                <View style={styles.tagFullYellow}>
+                  <Text style={styles.tagTextWhite}>🥐 Pâtisserie</Text>
+                </View>
+                <View style={styles.tagFullPurple}>
+                  <Text style={styles.tagTextWhite}>🍷 Vin</Text>
+                </View>
+                <View style={styles.tagFullGreen}>
+                  <Text style={styles.tagTextWhite}>⚽ Football</Text>
+                </View>
+                <View style={styles.tagFullBlack}>
+                  <Text style={styles.tagTextWhite}>
+                    🃏 Magic: the Gathering
+                  </Text>
+                </View>
+                <View style={styles.tagFullGray}>
+                  <Text style={styles.tagTextWhite}>🖥️ Informatique</Text>
+                </View>
+              </View>
+            </View>
+
+            <View style={styles.navigationContainer}>
+              <TouchableOpacity
+                style={styles.btnBack}
+                onPress={() => handleReturn()}
+              >
+                <FontAwesome color="#FFFFFF" name="chevron-left" />
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={styles.btnSkip}
+                onPress={() => handleSubmit()}
+              >
+                <Text style={styles.btnText}>Passer cette étape</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={styles.btnForward}
+                onPress={() => handleSubmit()}
+              >
+                <FontAwesome color="#FFFFFF" name="chevron-right" />
+              </TouchableOpacity>
+            </View>
           </View>
-
-          <View style={styles.mainContainer}>
-            <View style={styles.textContainer}>
-              <Text style={styles.text}>
-                Vos données essentielles ont été transformées en tags :
-              </Text>
-            </View>
-
-            <View style={styles.tagContainer}>
-              <View style={styles.tagFullDarkBlue}>
-                <Text style={styles.tagTextWhite}>Jean</Text>
-              </View>
-              <View style={styles.tagFullDarkBlue}>
-                <Text style={styles.tagTextWhite}>Dupont</Text>
-              </View>
-              <View style={styles.tagFullDarkBlue}>
-                <Text style={styles.tagTextWhite}>06 01 02 03 04</Text>
-              </View>
-              <View style={styles.tagFullDarkBlue}>
-                <Text style={styles.tagTextWhite}>prenom.nom@domain.com</Text>
-              </View>
-            </View>
-
-            <View style={styles.textContainer}>
-              <Text style={styles.text}>
-                Sélectionnez des tags qui vous correspondent parmi les
-                propositions ou ajoutez directement des tags personnalisés :{" "}
-              </Text>
-            </View>
-
-            <View style={styles.tagContainer}>
-              <View style={styles.tagFullYellow}>
-                <Text style={styles.tagTextWhite}>🥐 Pâtisserie</Text>
-              </View>
-              <View style={styles.tagFullPurple}>
-                <Text style={styles.tagTextWhite}>🍷 Vin</Text>
-              </View>
-              <View style={styles.tagFullGreen}>
-                <Text style={styles.tagTextWhite}>⚽ Football</Text>
-              </View>
-              <View style={styles.tagFullBlack}>
-                <Text style={styles.tagTextWhite}>🃏 Magic: the Gathering</Text>
-              </View>
-              <View style={styles.tagFullGray}>
-                <Text style={styles.tagTextWhite}>🖥️ Informatique</Text>
-              </View>
-            </View>
-          </View>
-
-          <View style={styles.navigationContainer}>
-            <TouchableOpacity
-              style={styles.btnBack}
-              onPress={() => handleCreation()}
-            >
-              <FontAwesome color="#FFFFFF" name="chevron-left" />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.btnSkip}>
-              <Text style={styles.btnText}>Passer cette étape</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.btnForward}>
-              <FontAwesome color="#FFFFFF" name="chevron-right" />
-            </TouchableOpacity>
-          </View>
-
-          <StatusBar backgroundColor={"#0031B8"} />
-        </View>
+        </KeyboardAvoidingView>
       </ScrollView>
     </SafeAreaView>
   );
@@ -117,35 +157,22 @@ const styles = StyleSheet.create({
 
   globalContainer: {
     flex: 1,
-  },
-
-  // Logo
-
-  logoContainer: {
-    alignItems: "center",
-    justifyContent: "center",
-    // backgroundColor: "red",
-    height: "20%",
-  },
-
-  logo: {
-    height: 120,
-    width: 335,
+    paddingVertical: 25,
   },
 
   // Main
 
   mainContainer: {
-    // backgroundColor: "green",
-    height: "70%",
+    backgroundColor: "green",
+    height: "90%",
+    paddingVertical: 25,
   },
 
   // Text
 
   textContainer: {
-    paddingLeft: 25,
-    paddingRight: 25,
-    // backgroundColor: "maroon",
+    marginHorizontal: 25,
+    backgroundColor: "maroon",
   },
 
   text: {
@@ -402,14 +429,15 @@ const styles = StyleSheet.create({
   // Navigation
 
   navigationContainer: {
-    // backgroundColor: "orange",
-    height: "10%",
-    paddingVertical: 10,
+    backgroundColor: "orange",
+    height: "20%",
+    // paddingVertical: 10,
     flexWrap: "wrap",
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingLeft: 25,
-    paddingRight: 25,
+    // alignItems: "center",
+    alignContent: "center",
+    paddingHorizontal: 25,
   },
 
   btnBack: {

@@ -17,12 +17,12 @@ import { useTogglePasswordVisibility } from "../module/useTogglePasswordVisibili
 import { useTogglePasswordVisibility2 } from "../module/useTogglePasswordVisibility2";
 import { updateToken } from "../reducers/users";
 
-const backendAdress = "http://172.17.188.30:3000";
+const backendAdress = "http://172.16.191.34:3000";
 
 export default function PasswordScreen({ navigation }) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.users.value);
-  console.log("start", user);
+  // console.log("start", user);
   const handleReturn = () => {
     navigation.navigate("MailScreen");
   };
@@ -61,7 +61,7 @@ export default function PasswordScreen({ navigation }) {
   }
   function PwdFormatAlert(props) {
     if (!regexMdp.test(Password1) && props.onceClicked) {
-      console.log("on rentre dans la fonction regex");
+      // console.log("on rentre dans la fonction regex");
       return (
         <View style={styles.Info}>
           <Text style={styles.textInfoX}>
@@ -75,9 +75,9 @@ export default function PasswordScreen({ navigation }) {
   const handleSubmit = () => {
     setOnClick(true);
 
-    if (!regexMdp.test(Password1) || !regexMdp.test(Password2)) {
-      return <PwdFormatAlert onceClicked={onClick} />;
-    }
+    // if (!regexMdp.test(Password1) || !regexMdp.test(Password2)) {
+    //   return <PwdFormatAlert onceClicked={onClick} />;
+    // }
 
     if (Password1 === Password2) {
       console.log("route", user);
@@ -90,16 +90,15 @@ export default function PasswordScreen({ navigation }) {
         }),
       })
         .then((response) => response.json())
-
         .then((data) => {
           // console.log("je rerentre")
           // console.log(data);
           if (data.result) {
             dispatch(updateToken(data.token));
-            navigation.navigate("ProfileCreation");
             // console.log("fin");
           }
         });
+      navigation.navigate("ProfileCreation");
     }
   };
 
