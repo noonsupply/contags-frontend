@@ -61,23 +61,24 @@ export const contactsSlice = createSlice({
     //updateContact permet de modifier les données d'un contact
     //action.payload doit être de la forme {contact : obj_contact, newDatas: obj_donnee_à_changer}
     // la donnée à changer doit être du bon format tableau avec le bon type d'objet dedans...
+    // updateContact: (state, action) => {
+    //     // on recherche le contact dans le tableau des contacts selon 2 critères : name, firstname (considère que l'utilisateur enregistre sur des noms différents)
+    //     const indexContact = state.value.findIndex(elt => elt.lastName === action.payload.contact.lastName && elt.firstName === action.payload.contact.firstName);
+    //     if(indexContact !== -1){
+    //         // on parcourt les keys à changer
+    //         for(let theKey in action.payload.newDatas){
+    //             state.value[indexContact][theKey] = action.payload.newDatas[theKey];
+    //         }
+    //     }else{
+    //         console.log('error in updateContact : contact not find')
+    //     }
+    //     console.log(state.value[indexContact])
+    //     console.log(state.value.length)
+    // },
     updateContact: (state, action) => {
-        // on recherche le contact dans le tableau des contacts selon 2 critères : name, firstname (considère que l'utilisateur enregistre sur des noms différents)
-        const indexContact = state.value.findIndex(elt => elt.lastName === action.payload.contact.lastName && elt.firstName === action.payload.contact.firstName);
-        if(indexContact !== -1){
-            // on parcourt les keys à changer
-            /* for(let theKey in action.payload.newDatas){
-                //state.value[indexContact][theKey] = action.payload.newDatas[theKey];
-                //console.log(action.payload.newDatas[theKey])
-                state.value[indexContact][theKey] = "hello"
-            }  */
-            state.value[indexContact].lastName = "hello"
-console.log("objet contact", state.value[indexContact])
-            console.log('lastName', state.value[indexContact].lastName)
-        }else{
-            console.log('error in updateContact : contact not find')
-        }
-        
+        state.value[action.payload.index] = action.payload.newDatas;
+        console.log(state.value[action.payload.index])
+        console.log(state.value.length)
     },
 
 

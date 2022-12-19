@@ -1,275 +1,135 @@
-import React from "react";
-import {
-    TextInput,
-    SafeAreaView,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
-} from 'react-native';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import FontAwesomeIcon from '@expo/vector-icons'
-import { Entypo } from "@expo/vector-icons";
-//import 'font-awesome/css/font-awesome.min.css'
-import { useState } from "react";
-import Tag from "../components/Tag"
+import { useState } from 'react';
+import { ImageBackground, Platform, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
+//import { AutocompleteDropdown } from 'react-native-autocomplete-dropdown';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-export default function Brouillon() {
-    const [tag, setTag] = useState("");
+import Tag from "../components/Tag";
+
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { updateContact, setContags } from '../reducers/contacts';
+
+export default function App() {
+  // const [dataSet, setDataSet] = useState([]);
+  // const [citiesData, setCitiesData] = useState([]);
+
+   const contacts = useSelector((state) => state.contacts.value);
+   const dispatch = useDispatch();
+
+   useEffect(() => {
+    const indexContact = contacts.findIndex(elt => elt.lastName === "Giroud" && elt.firstName === "Rania");
+    if(indexContact !==-1){
+      dispatch(setContags(contacts));
+    //   dispatch(updateContact({index : indexContact, newDatas: {lastName : "Giroud", firstName : "Nico", 
+    //   emails:[{emailType:"essai", email:"test@"}],
+    //   phones:[{phoneType:"mobile", number : "01", country:"Chine", areaCode : ""}, {phoneType:"home", number : "07", country:"Tunisie", areaCode : ""}]
+    // }}))
+       console.log("done")
+    }else{
+      console.log('non trouvé')
+    }
+    
+  },[]);
+
+  // const searchCity = (query) => {
+  //   // Prevent search with an empty query
+  //   if (query === '') {
+  //     return;
+  //   }
+
+
+  //       setDataSet([{id: 0, title : "Nico" },
+  //     {id : 1, title : "Esssai"}]);
+  // };
+
+  // const cities = citiesData.map((data, i) => {
+  //   return (
+  //     <View key={i} style={styles.resultContainer}>
+  //       <MaterialCommunityIcons name="map-marker-check" size={30} color="#51e181" />
+  //       <View>
+  //         <Text style={{ ...styles.resultText, ...styles.resultTitle }}>{data.title}</Text>
+  //         <Text style={styles.resultText}>{data.context}</Text>
+  //       </View>
+  //     </View>
+  //   );
+  // });
 
   return (
     <View style={styles.container}>
-        <View style={styles.closeContainer}>
-            <View><Entypo name="cross" size={25} color="#0031B8" /></View>
-        </View>
-        <View><Text style={styles.titles}>C'est parti pour rajouter des tags au contact :</Text></View>
-        {/* ETAPE 1 */}
-        <View style={styles.firstContainer}>
-            <Text style={styles.titles}>Étape 1 : choisir un nom</Text>
-            <View style={styles.inputContainer}>
-            <TextInput
-                style={styles.input}
-                placeholder={"Nom du tag"}
-                onChangeText={(value) => setTag(value)}
-                value={tag}
-            ></TextInput>
-            <Text>{tag.length}/10</Text>
-            </View>      
-        </View>
-        {/* ETAPE 2 */}
-        <View>
-            <Text style={styles.titles}>Étape 2 : choisir une couleur</Text>
-                <View style={styles.tagContainer}>
-                <TouchableOpacity style={[styles.tagFull, styles.tagBlank]} activeOpacity={0.8}></TouchableOpacity> 
-                    <TouchableOpacity style={[styles.tagFull, styles.tagBlueOne]} activeOpacity={0.8}></TouchableOpacity> 
-                    <TouchableOpacity style={[styles.tagFull, styles.tagGreen]} activeOpacity={0.8}></TouchableOpacity> 
-                    <TouchableOpacity style={[styles.tagFull, styles.tagOrange]} activeOpacity={0.8}></TouchableOpacity> 
-                    <TouchableOpacity style={[styles.tagFull, styles.tagYellow]} activeOpacity={0.8}></TouchableOpacity> 
-                    <TouchableOpacity style={[styles.tagFull, styles.tagRed]} activeOpacity={0.8}></TouchableOpacity> 
-                    <TouchableOpacity style={[styles.tagFull, styles.tagBlueTwo]} activeOpacity={0.8}></TouchableOpacity> 
-                    <TouchableOpacity style={[styles.tagFull, styles.tagPink]} activeOpacity={0.8}></TouchableOpacity> 
-                    <TouchableOpacity style={[styles.tagFull, styles.tagPurple]} activeOpacity={0.8}></TouchableOpacity>                 
-                </View>
-        </View>
-        {/* ETAPE 3 */}
-        <View style={styles.visualContainer}>
-            <Text style={styles.titles}>Étape 3 : visualiser les tags crées</Text>
-            <ScrollView  style={styles.ScrollView}>
-                <View style={styles.validateTagContainer}>
-                    <Tag tag={{title : "essai", color : "white", border :"#0031B8"}} />
-                </View>
-            </ScrollView>
-        </View >
-        {/* BOUTON VALIDER */}
-        <View style={styles.containerBtn}>
-            <TouchableOpacity style={styles.btnBack} activeOpacity={0.8}>
-            <Text style={styles.btnText}>Valider</Text>
-            </TouchableOpacity> 
-        </View>
-        
+      <Text style={styles.title}>Where are we going?</Text>
+      {/* <AutocompleteDropdown
+        onChangeText={(value) => searchCity(value)}
+        onSelectItem={(item) => item && setCitiesData([...citiesData, item])}
+        dataSet={dataSet}
+        renderItem={({ item, text }) => (
+          <TouchableOpacity onPress={() => handleTagPress(item)}>
+            <Tag tag={{title : item, color : "blue", border : "none"}} />
+          </TouchableOpacity>
+        )}
+        textInputProps={{ placeholder: 'Search city' }}
+        inputContainerStyle={styles.inputContainer}
+        containerStyle={styles.dropdownContainer}
+        suggestionsListContainerStyle={styles.suggestionListContainer}
+        closeOnSubmit
+      /> */}
+
+      <ScrollView style={styles.scrollContainer}>
+        <Text>ceci est un essai 1 </Text>
+        <Text>ceci est un essai 2 </Text>
+        <Text>ceci est un essai 3 </Text>
+      </ScrollView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-
   container: {
-    //flex: 1,
-    height: 550,
-    width: "80%",
-    alignItems: 'flex-start',
-    backgroundColor: 'white',
-    padding : 5,
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    padding: 25,
+    paddingTop: 50,
   },
-
-  closeContainer:{
-    width:"100%",
-    flexDirection : "row",
-    justifyContent : "flex-end",
-    alignItems : "center",
-    marginBottom : 0,
+  scrollContainer: {
+    width: '100%',
   },
-
-  titles: {
-    color : "#0031B8",
-    fontSize : 16,
-    marginTop : 0,
-    marginBottom : 0,
-    //fontFamily : "Poppins",
+  dropdownContainer: {
+    width: '100%',
+    marginBottom: 20,
   },
-  btnBack:{
-    border: 1,
-    borderRadius: 4,
-    width: 102,
-    height: 36,
+  inputContainer: {
+    borderWidth: 1,
+    borderColor: '#51e181',
+    backgroundColor: '#ffffff',
   },
-  firstContainer:{
-    width:"100%",
-  },
-  inputContainer:{
-    flexDirection : "row",
-    alignItems : "center",
-    justifyContent : "space-around",
-    marginTop : 10,
-    marginBottom : 10,
-  },
-  input:{
-    width : "80%",
-    height: 30,
-    borderRadius: 100,
-    paddingLeft: 5,
-    borderRadius: 5,
-    borderColor: "#0031B8",
-    borderWidth: 1.5,
-  },
-//   TAGS
-  tagContainer: {
-    alignItems: "center",
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "flex-start",
+  title: {
+    fontSize: 50,
+    color: '#51e181',
+    fontWeight: 'bold',
+    alignSelf: 'flex-start',
+    fontFamily: Platform.select({ ios: 'Georgia', android: 'serif' }),
     marginBottom: 15,
-    marginTop: 15,
-    paddingLeft: 10,
-    paddingRight: 10,
   },
-
-  tagText: {
-    color: "#FFFFFF",
-    fontSize: 14,
-    fontWeight: "bold",
+  suggestionListContainer: {
+    borderRadius: 3,
+    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+  },
+  resultContainer: {
+    backgroundColor: '#ffffff',
+    width: '100%',
+    borderRadius: 6,
+    padding: 20,
     marginBottom: 10,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    borderColor: '#51e181',
+    borderWidth: 1,
   },
-
-  tagTextBlank: {
-    color: "#0031B8",
-    fontSize: 14,
-    fontWeight: "bold",
-    marginBottom: 10,
+  resultText: {
+    textAlign: 'right',
   },
-  
-  tagFull: {
-    alignItems: "center",
-    borderRadius: 50,
-    fontSize: 12,
-    flexShrink: 1,
-    height: 50,
-    width: 50,
-    justifyContent: "flex-end",
-    marginBottom: 4,
-    marginLeft: 15,
-    marginRight: 15,
-    marginTop: 4,
-    paddingLeft: 12.5,
-    paddingRight: 12.5,
+  resultTitle: {
+    fontWeight: 'bold',
   },
-  
-  tagBlank :{
-    borderWidth : 2,
-    borderColor : "#0031B8",
-  },
-
-  tagBlueOne :{
-    backgroundColor : "#2FBAE5",
-  },
-  
-  tagGreen : {
-    backgroundColor : "#21AC14" ,
-  },
-
-  tagOrange: {
-    backgroundColor : "#E5712F" ,
-  },
- 
-  tagYellow: {
-    backgroundColor : "#EDC808" ,
-  },
-
-  tagRed:{
-    backgroundColor : "#D90000" ,
-  },
-
-  tagBlueTwo: {
-    backgroundColor : "#2F6DE5" ,
-  },
-
-  tagPink:  {
-    backgroundColor : "#E52F92" ,
-  },
-
-  tagPurple: {
-    backgroundColor : "#952FE5" ,
-  },
-
-  visualContainer: {
-    height : "25%",
-    width : "100%",
-  },
-
-  validateTagContainer: {
-    flexDirection : "row",
-    width : "100%",
-    flexWrap: "wrap",
-  },
-
-  tagFinal: {
-    alignItems: "center",
-    borderRadius: 20,
-    fontSize: 12,
-    flexShrink: 1,
-    height: 35,
-    // width : 110,
-    justifyContent: "flex-end",
-    // marginBottom: 8,
-    marginLeft: 15,
-    marginRight: 15,
-    marginTop: 5,
-    marginBottom : 5,
-    paddingLeft: 12.5,
-    paddingRight: 12.5,
-  },
-
-  tagFinalBlank: {
-    alignItems: "center",
-    borderRadius: 20,
-    fontSize: 12,
-    flexShrink: 1,
-    height: 35,
-    // width : 110,
-    justifyContent: "flex-end",
-    // marginBottom: 8,
-    marginLeft: 5,
-    marginRight: 5,
-    marginTop: 5,
-    marginBottom : 5,
-    paddingLeft: 12.5,
-    paddingRight: 12.5,
-    borderWidth : 2,
-    borderColor : "#0031B8",
-  },
-
-//   BOUTON
-  containerBtn: {
-    width:"100%",
-    justifyContent : "flex-end",
-    alignItems : "flex-end",
-  },
-
-  btnBack: {
-    borderWidth : 2,
-    borderColor : "#0031B8",
-    borderRadius: 10,
-    width : 80,
-    height : 30,
-    justifyContent : "center",
-    alignItems : "center",
-    marginRight : 10,
-    marginTop : 10,
-  },
-
-   btnText: {
-    color : "#0031B8",
-   }
-
 });

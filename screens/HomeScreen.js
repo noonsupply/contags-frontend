@@ -17,7 +17,7 @@ import { useSelector } from "react-redux";
 import ContactScreen from "./ContactScreen";
 
 
-export default function PasswordScreen({ navigation }) {
+export default function HomeScreen({ navigation }) {
   const addContact = useSelector((state) => state.contacts.value);
 
 

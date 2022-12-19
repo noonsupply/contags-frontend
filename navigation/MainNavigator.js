@@ -17,8 +17,8 @@ const Stack = createStackNavigator();
 const MainNavigator = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="HomeLoadContact">
-        {/*       <Stack.Screen
+      <Stack.Navigator initialRouteName="SpashScreen">
+       <Stack.Screen
           name="Splash"
           options={{ animationEnabled: false, header: () => null }}
           component={SplashScreen}
@@ -34,7 +34,7 @@ const MainNavigator = () => {
           component={PasswordScreen}
         />
         <Stack.Screen
-          name="ProfilCreation"
+          name="ProfileCreation"
           options={{ animationEnabled: true, header: () => null }}
           component={ProfileCreation}
         />
@@ -42,7 +42,7 @@ const MainNavigator = () => {
           name="TagCreation"
           options={{ animationEnabled: true, header: () => null }}
           component={TagCreation}
-        /> */}
+        /> 
 
         <Stack.Screen
           name="HomeLoadContact"
