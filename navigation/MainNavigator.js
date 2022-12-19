@@ -23,6 +23,11 @@ const MainNavigator = () => {
           options={{ animationEnabled: false, header: () => null }}
           component={SplashScreen}
         />
+        {/* <Stack.Screen
+          name="SignInPonctuelScreen"
+          options={{ animationEnabled: true, header: () => null }}
+          component={SignInPonctuelScreen}
+        /> */}
         <Stack.Screen
           name="MailScreen"
           options={{ animationEnabled: true, header: () => null }}
