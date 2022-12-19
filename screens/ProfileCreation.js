@@ -274,6 +274,7 @@ export default function ProfileCreation({ navigation }) {
                   placeholder={"Votre numéro de téléphone"}
                   onChangeText={(e) => setPhoneNumber(e)}
                   value={phoneNumber}
+                  keyboardType={"phone-pad"}
                 ></TextInput>
                 <PhoneNumberEmptyFieldAlert onceClicked={onClick} />
                 <PhoneNumberWrongFormatAlert onceClicked={onClick} />
