@@ -18,7 +18,7 @@ export default function App() {
   return (
     <Provider store={store}>
 
-    <TagCreation />
+    <MainNavigator />
 
     </Provider>
   );
