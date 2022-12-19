@@ -56,7 +56,9 @@ export default function MailScreen({ navigation }) {
           onChangeText={(value) => setEmail(value)}
           value={email}
         ></TextInput>
-        {emailError && <Text style={styles.error}>Invalid email address</Text>}
+        {emailError && (
+          <Text style={styles.error}>Adresse mail non valide</Text>
+        )}
       </View>
       <View style={styles.caseButton}>
         <TouchableOpacity style={styles.button2} onPress={() => handleSubmit()}>
@@ -111,6 +113,6 @@ const styles = StyleSheet.create({
     marginBottom: "500%",
   },
   error: {
-    color: "#ff0000",
+    color: "#D90000",
   },
 });

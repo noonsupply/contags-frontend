@@ -22,10 +22,15 @@ const store = configureStore({
 export default function App() {
   return (
     <Provider store={store}>
+<<<<<<< HEAD
+
+    <MainNavigator />
+=======
     <MainNavigator />
     {/* <ExempleModal /> */}
     {/* <ExempleSearchBar /> */}
     {/* <Brouillon /> */} 
+>>>>>>> a891ba5f1388b6893dd57daef358c76d6ed3413f
 
     </Provider>
   );
