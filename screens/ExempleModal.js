@@ -17,14 +17,33 @@ import { useSelector } from 'react-redux';
 
 import TagsDefinition from "../components/TagsDefinition";
 
+const backendAdress = "http://172.16.191.11:3000";
+
 export default function ExempleModal() {
   const [modalVisible, setModalVisible] = useState(false);
 
   const contacts = useSelector((state) => state.contacts.value);
-  const users = useSelector((state) => state.users.value);
+  const user = useSelector((state) => state.users.value);
 
   const handleCloseModal =() =>{
     setModalVisible(false);
+  }
+
+  const handleSave=() =>{
+    console.log("le user : ", user);
+    fetch(`${backendAdress}/users/saveTagsPerso`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        token: "ucVDnAss2u-1outYzJ9oDSZyYrnuNE_Z",
+        tagsPerso: user.tagsPerso,
+      }),
+    })
+      .then((response) => response.json())
+
+      .then((data) => {
+        console.log("rep route : ",data)
+      })
   }
   
   console.log('tags', contacts[2].tags)
@@ -41,8 +60,8 @@ export default function ExempleModal() {
         }}
       ><View style={styles.modalContainer}>
         <TagsDefinition handleCloseModal={handleCloseModal} 
-                        contact={{"name":"Patulacci","firstName":"Yannick","emails":[{type : 'personnal', email : "Yannick@gmail.com" }],"phones": [{type : 'mobile', number :"0714861783"}],"birthday":"2022-12-12T11:18:57.844Z","tags":[],"contactedTimesCounter":{"phoneCounter":1,"smsCounter":12,"emailCounter":6}}}
-                        user={null}
+                        contact={null}
+                        user={user}
       /></View>
       </Modal>
         <Pressable
@@ -50,6 +69,13 @@ export default function ExempleModal() {
         onPress={() => setModalVisible(true)}
       >
         <Text style={styles.textStyle}>Show Modal</Text>
+      </Pressable>
+
+      <Pressable
+        style={[styles.button, styles.buttonOpen]}
+        onPress={() => handleSave() }
+      >
+        <Text style={styles.textStyle}>Save DB</Text>
       </Pressable>
     </View>
   );
