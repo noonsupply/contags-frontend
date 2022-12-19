@@ -14,42 +14,51 @@ const initialState = {
 };
 
 export const usersSlice = createSlice({
-    name: 'users',
-    initialState,
-    reducers: {
-updateEmailMain: (state, action) => {
-    state.value.emailMain=action.payload
-},
+  name: "users",
+  initialState,
+  reducers: {
+    updateEmailMain: (state, action) => {
+      state.value.emailMain = action.payload;
+    },
 
-addEmail: (state, action) => {
-    state.value.emails.push(action.payload);
-},
+    addEmail: (state, action) => {
+      state.value.emails.push(action.payload);
+    },
 
-updateName: (state, action) => {
-    state.value.name=action.payload
-},
+    updateName: (state, action) => {
+      state.value.name = action.payload;
+    },
 
-updateFirstName: (state, action) => {
-    state.value.firstName=action.payload
-},
+    updateFirstName: (state, action) => {
+      state.value.firstName = action.payload;
+    },
 
-updateToken: (state, action) => {
-    state.value.token=action.payload
-},
+    updateToken: (state, action) => {
+      state.value.token = action.payload;
+    },
 
-addPhone: (state, action) => {
-    state.value.phones.push(action.payload);
-},
+    addPhone: (state, action) => {
+      state.value.phones.push(action.payload);
+    },
 
-updateDateOfBirth: (state, action) => {
-    state.value.dob=action.payload
-},
+    updateDateOfBirth: (state, action) => {
+      state.value.dob = action.payload;
+    },
 
-updateLastConnection: (state, action) => {
-    state.value.lastConnection=action.payload
-},
-    }})
-  
+    updateLastConnection: (state, action) => {
+      state.value.lastConnection = action.payload;
+    },
+  },
+});
 
-export const {updateEmailMain, addEmail, updateName, updateFirstName, updateToken, addPhone, updateDateOfBirth, updateLastConnection} = usersSlice.actions;
+export const {
+  updateEmailMain,
+  addEmail,
+  updateName,
+  updateFirstName,
+  updateToken,
+  addPhone,
+  updateDateOfBirth,
+  updateLastConnection,
+} = usersSlice.actions;
 export default usersSlice.reducer;

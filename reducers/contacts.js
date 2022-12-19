@@ -1,10 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
- value: [
- {"name":"Papin","firstName":"Mohamed","emails":[{type : 'personnal', email :"PaMo@sfr.fr"}], "phones" :  [{type : "mobile", number:"0626637256"}],"birthday":"2022-12-12T11:18:57.844Z","tags":[{"title":"Série","color":"blue"},{"title":"cuisine","color":"yellow"},{"title":"Développeur","color":"green"},{"title":"loueur","color":"yellow"}],"contactedTimesCounter":{"phoneCounter":3,"smsCounter":8,"emailCounter":16}},
- {"name":"O Neil","firstName":"Josettte","emails":[{type : 'personnal', email : "O Jo@orange.fr"}], "phones" : [{type : "mobile", number :"0754596499"}],"birthday":"2022-12-12T11:18:57.844Z","tags":[{"title":"station","color":"yellow"}],"contactedTimesCounter":{"phoneCounter":2,"smsCounter":12,"emailCounter":6}},
- {"name":"Patulacci","firstName":"Yannick","emails":[{type : 'personnal', email : "Yannick@gmail.com" }],"phones": [{type : 'mobile', number :"0714861783"}],"birthday":"2022-12-12T11:18:57.844Z","tags":[{"title":"Jeu vidéo","color":"orange"}],"contactedTimesCounter":{"phoneCounter":1,"smsCounter":12,"emailCounter":6}}],
+ value: [],
 };
 
 export const contactsSlice = createSlice({
@@ -66,16 +63,23 @@ export const contactsSlice = createSlice({
     // la donnée à changer doit être du bon format tableau avec le bon type d'objet dedans...
     updateContact: (state, action) => {
         // on recherche le contact dans le tableau des contacts selon 2 critères : name, firstname (considère que l'utilisateur enregistre sur des noms différents)
-        const indexContact = state.value.findIndex(elt => elt.name === action.payload.contact.name && elt.firstName === action.payload.contact.firstName);
+        const indexContact = state.value.findIndex(elt => elt.lastName === action.payload.contact.lastName && elt.firstName === action.payload.contact.firstName);
         if(indexContact !== -1){
             // on parcourt les keys à changer
-            for(let theKey in action.payload.newDatas){
-                state.value[indexContact][theKey] = action.payload.newDatas[theKey];
-            }
+            /* for(let theKey in action.payload.newDatas){
+                //state.value[indexContact][theKey] = action.payload.newDatas[theKey];
+                //console.log(action.payload.newDatas[theKey])
+                state.value[indexContact][theKey] = "hello"
+            }  */
+            state.value[indexContact].lastName = "hello"
+console.log("objet contact", state.value[indexContact])
+            console.log('lastName', state.value[indexContact].lastName)
         }else{
             console.log('error in updateContact : contact not find')
         }
+        
     },
+
 
     //addEmail permet d'ajouter un email à  un contact
     //action.payload doit être de la forme {contact : obj_contact, email: obj_email}
@@ -134,9 +138,20 @@ export const contactsSlice = createSlice({
             console.log('error in updatePhone : contact not find')
         }
     },
-   
+
+    setContact : (state, action) => {
+        state.value = action.payload;
+     //console.log(state.value)
+    },
+
+//action.payload => Un objet avec un nouveau contact
+    updateContactFrom: (state, action) => {
+
+
+      
+    }
  },
 });
 
-export const { addContact,  replaceAllTags, addOneTag , updateContact, addEmail, addPhone, updatePhone, updateEmail, updateTags } = contactsSlice.actions;
+export const { updateContactFrom, setContact, addContact,  replaceAllTags, addOneTag , updateContact, addEmail, addPhone, updatePhone, updateEmail, updateTags } = contactsSlice.actions;
 export default contactsSlice.reducer;

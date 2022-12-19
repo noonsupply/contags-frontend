@@ -8,14 +8,17 @@ import PasswordScreen from "../screens/PasswordScreen";
 import ProfileCreation from "../screens/ProfileCreation";
 import TagCreation from "../screens/TagCreation";
 import HomeScreen from "../screens/HomeScreen";
+import HomeLoadContact from "../screens/HomeLoadContact";
+import ContactScreen from "../screens/ContactScreen";
+import ModalSetting from "../screens/ModalSetting";
 
 const Stack = createStackNavigator();
 
 const MainNavigator = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Splash">
-        <Stack.Screen
+      <Stack.Navigator initialRouteName="HomeLoadContact">
+        {/*       <Stack.Screen
           name="Splash"
           options={{ animationEnabled: false, header: () => null }}
           component={SplashScreen}
@@ -39,12 +42,32 @@ const MainNavigator = () => {
           name="TagCreation"
           options={{ animationEnabled: true, header: () => null }}
           component={TagCreation}
-        />
+        /> */}
+
         <Stack.Screen
-          name="Home"
+          name="HomeLoadContact"
+          options={{ animationEnabled: true, header: () => null }}
+          component={HomeLoadContact}
+        />
+
+        <Stack.Screen
+          name="HomeScreen"
           options={{ animationEnabled: true, header: () => null }}
           component={HomeScreen}
         />
+
+        <Stack.Screen
+          name="ContactScreen"
+          options={{ animationEnabled: true, header: () => null }}
+          component={ContactScreen}
+        />
+
+        {/* <Stack.Screen
+          name="ModalSetting"
+          options={{ animationEnabled: true, header: () => null }}
+          component={ModalSetting}
+        /> */}
+
       </Stack.Navigator>
     </NavigationContainer>
   );
