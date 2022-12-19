@@ -17,7 +17,7 @@ import { useTogglePasswordVisibility } from "../module/useTogglePasswordVisibili
 import { useTogglePasswordVisibility2 } from "../module/useTogglePasswordVisibility2";
 import { updateToken } from "../reducers/users";
 
-const backendAdress = "http://172.16.191.9:3000";
+const backendAdress = "http://172.16.191.34:3000";
 
 export default function PasswordScreen({ navigation }) {
   const dispatch = useDispatch();
@@ -71,8 +71,8 @@ export default function PasswordScreen({ navigation }) {
           // console.log(data);
           if (data.result) {
             dispatch(updateToken(data.token));
-            navigation.navigate("ProfileCreation2");
-            console.log("fin");
+            navigation.navigate("ProfileCreation");
+            // console.log("fin");
           }
         });
     }

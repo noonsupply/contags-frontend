@@ -5,7 +5,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import SplashScreen from "../screens/SplashScreen";
 import MailScreen from "../screens/MailScreen";
 import PasswordScreen from "../screens/PasswordScreen";
-import ProfileCreation2 from "../screens/profileCreation2";
+import ProfileCreation from "../screens/ProfileCreation";
 import TagCreation from "../screens/TagCreation";
 import HomeScreen from "../screens/HomeScreen";
 import contactScreen from "../screens/contactScreen";
@@ -32,9 +32,9 @@ const MainNavigator = () => {
           component={PasswordScreen}
         />
         <Stack.Screen
-          name="ProfileCreation2"
+          name="ProfileCreation"
           options={{ animationEnabled: true, header: () => null }}
-          component={ProfileCreation2}
+          component={ProfileCreation}
         />
         <Stack.Screen
           name="TagCreation"
