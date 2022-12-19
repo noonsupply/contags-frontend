@@ -42,12 +42,12 @@ const MainNavigator = () => {
           component={TagCreation}
         />
         <Stack.Screen
-          name="Home"
+          name="HomeScreen"
           options={{ animationEnabled: true, header: () => null }}
           component={HomeScreen}
         />
         <Stack.Screen
-          name="Contact"
+          name="contactScreen"
           options={{ animationEnabled: true, header: () => null }}
           component={contactScreen}
         />
