@@ -17,7 +17,7 @@ import { useTogglePasswordVisibility } from "../module/useTogglePasswordVisibili
 import { useTogglePasswordVisibility2 } from "../module/useTogglePasswordVisibility2";
 import { updateToken } from "../reducers/users";
 
-const backendAdress = "http://172.17.188.30:3000";
+const backendAdress = "http://172.16.191.34:3000";
 
 export default function PasswordScreen({ navigation }) {
   const dispatch = useDispatch();
@@ -37,17 +37,17 @@ export default function PasswordScreen({ navigation }) {
   let iconV = null;
   if (Password1 === Password2 && Password1.length > 0) {
     iconV = (
-      <View>
+      <View style={styles.Info}>
         <Text style={styles.textInfoV}>Mots de passe indentique</Text>
-        <Entypo name="check" size={20} color="#00ff00" style={styles.icon} />
+        <Entypo name="check" size={20} color="#21AC14" style={styles.icon} />
       </View>
     );
   }
   if (Password1 !== Password2 && Password1.length > 0) {
     iconV = (
-      <View>
+      <View style={styles.Info}>
         <Text style={styles.textInfoX}>Mots de passe différents</Text>
-        <Entypo name="cross" size={25} color="#ff0000" style={styles.icon} />
+        <Entypo name="cross" size={25} color="#D90000" style={styles.icon} />
       </View>
     );
   }
@@ -71,8 +71,8 @@ export default function PasswordScreen({ navigation }) {
           // console.log(data);
           if (data.result) {
             dispatch(updateToken(data.token));
-            navigation.navigate("ProfilCreation");
-            console.log("fin");
+            navigation.navigate("ProfileCreation");
+            // console.log("fin");
           }
         });
     }
@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
   logo: {
     width: "80%",
     height: "30%",
-    top: 96,
+    top: "40%",
   },
   pass: {
     marginTop: "20%",
@@ -168,19 +168,20 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     alignItems: "center",
   },
+  Info: {
+    flexDirection: "row",
+  },
   textInfoV: {
-    color: "#ffffff",
-    marginLeft: 50,
-    color: "#00ff00",
+    marginLeft: "10%",
+    color: "#21AC14",
   },
   textInfoX: {
-    color: "#ffffff",
-    marginLeft: 50,
-    color: "#ff0000",
+    marginLeft: "10%",
+    color: "#D90000",
   },
   text: {
     color: "#0031B8",
-    marginLeft: "5%",
+    marginLeft: "10%",
     marginRight: "5%",
   },
   input: {
@@ -203,12 +204,12 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 5,
   },
   icon: {
-    marginLeft: 280,
+    marginLeft: 50,
   },
   caseButton: {
     flexWrap: "wrap",
     flexDirection: "row",
-    marginTop: "60%",
+    marginBottom: "100%",
     justifyContent: "space-between",
   },
   button: {

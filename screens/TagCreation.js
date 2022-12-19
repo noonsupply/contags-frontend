@@ -13,12 +13,14 @@ import {
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 export default function TagCreation({ navigation }) {
-  const handleCreation = () => {
-    navigation.navigate("ProfilCreation");
-  };
+  // const handleCreation = () => {
+  //   navigation.navigate("ProfileCreation");
+
 
   return (
     <SafeAreaView style={styles.safeAreaView}>
+            <StatusBar backgroundColor={"#FFFFFF"} barStyle={"dark-content"} />
+
       <ScrollView style={styles.scrollView}>
         <View style={styles.globalContainer}>
           <View style={styles.logoContainer}>

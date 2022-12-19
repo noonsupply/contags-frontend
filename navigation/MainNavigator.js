@@ -8,6 +8,7 @@ import PasswordScreen from "../screens/PasswordScreen";
 import ProfileCreation from "../screens/ProfileCreation";
 import TagCreation from "../screens/TagCreation";
 import HomeScreen from "../screens/HomeScreen";
+import contactScreen from "../screens/contactScreen";
 
 const Stack = createStackNavigator();
 
@@ -31,7 +32,7 @@ const MainNavigator = () => {
           component={PasswordScreen}
         />
         <Stack.Screen
-          name="ProfilCreation"
+          name="ProfileCreation"
           options={{ animationEnabled: true, header: () => null }}
           component={ProfileCreation}
         />
@@ -41,9 +42,14 @@ const MainNavigator = () => {
           component={TagCreation}
         />
         <Stack.Screen
-          name="Home"
+          name="HomeScreen"
           options={{ animationEnabled: true, header: () => null }}
           component={HomeScreen}
+        />
+        <Stack.Screen
+          name="contactScreen"
+          options={{ animationEnabled: true, header: () => null }}
+          component={contactScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>
