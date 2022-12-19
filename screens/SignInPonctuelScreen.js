@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Pressable,
   KeyboardAvoidingView,
+  Alert,
 } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { Entypo } from "@expo/vector-icons";
@@ -16,70 +17,38 @@ import { useSelector, useDispatch } from "react-redux";
 import { useTogglePasswordVisibility } from "../module/useTogglePasswordVisibility";
 import { useTogglePasswordVisibility2 } from "../module/useTogglePasswordVisibility2";
 import { updateToken } from "../reducers/users";
+import HomeScreen from "./HomeScreen";
+import { checkBody } from "../module/checkbody";
 
 const BACKEND_ADDRESS = "http://172.17.188.30:3000";
 
 export default function PasswordScreen({ navigation }) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.users.value);
-  const handleReturn = () => {
-    navigation.navigate("MailScreen");
-  };
-
   const { passwordVisibility, rightIcon, handlePasswordVisibility } =
     useTogglePasswordVisibility();
-  const { passwordVisibility2, rightIcon2, handlePasswordVisibility2 } =
-    useTogglePasswordVisibility2();
-  const [Password1, setPassword1] = useState(null);
-  const [Password2, setPassword2] = useState(null);
-  const [onClick, setOnClick] = useState(false);
+  const [Password1, setPassword1] = useState("");
+  const [emailMain, setEmailMain] = useState();
 
-  const regexMdp =
-    /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{7,}$/;
+  // const handleSubmit = () => {
+  //   if (Password1 === PasswordBDD) {
+  //     dispatch();
+  //     navigation.navigate("Home");
+  //   } else {
+  //     Alert.alert("Erreur", "Mauvais mot de passe");
+  //   }
+  // };
 
-  function PwdIdenticalAlert() {
-    if (Password1 === Password2 && regexMdp.test(Password2)) {
-      return (
-        <View style={styles.Info}>
-          <Text style={styles.textInfoV}>Mots de passe identiques</Text>
-          <Entypo name="check" size={20} color="#21AC14" style={styles.icon} />
-        </View>
-      );
-    }
-  }
-
-  function PwdDifferentAlert(props) {
-    if (Password1 !== Password2 && props.onceClicked) {
-      return (
-        <View style={styles.Info}>
-          <Text style={styles.textInfoX}>Mots de passe différents</Text>
-          <Entypo name="cross" size={25} color="#D90000" style={styles.icon} />
-        </View>
-      );
-    }
-  }
-  function PwdFormatAlert(props) {
-    if (!regexMdp.test(Password1) && props.onceClicked) {
-      console.log("on rentre dans la fonction regex");
-      return (
-        <View style={styles.Info}>
-          <Text style={styles.textInfoX}>
-            Votre mot de passe doit contenir 1 majuscule, 1 minuscule, 1
-            caractère spéciale et plus de 7 caractères.
-          </Text>
-        </View>
-      );
-    }
-  }
+  /*Fonction de hackatweet */
   const handleSubmit = () => {
-    setOnClick(true);
-
-    if (!regexMdp.test(Password1) || !regexMdp.test(Password2)) {
-      return <PwdFormatAlert onceClicked={onClick} />;
-    }
-
-    if (Password1 === Password2) {
-      fetch(`${BACKEND_ADDRESS}/users/create`, {
+    // on verifie si les champs sont remplis
+    if (
+      checkBody({ emailMain: user.emailMain, password: Password1 }, [
+        "password",
+      ])
+    ) {
+      // on utilise la route pour enregistrer l'utilisateur
+      fetch(`${BACKEND_ADDRESS}/users/signin`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -89,10 +58,9 @@ export default function PasswordScreen({ navigation }) {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log(data);
           if (data.result) {
             dispatch(updateToken(data.token));
-            navigation.navigate("ProfilCreation");
+            navigation.navigate("Home");
           }
         });
     }
@@ -108,7 +76,7 @@ export default function PasswordScreen({ navigation }) {
       </View>
       <View>
         <Text style={styles.text}>
-          Pour finaliser votre inscription, veuillez saisir un mot de passe
+          Cela fait longtemps qu’on vous a pas vu ?
         </Text>
       </View>
       <View style={styles.pass}>
@@ -133,33 +101,8 @@ export default function PasswordScreen({ navigation }) {
             <FontAwesome name={rightIcon} size={22} color="#0031b8" />
           </Pressable>
         </View>
-        <Text style={styles.text}>Saisir de nouveau</Text>
-        <View style={styles.passwordContainer}>
-          <TextInput
-            placeholder="Password"
-            style={styles.input}
-            autoCapitalize="none"
-            autoCorrect={false}
-            textContentType="newPassword"
-            secureTextEntry={passwordVisibility2}
-            value={Password2}
-            onChangeText={(text) => setPassword2(text)}
-          />
-          <Pressable
-            style={styles.iconDivEye}
-            onPress={handlePasswordVisibility2}
-          >
-            <FontAwesome name={rightIcon2} size={22} color="#0031b8" />
-          </Pressable>
-        </View>
-        <PwdIdenticalAlert />
-        <PwdDifferentAlert onceClicked={onClick} />
-        <PwdFormatAlert onceClicked={onClick} />
       </View>
       <View style={styles.caseButton}>
-        <TouchableOpacity style={styles.button} onPress={() => handleReturn()}>
-          <FontAwesome color="#ffffff" name="chevron-left" />
-        </TouchableOpacity>
         <TouchableOpacity style={styles.button2} onPress={() => handleSubmit()}>
           <FontAwesome color="#ffffff" name="chevron-right" />
         </TouchableOpacity>
@@ -190,17 +133,6 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     alignItems: "center",
   },
-  Info: {
-    flexDirection: "row",
-    marginHorizontal: "10%",
-    marginBottom: "10%",
-  },
-  textInfoV: {
-    color: "#21AC14",
-  },
-  textInfoX: {
-    color: "#D90000",
-  },
   text: {
     color: "#0031B8",
     marginLeft: "10%",
@@ -225,6 +157,9 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 5,
     borderBottomRightRadius: 5,
   },
+  caseAlert: {
+    color: "#000000",
+  },
   icon: {
     marginLeft: 50,
   },
@@ -232,17 +167,8 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     flexDirection: "row",
     marginBottom: "100%",
-    justifyContent: "space-between",
   },
-  button: {
-    backgroundColor: "#0031B8",
-    height: 50,
-    width: 50,
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: 50,
-    marginLeft: "5%",
-  },
+
   button2: {
     backgroundColor: "#0031B8",
     height: 50,
@@ -250,6 +176,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 50,
-    marginRight: "5%",
+    marginLeft: "80%",
   },
 });
