@@ -23,7 +23,7 @@ import {
   addPhone,
 } from "../reducers/users";
 
-const BACKEND_ADDRESS = "http://172.16.191.9:3000";
+const BACKEND_ADDRESS = "http://172.16.191.34:3000";
 
 export default function ProfileCreation({ navigation }) {
   // useSelector & useDispatch
@@ -35,91 +35,72 @@ export default function ProfileCreation({ navigation }) {
 
   const [firstName, setFirstName] = useState(null);
   const [lastName, setLastName] = useState(null);
-  const [phoneNumber, setPhoneNumber] = useState(null);
-  const [validateTyping, setValidateTyping] = useState(false);
   const [dob, setDob] = useState(null);
+  const [phoneNumber, setPhoneNumber] = useState(null);
+  const [onClick, setOnClick] = useState(false);
 
-  // Alertes de remplissage des champs
+  // Alertes de renseignement des champs
 
-  const firstNameFieldEmptyAlert = (
-    <View>
-      <Text style={styles.alertMsg}>Veuillez saisir un prénom</Text>
-    </View>
-  );
+  function FirstNameAlert(props) {
+    if (!firstName && props.onceClicked) {
+      return (
+        <View>
+          <Text style={styles.alertMsg}>Veuillez saisir un prénom</Text>
+        </View>
+      );
+    }
+  }
 
-  const lastNameFieldEmptyAlert = (
-    <View>
-      <Text style={styles.alertMsg}>Veuillez saisir un nom</Text>
-    </View>
-  );
+  function LastNameAlert(props) {
+    if (!lastName && props.onceClicked) {
+      return (
+        <View>
+          <Text style={styles.alertMsg}>Veuillez saisir un nom</Text>
+        </View>
+      );
+    }
+  }
 
-  const dateOfBirthNotSelectedAlert = (
-    <View>
-      <Text style={styles.alertMsg}>
-        Veuillez indiquer votre date de naissance
-      </Text>
-    </View>
-  );
+  function DobAlert(props) {
+    if (!dob && props.onceClicked) {
+      return (
+        <View>
+          <Text style={styles.alertMsg}>
+            Veuillez indiquer votre date de naissance
+          </Text>
+        </View>
+      );
+    }
+  }
 
-  const phoneNumberFieldEmptyAlert = (
-    <View>
-      <Text style={styles.alertMsg}>
-        Veuillez saisir un numéro de téléphone
-      </Text>
-    </View>
-  );
+  function PhoneNumberEmptyFieldAlert(props) {
+    if (!phoneNumber && props.onceClicked) {
+      return (
+        <View>
+          <Text style={styles.alertMsg}>
+            Veuillez saisir un numéro de téléphone
+          </Text>
+        </View>
+      );
+    }
+  }
 
-  const phoneNumberWrongFormatAlert = (
-    <View>
-      <Text style={styles.alertMsg}>Mauvais format de numéro de téléphone</Text>
-    </View>
-  );
-
-  const allFieldsAreNotFilled = (
-    <View>
-      <Text style={styles.alertMsg}>
-        Veuillez indiquer toutes les informations demandées.
-      </Text>
-    </View>
-  );
+  function PhoneNumberWrongFormatAlert(props) {
+    if (phoneNumber && !regExPhoneNum.test(phoneNumber) && props.onceClicked) {
+      return (
+        <View>
+          <Text style={styles.alertMsg}>
+            Mauvais format de numéro de téléphone
+          </Text>
+        </View>
+      );
+    }
+  }
 
   // RegEx de vérification du format du numéro de téléphone
 
   const regExPhoneNum =
     /(\+|00|0)(297|93|244|1264|358|355|376|971|54|374|1684|1268|61|43|994|257|32|229|226|880|359|973|1242|387|590|375|501|1441|591|55|1246|673|975|267|236|1|61|41|56|86|225|237|243|242|682|57|269|238|506|53|5999|61|1345|357|420|49|253|1767|45|1809|1829|1849|213|593|20|291|212|34|372|251|358|679|500|33|298|691|241|44|995|44|233|350|224|590|220|245|240|30|1473|299|502|594|1671|592|852|504|385|509|36|62|44|91|246|353|98|964|354|972|39|1876|44|962|81|76|77|254|996|855|686|1869|82|383|965|856|961|231|218|1758|423|94|266|370|352|371|853|590|212|377|373|261|960|52|692|389|223|356|95|382|976|1670|258|222|1664|596|230|265|60|262|264|687|227|672|234|505|683|31|47|977|674|64|968|92|507|64|51|63|680|675|48|1787|1939|850|351|595|970|689|974|262|40|7|250|966|249|221|65|500|4779|677|232|503|378|252|508|381|211|239|597|421|386|46|268|1721|248|963|1649|235|228|66|992|690|993|670|676|1868|216|90|688|886|255|256|380|598|1|998|3906698|379|1784|58|1284|1340|84|678|681|685|967|27|260|263)(9[976]\d|8[987530]\d|6[987]\d|5[90]\d|42\d|3[875]\d|2[98654321]\d|9[8543210]|8[6421]|6[6543210]|5[87654321]|4[987654310]|3[9643210]|2[70]|7|1)\d{4,20}$/;
-
-  // Fonctions de vérification du remplissage des champs et de la sélection de date
-
-  const emptyFirstNameFieldCheck = () => {
-    if (!firstName) {
-      return firstNameFieldEmptyAlert;
-    }
-  };
-
-  const emptyLastNameFieldCheck = () => {
-    if (!lastName) {
-      return lastNameFieldEmptyAlert;
-    }
-  };
-
-  const dobSelectionCheck = () => {
-    if (!dob) {
-      return dateOfBirthNotSelectedAlert;
-    }
-  };
-
-  const phoneNumberFieldCheck = () => {
-    if (!phoneNumber) {
-      return phoneNumberFieldEmptyAlert;
-    } else if (!regExPhoneNum.test(phoneNumber)) {
-      return phoneNumberWrongFormatAlert;
-    } else {
-    }
-  };
-
-  const areAllFieldsFilled = () => {
-    return allFieldsAreNotFilled;
-  };
 
   // DatePicker (date of birth => dob)
 
@@ -135,59 +116,99 @@ export default function ProfileCreation({ navigation }) {
     setDatePickerVisibility(false);
   };
 
+  function formatDate(date) {
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+    let formattedDate = "";
+    if (day < 10) {
+      formattedDate = `0${day}/`;
+    } else {
+      formattedDate = `${day}/`;
+    }
+
+    if (month < 10) {
+      formattedDate += `0${month}/`;
+    } else {
+      formattedDate += `${month}/`;
+    }
+
+    return `${formattedDate}${year}`;
+  }
+
   const handleConfirm = (date) => {
-    setDob(date);
+    const selectedDate = formatDate(date);
+    setDob(selectedDate);
     hideDatePicker();
   };
+
+  function DisplaySelectedDate() {
+    if (dob) {
+      return (
+        <View>
+          <Text style={styles.displayDob}>
+            Date de naissance sélectionnée : {dob}
+          </Text>
+        </View>
+      );
+    }
+  }
 
   // HANDLE SUBMIT
 
   const handleSubmit = () => {
-    if (!firstName && !lastName && !dob && !phoneNumber) {
-      areAllFieldsFilled();
-    } else {
-      setValidateTyping(true);
-      const formattedPhoneNumber = phoneNumber.split(" ").join("");
-      setPhoneNumber(formattedPhoneNumber);
+    setOnClick(true);
 
-      if ((firstName, lastName, dob, formattedPhoneNumber)) {
-        fetch(`${BACKEND_ADDRESS}/users/completeProfile`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            token: user.token,
-            firstName: firstName,
-            lastName: lastName,
-            dob: dob,
-            phones: [
-              {
+    if (
+      !firstName ||
+      !lastName ||
+      !dob ||
+      !phoneNumber ||
+      !regExPhoneNum.test(phoneNumber)
+    ) {
+      return;
+    }
+
+    const formattedPhoneNumber = phoneNumber.split(" ").join("");
+    setPhoneNumber(formattedPhoneNumber);
+
+    if ((firstName, lastName, dob, formattedPhoneNumber)) {
+      fetch(`${BACKEND_ADDRESS}/users/completeProfile`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          token: user.token,
+          firstName: firstName,
+          lastName: lastName,
+          dob: dob,
+          phones: [
+            {
+              phoneType: "main",
+              number: formattedPhoneNumber,
+              country: null,
+              areaCode: null,
+            },
+          ],
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (date.result) {
+            dispatch(updateName(lastName));
+            dispatch(updateFirstName(firstName));
+            dispatch(
+              addPhone({
                 phoneType: "main",
                 number: formattedPhoneNumber,
                 country: null,
                 areaCode: null,
-              },
-            ],
-          }),
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            if (date.result) {
-              dispatch(updateName(lastName));
-              dispatch(updateFirstName(firstName));
-              dispatch(
-                addPhone({
-                  phoneType: "main",
-                  number: formattedPhoneNumber,
-                  country: null,
-                  areaCode: null,
-                })
-              );
-              dispatch(updateDateOfBirth(dob));
-            }
-          });
-      }
-      navigation.navigate("TagCreation");
+              })
+            );
+            dispatch(updateDateOfBirth(dob));
+          }
+        });
     }
+    navigation.navigate("TagCreation");
   };
 
   return (
@@ -219,7 +240,7 @@ export default function ProfileCreation({ navigation }) {
                   onChangeText={(e) => setFirstName(e)}
                   value={firstName}
                 ></TextInput>
-                {validateTyping && emptyFirstNameFieldCheck()}
+                <FirstNameAlert onceClicked={onClick} />
 
                 <Text style={styles.text}>Nom</Text>
                 <TextInput
@@ -228,7 +249,7 @@ export default function ProfileCreation({ navigation }) {
                   onChangeText={(e) => setLastName(e)}
                   value={lastName}
                 ></TextInput>
-                {validateTyping && emptyLastNameFieldCheck()}
+                <LastNameAlert onceClicked={onClick} />
 
                 <Text style={styles.text}>Date de naissance</Text>
                 <View style={styles.datePickerContainer}>
@@ -244,6 +265,8 @@ export default function ProfileCreation({ navigation }) {
                     maximumDate={today}
                   />
                 </View>
+                <DisplaySelectedDate />
+                <DobAlert onceClicked={onClick} />
 
                 <Text style={styles.text}>Numéro de téléphone portable</Text>
                 <TextInput
@@ -252,8 +275,8 @@ export default function ProfileCreation({ navigation }) {
                   onChangeText={(e) => setPhoneNumber(e)}
                   value={phoneNumber}
                 ></TextInput>
-                {validateTyping && phoneNumberFieldCheck()}
-                {areAllFieldsFilled()}
+                <PhoneNumberEmptyFieldAlert onceClicked={onClick} />
+                <PhoneNumberWrongFormatAlert onceClicked={onClick} />
               </View>
             </View>
 
@@ -349,7 +372,13 @@ const styles = StyleSheet.create({
   },
 
   alertMsg: {
-    color: "red",
+    color: "#D90000",
+    fontSize: 14,
+    fontWeight: "500",
+  },
+
+  displayDob: {
+    color: "#21AC14",
     fontSize: 14,
     fontWeight: "500",
   },
