@@ -159,18 +159,18 @@ export default function ProfileCreation({ navigation }) {
   const handleSubmit = () => {
     setOnClick(true);
 
+    const formattedPhoneNumber = phoneNumber.split(" ").join("");
+    setPhoneNumber(formattedPhoneNumber);
+
     if (
       !firstName ||
       !lastName ||
       !dob ||
       !phoneNumber ||
-      !regExPhoneNum.test(phoneNumber)
+      !regExPhoneNum.test(formattedPhoneNumber)
     ) {
       return;
     }
-
-    const formattedPhoneNumber = phoneNumber.split(" ").join("");
-    setPhoneNumber(formattedPhoneNumber);
 
     if ((firstName, lastName, dob, formattedPhoneNumber)) {
       fetch(`${BACKEND_ADDRESS}/users/completeProfile`, {
@@ -193,7 +193,7 @@ export default function ProfileCreation({ navigation }) {
       })
         .then((response) => response.json())
         .then((data) => {
-          if (date.result) {
+          if (data.result) {
             dispatch(updateName(lastName));
             dispatch(updateFirstName(firstName));
             dispatch(
