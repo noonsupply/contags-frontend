@@ -11,7 +11,6 @@ import HomeScreen from "../screens/HomeScreen";
 import ContactScreen from "../screens/ContactScreen";
 import HomeLoadContact from "../screens/HomeLoadContact";
 import SignInPonctuelScreen from "../screens/SignInPonctuelScreen";
-import ModalSetting from "../screens/ModalSetting";
 
 const Stack = createStackNavigator();
 
@@ -57,16 +56,6 @@ const MainNavigator = () => {
         />
 
         <Stack.Screen
-          name="HomeLoad"
-          options={{ animationEnabled: true, header: () => null }}
-          component={HomeLoadContact}
-        />
-        <Stack.Screen
-          name="HomeLoadContact"
-          options={{ animationEnabled: true, header: () => null }}
-          component={HomeLoadContact}
-        />
-        <Stack.Screen
           name="HomeScreen"
           options={{ animationEnabled: true, header: () => null }}
           component={HomeScreen}
@@ -77,13 +66,6 @@ const MainNavigator = () => {
           options={{ animationEnabled: true, header: () => null }}
           component={ContactScreen}
         />
-
-        <Stack.Screen
-          name="ModalSetting"
-          options={{ animationEnabled: true, header: () => null }}
-          component={ModalSetting}
-        />
-
       </Stack.Navigator>
     </NavigationContainer>
   );
