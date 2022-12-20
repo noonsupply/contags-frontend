@@ -26,7 +26,7 @@ export const usersSlice = createSlice({
     },
 
     updateName: (state, action) => {
-      state.value.name = action.payload;
+      state.value.lastName = action.payload;
     },
 
     updateFirstName: (state, action) => {

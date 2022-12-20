@@ -169,6 +169,8 @@ export default function ProfileCreation({ navigation }) {
       !phoneNumber ||
       !regExPhoneNum.test(formattedPhoneNumber)
     ) {
+
+      // Le return vide sert à stopper le traitement pour éviter de passer à la screen suivante si une information n'est pas renseignée
       return;
     }
 

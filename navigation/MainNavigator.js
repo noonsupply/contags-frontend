@@ -8,8 +8,9 @@ import PasswordScreen from "../screens/PasswordScreen";
 import ProfileCreation from "../screens/ProfileCreation";
 import TagCreation from "../screens/TagCreation";
 import HomeScreen from "../screens/HomeScreen";
-import contactScreen from "../screens/contactScreen";
+import contactScreen from "../screens/ContactScreen";
 import SignInPonctuelScreen from "../screens/SignInPonctuelScreen";
+import HomeLoadContact from "../screens/HomeLoadContact";
 
 const Stack = createStackNavigator();
 
@@ -48,12 +49,17 @@ const MainNavigator = () => {
           component={TagCreation}
         />
         <Stack.Screen
+          name="HomeLoadContact"
+          options={{ animationEnabled: true, header: () => null }}
+          component={HomeLoadContact}
+        />
+        <Stack.Screen
           name="HomeScreen"
           options={{ animationEnabled: true, header: () => null }}
           component={HomeScreen}
         />
         <Stack.Screen
-          name="contactScreen"
+          name="ContactScreen"
           options={{ animationEnabled: true, header: () => null }}
           component={contactScreen}
         />
