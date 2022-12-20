@@ -17,7 +17,7 @@ import { useTogglePasswordVisibility } from "../module/useTogglePasswordVisibili
 import { useTogglePasswordVisibility2 } from "../module/useTogglePasswordVisibility2";
 import { updateToken } from "../reducers/users";
 
-const backendAdress = "http://172.16.191.34:3000";
+const backendAdress = "http://172.16.191.17:3000";
 
 export default function PasswordScreen({ navigation }) {
   const dispatch = useDispatch();
@@ -79,7 +79,7 @@ export default function PasswordScreen({ navigation }) {
     //   return <PwdFormatAlert onceClicked={onClick} />;
     // }
 
-    if (Password1 === Password2) {
+    if (Password1 === Password2 && regexMdp.test(Password1)) {
       console.log("route", user);
       fetch(`${backendAdress}/users/create`, {
         method: "POST",

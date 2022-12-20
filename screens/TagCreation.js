@@ -25,7 +25,6 @@ export default function TagCreation({ navigation }) {
 
   function UserFirstName() {
     const userFirstName = useSelector((state) => state.users.value.firstName);
-    console.log("Le PRENOM de l'utilisateur est:", userFirstName);
     return (
       <View style={styles.tagFullDarkBlue}>
         <Text style={styles.tagTextWhite}>{userFirstName}</Text>
@@ -35,7 +34,6 @@ export default function TagCreation({ navigation }) {
 
   function UserLastName() {
     const userLastName = useSelector((state) => state.users.value.name);
-    console.log("Le NOM de l'utilisateur est:", userLastName);
     return (
       <View style={styles.tagFullDarkBlue}>
         <Text style={styles.tagTextWhite}>{userLastName}</Text>
@@ -44,8 +42,11 @@ export default function TagCreation({ navigation }) {
   }
 
   function UserPhoneNumber() {
-    const userPhoneNumber = useSelector((state) => state.users.value.phones[0].number);
-    console.log("Le NUMERO DE TEL de l'utilisateur est:", userPhoneNumber);
+    const phoneNumberArr = useSelector((state) => state.users.value.phones);
+    const userPhoneNumber = phoneNumberArr.map((mainPhoneNumber) => {
+      return mainPhoneNumber.number
+    })
+    // console.log("Le NUMERO DE TEL de l'utilisateur est:", userPhoneNumber);
     return (
       <View style={styles.tagFullDarkBlue}>
         <Text style={styles.tagTextWhite}>{userPhoneNumber}</Text>
@@ -55,7 +56,6 @@ export default function TagCreation({ navigation }) {
 
   function UserMainEmail() {
     const userMainEmail = useSelector((state) => state.users.value.emailMain);
-    console.log("Le MAIL de l'utilisateur est:", userMainEmail);
     return (
       <View style={styles.tagFullDarkBlue}>
         <Text style={styles.tagTextWhite}>{userMainEmail}</Text>
@@ -67,7 +67,6 @@ export default function TagCreation({ navigation }) {
     <SafeAreaView style={styles.safeAreaView}>
       <StatusBar backgroundColor={"#FFFFFF"} barStyle={"dark-content"} />
 
-      <ScrollView style={styles.scrollView}>
         <KeyboardAvoidingView>
           <View style={styles.globalContainer}>
             <View style={styles.mainContainer}>
@@ -91,25 +90,80 @@ export default function TagCreation({ navigation }) {
                 </Text>
               </View>
 
-              <View style={styles.tagContainer}>
-                <View style={styles.tagFullYellow}>
-                  <Text style={styles.tagTextWhite}>🥐 Pâtisserie</Text>
+
+              <View style={styles.templateTagContainer}>
+              <ScrollView>
+                <View style={styles.tagFullDarkBlue}>
+                  <Text style={styles.tagTextWhite}>Amis</Text>
                 </View>
-                <View style={styles.tagFullPurple}>
-                  <Text style={styles.tagTextWhite}>🍷 Vin</Text>
+                <View style={styles.tagFullDarkBlue}>
+                  <Text style={styles.tagTextWhite}>Famille</Text>
                 </View>
-                <View style={styles.tagFullGreen}>
-                  <Text style={styles.tagTextWhite}>⚽ Football</Text>
+                <View style={styles.tagFullDarkBlue}>
+                  <Text style={styles.tagTextWhite}>Collègues</Text>
                 </View>
-                <View style={styles.tagFullBlack}>
+                <View style={styles.tagFullDarkBlue}>
                   <Text style={styles.tagTextWhite}>
-                    🃏 Magic: the Gathering
+                    Football
                   </Text>
                 </View>
-                <View style={styles.tagFullGray}>
-                  <Text style={styles.tagTextWhite}>🖥️ Informatique</Text>
+                <View style={styles.tagFullDarkBlue}>
+                  <Text style={styles.tagTextWhite}>Basket</Text>
                 </View>
+                <View style={styles.tagFullDarkBlue}>
+                  <Text style={styles.tagTextWhite}>Tennis</Text>
+                </View>
+                <View style={styles.tagFullDarkBlue}>
+                  <Text style={styles.tagTextWhite}>Rugby</Text>
+                </View>
+                <View style={styles.tagFullDarkBlue}>
+                  <Text style={styles.tagTextWhite}>Lecture</Text>
+                </View>
+                <View style={styles.tagFullDarkBlue}>
+                  <Text style={styles.tagTextWhite}>Cinéma</Text>
+                </View>
+                <View style={styles.tagFullDarkBlue}>
+                  <Text style={styles.tagTextWhite}>Jeux</Text>
+                </View>
+                <View style={styles.tagFullDarkBlue}>
+                  <Text style={styles.tagTextWhite}>Randonnée</Text>
+                </View>
+                <View style={styles.tagFullDarkBlue}>
+                  <Text style={styles.tagTextWhite}>Discord</Text>
+                </View>
+                <View style={styles.tagFullDarkBlue}>
+                  <Text style={styles.tagTextWhite}>Twitch</Text>
+                </View>
+                <View style={styles.tagFullDarkBlue}>
+                  <Text style={styles.tagTextWhite}>Facebook</Text>
+                </View>
+                <View style={styles.tagFullDarkBlue}>
+                  <Text style={styles.tagTextWhite}>Instagram</Text>
+                </View>
+                <View style={styles.tagFullDarkBlue}>
+                  <Text style={styles.tagTextWhite}>Tik Tok</Text>
+                </View>
+                <View style={styles.tagFullDarkBlue}>
+                  <Text style={styles.tagTextWhite}>Twitter</Text>
+                </View>
+                <View style={styles.tagFullDarkBlue}>
+                  <Text style={styles.tagTextWhite}>Youtube</Text>
+                </View>
+                <View style={styles.tagFullDarkBlue}>
+                  <Text style={styles.tagTextWhite}>École</Text>
+                </View>
+                <View style={styles.tagFullDarkBlue}>
+                  <Text style={styles.tagTextWhite}>Collège</Text>
+                </View>
+                <View style={styles.tagFullDarkBlue}>
+                  <Text style={styles.tagTextWhite}>Lycée</Text>
+                </View>
+                <View style={styles.tagFullDarkBlue}>
+                  <Text style={styles.tagTextWhite}>Université</Text>
+                </View>
+                </ScrollView>
               </View>
+
             </View>
 
             <View style={styles.navigationContainer}>
@@ -136,7 +190,6 @@ export default function TagCreation({ navigation }) {
             </View>
           </View>
         </KeyboardAvoidingView>
-      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -151,20 +204,15 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
   },
 
-  scrollView: {
-    flex: 1,
-  },
-
   globalContainer: {
-    flex: 1,
-    paddingVertical: 25,
+    height: "100%",
+    width: "100%",
   },
 
   // Main
 
   mainContainer: {
     backgroundColor: "green",
-    height: "90%",
     paddingVertical: 25,
   },
 
@@ -195,17 +243,65 @@ const styles = StyleSheet.create({
     marginRight: 25,
   },
 
+  // Navigation
+
+  navigationContainer: {
+    backgroundColor: "orange",
+    height: "10%",
+    // paddingVertical: 10,
+    flexWrap: "wrap",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    // alignItems: "center",
+    alignContent: "center",
+    paddingHorizontal: 25,
+  },
+
+  btnBack: {
+    alignItems: "center",
+    backgroundColor: "#0031B8",
+    borderRadius: 50,
+    height: 50,
+    justifyContent: "center",
+    width: 50,
+  },
+
+  btnForward: {
+    alignItems: "center",
+    backgroundColor: "#0031B8",
+    borderRadius: 50,
+    height: 50,
+    justifyContent: "center",
+    width: 50,
+  },
+
+  btnSkip: {
+    alignItems: "center",
+    backgroundColor: "#FFF",
+    borderRadius: 50,
+    height: 50,
+    justifyContent: "center",
+    paddingHorizontal: 10,
+  },
+
+  btnText: {
+    color: "#0031B8",
+    fontSize: 14,
+    fontWeight: "bold",
+  },
+
   // Tags
 
-  tagContainer: {
-    alignItems: "center",
+  templateTagContainer: {
+    alignItems: "flex-start",
     flexDirection: "row",
     flexWrap: "wrap",
-    justifyContent: "flex-start",
+    // justifyContent: "center",
     marginBottom: 15,
     marginTop: 15,
     paddingLeft: 25,
     paddingRight: 25,
+    height: 250,
   },
 
   tagTextBlue: {
@@ -220,6 +316,18 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "bold",
     marginBottom: 10,
+  },
+
+  tagFullDarkBlue: {
+    alignItems: "center",
+    backgroundColor: "#0031B8",
+    borderRadius: 20,
+    fontSize: 12,
+    flexShrink: 1,
+    height: 35,
+    justifyContent: "flex-end",
+    marginVertical: 4,
+    marginHorizontal: 2,
   },
 
   tagFullGray: {
@@ -302,21 +410,7 @@ const styles = StyleSheet.create({
     paddingRight: 12.5,
   },
 
-  tagFullDarkBlue: {
-    alignItems: "center",
-    backgroundColor: "#0031B8",
-    borderRadius: 20,
-    fontSize: 12,
-    flexShrink: 1,
-    height: 35,
-    justifyContent: "flex-end",
-    marginBottom: 12.5,
-    marginLeft: 5,
-    marginRight: 5,
-    marginTop: 12.5,
-    paddingLeft: 12.5,
-    paddingRight: 12.5,
-  },
+
 
   // tagGray: {
   //   alignItems: "center",
@@ -426,50 +520,5 @@ const styles = StyleSheet.create({
   //   paddingRight: 12.5,
   // },
 
-  // Navigation
-
-  navigationContainer: {
-    backgroundColor: "orange",
-    height: "20%",
-    // paddingVertical: 10,
-    flexWrap: "wrap",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    // alignItems: "center",
-    alignContent: "center",
-    paddingHorizontal: 25,
-  },
-
-  btnBack: {
-    alignItems: "center",
-    backgroundColor: "#0031B8",
-    borderRadius: 50,
-    height: 50,
-    justifyContent: "center",
-    width: 50,
-  },
-
-  btnForward: {
-    alignItems: "center",
-    backgroundColor: "#0031B8",
-    borderRadius: 50,
-    height: 50,
-    justifyContent: "center",
-    width: 50,
-  },
-
-  btnSkip: {
-    alignItems: "center",
-    backgroundColor: "#FFF",
-    borderRadius: 50,
-    height: 50,
-    justifyContent: "center",
-    paddingHorizontal: 10,
-  },
-
-  btnText: {
-    color: "#0031B8",
-    fontSize: 14,
-    fontWeight: "bold",
-  },
+  
 });
