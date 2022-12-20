@@ -8,7 +8,7 @@ import PasswordScreen from "../screens/PasswordScreen";
 import ProfileCreation from "../screens/ProfileCreation";
 import TagCreation from "../screens/TagCreation";
 import HomeScreen from "../screens/HomeScreen";
-import contactScreen from "../screens/contactScreen";
+import ContactScreen from "../screens/ContactScreen";
 import SignInPonctuelScreen from "../screens/SignInPonctuelScreen";
 
 const Stack = createStackNavigator();
@@ -53,9 +53,9 @@ const MainNavigator = () => {
           component={HomeScreen}
         />
         <Stack.Screen
-          name="Contact"
+          name="ContactScreen"
           options={{ animationEnabled: true, header: () => null }}
-          component={contactScreen}
+          component={ContactScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>

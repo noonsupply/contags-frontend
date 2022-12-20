@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   value: {
-    name: "",
+    lastName: "",
     firstName: "",
     token: "",
     emailMain: "gabin.subri@gmail.com",
@@ -26,8 +26,8 @@ export const usersSlice = createSlice({
       state.value.emails.push(action.payload);
     },
 
-    updateName: (state, action) => {
-      state.value.name = action.payload;
+    updateLastName: (state, action) => {
+      state.value.lastName = action.payload;
     },
 
     updateFirstName: (state, action) => {
@@ -55,7 +55,7 @@ export const usersSlice = createSlice({
 export const {
   updateEmailMain,
   addEmail,
-  updateName,
+  updateLastName,
   updateFirstName,
   updateToken,
   addPhone,
