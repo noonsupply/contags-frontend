@@ -16,7 +16,7 @@ import users from "../reducers/users";
 
 export default function TagCreation({ navigation }) {
   const handleSubmit = () => {
-    navigation.navigate("contactScreen");
+    navigation.navigate("HomeLoadContact");
   };
 
   const handleReturn = () => {
