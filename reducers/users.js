@@ -10,7 +10,7 @@ const initialState = {
     phones: [],
     dob: null,
     lastConnection: null,
-    tagsPerso : [],
+    tagsPerso: [],
   },
 };
 
@@ -26,7 +26,7 @@ export const usersSlice = createSlice({
       state.value.emails.push(action.payload);
     },
 
-    updateName: (state, action) => {
+    updateLastName: (state, action) => {
       state.value.lastName = action.payload;
     },
 
@@ -50,9 +50,9 @@ export const usersSlice = createSlice({
       state.value.lastConnection = action.payload;
     },
 
-    updateTagsPerso:(state, action) => {
+    updateTagsPerso: (state, action) => {
       state.value.tagsPerso = action.payload;
-      console.log("user", state.value)
+      console.log("user", state.value);
     },
 
     //updateTags permet de fusionner le tableau de tags du user avec un nouveau tableau de tag
@@ -69,17 +69,17 @@ export const usersSlice = createSlice({
     //       }
     //   }
     //  }else{
-    //      // il n'y avait pas de tags, on ajoute directement tous les tags/         
+    //      // il n'y avait pas de tags, on ajoute directement tous les tags/
     //      state.value.tagsPerso = action.payload.tagsPerso ;
     //  }
-  //},
+    //},
   },
 });
 
 export const {
   updateEmailMain,
   addEmail,
-  updateName,
+  updateLastName,
   updateFirstName,
   updateToken,
   addPhone,

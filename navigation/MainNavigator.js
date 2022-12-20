@@ -11,14 +11,15 @@ import HomeScreen from "../screens/HomeScreen";
 import ContactScreen from "../screens/ContactScreen";
 import HomeLoadContact from "../screens/HomeLoadContact";
 import SignInPonctuelScreen from "../screens/SignInPonctuelScreen";
+import HomeRechercheScreen from "../screens/HomeRechercheScreen";
 
 const Stack = createStackNavigator();
 
 const MainNavigator = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="HomeLoadContact">
-       <Stack.Screen
+      <Stack.Navigator initialRouteName="SpashScreen">
+        <Stack.Screen
           name="Splash"
           options={{ animationEnabled: false, header: () => null }}
           component={SplashScreen}
@@ -48,13 +49,11 @@ const MainNavigator = () => {
           options={{ animationEnabled: true, header: () => null }}
           component={TagCreation}
         />
-
         <Stack.Screen
           name="HomeLoadContact"
           options={{ animationEnabled: true, header: () => null }}
           component={HomeLoadContact}
         />
-
         <Stack.Screen
           name="HomeScreen"
           options={{ animationEnabled: true, header: () => null }}
@@ -66,6 +65,12 @@ const MainNavigator = () => {
           options={{ animationEnabled: true, header: () => null }}
           component={ContactScreen}
         />
+
+        {/* <Stack.Screen
+          name="HomeRechercheScreen"
+          options={{ animationEnabled: true, header: () => null }}
+          component={HomeRechercheScreen}
+        /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );
