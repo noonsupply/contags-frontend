@@ -17,6 +17,10 @@ import { useState, useEffect } from "react";
 import { setContact, updateContact } from "../reducers/contacts";
 
 
+ //creation de la sidebar
+
+
+
 
 export default function ContactScreen({ route, navigation }) {
   const dispatch = useDispatch();
@@ -26,8 +30,10 @@ export default function ContactScreen({ route, navigation }) {
 
   //sauvegarde de l'ancienne data du contact
   const oldContacts = {
-    lastName: contacts[personne.key].lastName,
-    firstName: contacts[personne.key].firstName,
+    //lastName: contacts[personne.key].lastName,
+    //firstName: contacts[personne.key].firstName,
+    lastName: "Thorreau",
+    firstName: "Florian"
   };
 
   //initialisation des états
@@ -160,28 +166,27 @@ dispatch(
 
   return (
     <KeyboardAvoidingView behavior="position" style={styles.container}>
-      {/* <View style={styles.caseHeader}>
-         <View style={styles.header}>
+      <View style={styles.caseHeader}>
+        <View style={styles.header}>
           <FontAwesome name="chevron-left" size={20} color="#0031B8" />
           <Entypo.Button
             //onPress={() => {toggleDrawer}}
             name="dots-three-vertical"
-            size={0}
+            size={24}
             color="#0031B8"
           />
-        </View> 
-      </View> */}
-      {/* <View style={styles.icon}>
+        </View>
+      </View>
+      <View style={styles.icon}>
         <FontAwesome name="user-circle" size={100} color="#0031B8" />
-      </View> */}
-      {/* <View style={styles.fastAction}>
+      </View>
+      <View style={styles.fastAction}>
         <FontAwesome name="phone" size={30} color="#0031B8" />
         <Entypo name="message" size={30} color="#0031B8" />
         <FontAwesome name="envelope" size={30} color="#0031B8" />
         <FontAwesome name="paper-plane" size={30} color="#0031B8" />
-      </View> */}
+      </View>
       <View style={styles.caseBody}>
-        <Text> DEBUT</Text>
         <View style={styles.nameandfirst}>
           <View style={styles.casePrenom}>
             <TextInput
@@ -281,20 +286,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#ffffff",
-    height : "100%",
-    width : "100%",
   },
   caseHeader: {
     alignItems: "center",
     marginTop: 40,
-    height : 0,
   },
   header: {
     flexDirection: "row",
     marginTop: "5%",
     justifyContent: "space-between",
     width: "90%",
-    height: 0,
   },
   icon: {
     marginTop: "5%",
