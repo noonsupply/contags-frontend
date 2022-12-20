@@ -18,7 +18,7 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import users from "../reducers/users";
 import {
   updateDateOfBirth,
-  updateName,
+  updateLastName,
   updateFirstName,
   addPhone,
 } from "../reducers/users";
@@ -196,7 +196,7 @@ export default function ProfileCreation({ navigation }) {
         .then((response) => response.json())
         .then((data) => {
           if (data.result) {
-            dispatch(updateName(lastName));
+            dispatch(updateLastName(lastName));
             dispatch(updateFirstName(firstName));
             dispatch(
               addPhone({
