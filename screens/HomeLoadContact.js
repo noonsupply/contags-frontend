@@ -14,23 +14,23 @@ import * as Contacts from "expo-contacts";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import { useDispatch } from 'react-redux';
-import {setContact} from "../reducers/contacts"
+import { useDispatch } from "react-redux";
+import { setContact } from "../reducers/contacts";
+import { localeData } from "moment/moment";
 //import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-
-export default function HomeLoadContact({navigation}) {
+export default function HomeLoadContact({ navigation }) {
   const dispatch = useDispatch();
 
   const contacts = useSelector((state) => state.contacts.value);
+  const user = useSelector((state) => state.users.value);
 
   let [error, setError] = useState(undefined);
   let [myContacts, setMyContacts] = useState([]);
 
-  const BACKEND_ADDRESS = "http://172.16.188.143:3000";
+  const BACKEND_ADDRESS = "http://172.17.188.10:3000";
 
   useEffect(() => {
-
     (async () => {
       const { status } = await Contacts.requestPermissionsAsync();
       if (status === "granted") {
@@ -45,27 +45,39 @@ export default function HomeLoadContact({navigation}) {
         });
 
         if (data.length > 0) {
-          const contactPush = data.map(element => { 
+          const contactPush = data.map((element) => {
             const tableauEmail = element.emails;
-            let mailTableau = []
-            if(tableauEmail!==undefined){
-              
-            tableauEmail.forEach(emailElement => mailTableau.push({emailType: emailElement.label, email: emailElement.email }));
+            let mailTableau = [];
+            if (tableauEmail !== undefined) {
+              tableauEmail.forEach((emailElement) =>
+                mailTableau.push({
+                  emailType: emailElement.label,
+                  email: emailElement.email,
+                })
+              );
             }
 
             const tableauPhone = element.phoneNumbers;
-            let phoneTableau = []
-            tableauPhone.forEach(phoneElement => phoneTableau.push({phoneType: phoneElement.label, number: phoneElement.number, country: phoneElement.countryCode, areaCode: phoneElement.countryCode }));
+            let phoneTableau = [];
+            if (tableauPhone) {
+              tableauPhone.forEach((phoneElement) =>
+                phoneTableau.push({
+                  phoneType: phoneElement.label,
+                  number: phoneElement.number,
+                  country: "",
+                  areaCode: "",
+                })
+              );
+            }
+            return {
+              lastName: element.lastName,
+              firstName: element.firstName,
+              emails: mailTableau,
+              phones: phoneTableau,
+            };
+          });
 
-            return{
-            lastName: element.lastName,
-            firstName: element.firstName,
-            emails: mailTableau,
-            phones: phoneTableau,
-          }})
-          
           setMyContacts(contactPush);
-          
         } else {
           setError("No contacts found");
         }
@@ -74,24 +86,25 @@ export default function HomeLoadContact({navigation}) {
       }
     })();
   }, []);
-  const  handleAddContactAuto = () => {
-
-     fetch(`${BACKEND_ADDRESS}/users/addAllContact`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          token: "t320Oc5FBgBjccN3hoqA334j7sT5XO5I",
-          contacts: myContacts,
-        }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if(data.result){
-            dispatch(setContact(myContacts))
-          }
-          alert("Import des contacts réalisé avec succès")
+  const handleAddContactAuto = () => {
+    fetch(`${BACKEND_ADDRESS}/users/addAllContact`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        token: user.token,
+        contacts: myContacts,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("data", data);
+        if (data.result) {
+          dispatch(setContact(myContacts));
+          alert("Import des contacts réalisé avec succès");
           navigation.navigate("HomeScreen");
-        });
+        }
+      });
+    alert("coucou");
   };
 
   let getContactData = (contacts, property) => {
@@ -141,7 +154,7 @@ export default function HomeLoadContact({navigation}) {
           backgroundColor: "#DCDCDC",
           width: "80%",
           height: "5%",
-          borderRadius: "5px",
+          borderRadius: 5,
           paddingLeft: 15,
           marginTop: 15,
         }}
@@ -152,7 +165,7 @@ export default function HomeLoadContact({navigation}) {
         style={{
           color: "#595959",
           fontWeight: "1px",
-          fontSize: "18px",
+          fontSize: 18,
           paddingTop: 10,
           marginTop: 200,
           textAlign: "center",
@@ -183,7 +196,7 @@ export default function HomeLoadContact({navigation}) {
             style={{
               color: "#0031b8",
               fontWeight: "1px",
-              fontSize: "18px",
+              fontSize: 18,
               textAlign: "center",
               fontWeight: "bold",
               textAlignVertical: "center",
@@ -191,9 +204,7 @@ export default function HomeLoadContact({navigation}) {
           >
             Importer mes contacts
           </Text>
-          <Text
-            style={{ color: "#0031b8", fontWeight: "bold", fontSize: "30px" }}
-          >
+          <Text style={{ color: "#0031b8", fontWeight: "bold", fontSize: 30 }}>
             {"   "}+
           </Text>
         </Text>

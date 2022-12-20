@@ -1,37 +1,58 @@
+import * as React from "react";
 import {
-  StyleSheet,
-  Text,
-  TextInput,
   View,
-  Image,
+  useWindowDimensions,
+  StyleSheet,
   TouchableOpacity,
-  Pressable,
-  KeyboardAvoidingView,
+  Text,
   ScrollView,
-  Button,
+  TextInput,
 } from "react-native";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
+import { TabView, SceneMap } from "react-native-tab-view";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Entypo } from "@expo/vector-icons";
-import { EvilIcons } from "@expo/vector-icons";
-import { useSelector } from "react-redux";
-import ContactScreen from "./ContactScreen";
 
-export default function HomeRechercheScreen({ navigation }) {
-  const addContact = useSelector((state) => state.contacts.value);
+import FontAwesome from "react-native-vector-icons/FontAwesome";
 
-  const contacts = addContact.map((data, i) => {
-    const tableauPhone = data.phones[0].number;
-    const tableauEmail = data.emails;
-    const key = i;
+export default function TabViewExample() {
+  const TablA = [
+    { lastName: "Wayne", firstName: "Rania" },
+    { lastName: "Papin", firstName: "Yasmine" },
+    { lastName: "François", firstName: "Paul" },
+    { lastName: "Gump", firstName: "Lucas" },
+    { lastName: "Al-Khwarizmi", firstName: "Nicolas" },
+    { lastName: "Giroud", firstName: "Josettte" },
+    { lastName: "Al-Khwarizmi", firstName: "Hélène" },
+    { lastName: "Camus", firstName: "Pierre" },
+    { lastName: "Wayne", firstName: "Julien" },
+    { lastName: "Camus", firstName: "Léa" },
+    { lastName: "Green", firstName: "Noémie" },
+    { lastName: "Turing", firstName: "Patrice" },
+    { lastName: "Curry", firstName: "Léa" },
+    { lastName: "Wilde", firstName: "Gwenael" },
+    { lastName: "Dick", firstName: "Mohamed" },
+  ];
+  const TablB = [
+    { lastName: "Patulacci", fisrtName: "Lucette" },
+    { lastName: "Cooper", fisrtName: "Yvon" },
+    { lastName: "Gump", fisrtName: "Ryan" },
+    { lastName: "Pitt", fisrtName: "Paul" },
+    { lastName: "Brown", fisrtName: "Nicolas" },
+    { lastName: "Pitt", fisrtName: "Olivier" },
+    { lastName: "Kenobi", fisrtName: "Sharon" },
+    { lastName: "Poirot", fisrtName: "Pierre" },
+    { lastName: "Al-Khwarizmi", fisrtName: "Odile" },
+    { lastName: "Papin", fisrtName: "Ryan" },
+    { lastName: "Mbappé", fisrtName: "Yasmine" },
+    { lastName: "Söze", fisrtName: "Alexandre" },
+    { lastName: "Durden", fisrtName: "Jean-Pierre" },
+    { lastName: "Patulacci", fisrtName: "Julien" },
+    { lastName: "Turing", fisrtName: "Ryan" },
+  ];
 
-    let email;
-
-    if (tableauEmail !== undefined) {
-      email = Object.values(tableauEmail);
-    }
-
+  const DisplayTabA = TablA.map((Element, index) => {
     return (
-      <View style={styles.container} key={i}>
+      <View style={styles.container} key={index}>
         <TouchableOpacity
           style={styles.case}
           onPress={() =>
@@ -46,7 +67,7 @@ export default function HomeRechercheScreen({ navigation }) {
             <FontAwesome name="user-circle" size={35} color="#0031B8" />
           </View>
           <Text style={styles.name}>
-            {data.name} {data.firstName}
+            {Element.lastName} {Element.firstName}
           </Text>
           <TouchableOpacity style={styles.param}>
             <Entypo name="dots-three-vertical" size={24} color="black" />
@@ -56,37 +77,87 @@ export default function HomeRechercheScreen({ navigation }) {
     );
   });
 
-  return (
-    <ScrollView>
-      <View style={styles.container}>{contacts}</View>
-      <View style={styles.contactContainer}></View>
-
-      <View style={styles.btnContainer}>
-        <Text>Ajouter manuellement</Text>
+  const DisplayTabB = TablB.map((Element, index) => {
+    return (
+      <View style={styles.container} key={index}>
         <TouchableOpacity
-          style={styles.btnAddContact}
-          onPress={() => alert("Bonjour")}
+          style={styles.case}
+          onPress={() =>
+            navigation.navigate("ContactScreen", {
+              lastName: data.lastName,
+              firstName: data.firstName,
+              /* dob: data.dob, phonenr: tableauPhone, email : email, */ key: key,
+            })
+          }
         >
-          <FontAwesome color="#ffffff" name="plus" />
+          <View style={styles.caseIcon}>
+            <FontAwesome name="user-circle" size={35} color="#0031B8" />
+          </View>
+          <Text style={styles.name}>
+            {Element.lastName} {Element.firstName}
+          </Text>
+          <TouchableOpacity style={styles.param}>
+            <Entypo name="dots-three-vertical" size={24} color="black" />
+          </TouchableOpacity>
         </TouchableOpacity>
       </View>
+    );
+  });
+
+  const layout = useWindowDimensions();
+  const FirstRoute = () => (
+    <ScrollView>
+      <View style={styles.container}>{DisplayTabA}</View>
+      <View style={styles.contactContainer}></View>
+
+      <View style={styles.btnContainer}></View>
     </ScrollView>
+  );
+
+  const SecondRoute = () => (
+    <ScrollView>
+      <View style={styles.container}>{DisplayTabB}</View>
+      <View style={styles.contactContainer}></View>
+
+      <View style={styles.btnContainer}></View>
+    </ScrollView>
+  );
+  const renderScene = SceneMap({
+    first: FirstRoute,
+    second: SecondRoute,
+  });
+
+  const [index, setIndex] = React.useState(0);
+  const [routes] = React.useState([
+    { key: "first", title: "First" },
+    { key: "second", title: "Second" },
+  ]);
+
+  return (
+    <SafeAreaProvider style={styles.SAV}>
+      <View>
+        <TextInput placeholder="🔎 Search Bar                                                                             ✖️" />
+      </View>
+      <TabView
+        navigationState={{ index, routes }}
+        renderScene={renderScene}
+        onIndexChange={setIndex}
+        initialLayout={{ width: layout.width }}
+      />
+    </SafeAreaProvider>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  SAV: {
     flex: 1,
+    height: "100%",
+  },
+  container: {
     backgroundColor: "#ffffff",
     alignItems: "center",
     justifyContent: "center",
     marginTop: 20,
-  },
-
-  contactContainer: {
-    flex: 0.5,
-    height: 100,
-    marginTop: 50,
   },
 
   case: {
@@ -98,10 +169,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    shadowColor: "black",
-    shadowOffset: { width: -2, height: 4 },
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
   },
   caseIcon: {
     borderRadius: 70,

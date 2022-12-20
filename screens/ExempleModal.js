@@ -1,35 +1,35 @@
 import React from "react";
 import {
-    TextInput,
-    SafeAreaView,
-    Modal,
-    StyleSheet,
-    Text,
-    Pressable,
-    View,
-} from 'react-native';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import FontAwesomeIcon from '@expo/vector-icons'
+  TextInput,
+  SafeAreaView,
+  Modal,
+  StyleSheet,
+  Text,
+  Pressable,
+  View,
+} from "react-native";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
+import FontAwesomeIcon from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 //import 'font-awesome/css/font-awesome.min.css'
 import { useState } from "react";
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
 
 import TagsDefinition from "../components/TagsDefinition";
 
-const backendAdress = "http://172.16.191.11:3000";
+const backendAdress = "http://172.17.188.10:3000";
 
 export default function ExempleModal() {
   const [modalVisible, setModalVisible] = useState(false);
 
-  const contacts = useSelector((state) => state.contacts.value);
-  const user = useSelector((state) => state.users.value);
+  const contacts = useSelector((state) => state.contacts.value);
+  const user = useSelector((state) => state.users.value);
 
-  const handleCloseModal =() =>{
+  const handleCloseModal = () => {
     setModalVisible(false);
-  }
+  };
 
-  const handleSave=() =>{
+  const handleSave = () => {
     console.log("le user : ", user);
     fetch(`${backendAdress}/users/saveTagsPerso`, {
       method: "POST",
@@ -42,15 +42,15 @@ export default function ExempleModal() {
       .then((response) => response.json())
 
       .then((data) => {
-        console.log("rep route : ",data)
-      })
-  }
-  
-  console.log('tags', contacts[2].tags)
+        console.log("rep route : ", data);
+      });
+  };
+
+  console.log("tags", contacts[2].tags);
   return (
     <View style={styles.container}>
-        {/* <TagsDefinition /> */}
-        <Modal
+      {/* <TagsDefinition /> */}
+      <Modal
         animationType="slide"
         transparent={true}
         visible={modalVisible}
@@ -58,13 +58,16 @@ export default function ExempleModal() {
           Alert.alert("Modal has been closed.");
           setModalVisible(!modalVisible);
         }}
-      ><View style={styles.modalContainer}>
-        <TagsDefinition handleCloseModal={handleCloseModal} 
-                        contact={null}
-                        user={user}
-      /></View>
+      >
+        <View style={styles.modalContainer}>
+          <TagsDefinition
+            handleCloseModal={handleCloseModal}
+            contact={null}
+            user={user}
+          />
+        </View>
       </Modal>
-        <Pressable
+      <Pressable
         style={[styles.button, styles.buttonOpen]}
         onPress={() => setModalVisible(true)}
       >
@@ -73,7 +76,7 @@ export default function ExempleModal() {
 
       <Pressable
         style={[styles.button, styles.buttonOpen]}
-        onPress={() => handleSave() }
+        onPress={() => handleSave()}
       >
         <Text style={styles.textStyle}>Save DB</Text>
       </Pressable>
@@ -82,28 +85,27 @@ export default function ExempleModal() {
 }
 
 const styles = StyleSheet.create({
-
   container: {
     flex: 1,
     height: "100%",
     width: "100%",
-    backgroundColor: 'blue',
-    padding : 5,
-    alignItems : "center",
-    justifyContent : "center"
+    backgroundColor: "blue",
+    padding: 5,
+    alignItems: "center",
+    justifyContent: "center",
   },
 
   modalContainer: {
     width: "90%",
     height: "95%",
-    alignItems : "center",
-    marginTop:10,
+    alignItems: "center",
+    marginTop: 10,
   },
 
   button: {
     borderRadius: 20,
     padding: 10,
-    elevation: 2
+    elevation: 2,
   },
   buttonOpen: {
     backgroundColor: "#F194FF",
@@ -114,8 +116,6 @@ const styles = StyleSheet.create({
   textStyle: {
     color: "white",
     fontWeight: "bold",
-    textAlign: "center"
+    textAlign: "center",
   },
- 
-
 });

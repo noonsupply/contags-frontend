@@ -16,35 +16,37 @@ import { EvilIcons } from "@expo/vector-icons";
 import { useSelector } from "react-redux";
 import ContactScreen from "./ContactScreen";
 
-
 export default function HomeScreen({ navigation }) {
   const addContact = useSelector((state) => state.contacts.value);
-
-
-
+  console.log("addContact", addContact);
   const contacts = addContact.map((data, i) => {
-
-    const tableauPhone = data.phones[0].number;
-    const tableauEmail = data.emails;
+    // const tableauPhone = data.phones[0].number;
+    // const tableauEmail = data.emails;
     const key = i;
 
-let email
+    // let email;
 
-if(tableauEmail!== undefined){
-
-  email = Object.values(tableauEmail)
-}
-    
-
+    // if (tableauEmail !== undefined) {
+    //   email = Object.values(tableauEmail);
+    // }
 
     return (
       <View style={styles.container} key={i}>
-        <TouchableOpacity style={styles.case} onPress={() => navigation.navigate('ContactScreen', {lastName: data.lastName, firstName: data.firstName, /* dob: data.dob, phonenr: tableauPhone, email : email, */ key: key})}>
+        <TouchableOpacity
+          style={styles.case}
+          onPress={() =>
+            navigation.navigate("ContactScreen", {
+              lastName: data.lastName,
+              firstName: data.firstName,
+              /* dob: data.dob, phonenr: tableauPhone, email : email, */ key: key,
+            })
+          }
+        >
           <View style={styles.caseIcon}>
             <FontAwesome name="user-circle" size={35} color="#0031B8" />
           </View>
           <Text style={styles.name}>
-            {data.name} {data.firstName}
+            {data.lastName} {data.firstName}
           </Text>
           <TouchableOpacity style={styles.param}>
             <Entypo name="dots-three-vertical" size={24} color="black" />
@@ -56,19 +58,18 @@ if(tableauEmail!== undefined){
 
   return (
     <ScrollView>
-      <View  style={styles.container}>{contacts}</View>
-      <View style={styles.contactContainer} ></View>
-      
-        <View style={styles.btnContainer}>
-          <Text>Ajouter manuellement</Text>
-          <TouchableOpacity
-            style={styles.btnAddContact}
-            onPress={() => alert("Bonjour")}
-          >
-            <FontAwesome color="#ffffff" name="plus" />
-          </TouchableOpacity>
-        </View>
-      
+      <View style={styles.container}>{contacts}</View>
+      <View style={styles.contactContainer}></View>
+
+      <View style={styles.btnContainer}>
+        <Text>Ajouter manuellement</Text>
+        <TouchableOpacity
+          style={styles.btnAddContact}
+          onPress={() => alert("Bonjour")}
+        >
+          <FontAwesome color="#ffffff" name="plus" />
+        </TouchableOpacity>
+      </View>
     </ScrollView>
   );
 }
@@ -97,10 +98,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    shadowColor: "black",
-    shadowOffset: { width: -2, height: 4 },
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
+    // shadowColor: "black",
+    // shadowOffset: { width: -2, height: 4 },
+    // shadowOpacity: 0.2,
+    // shadowRadius: 3,
   },
   caseIcon: {
     borderRadius: 70,

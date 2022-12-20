@@ -23,7 +23,7 @@ import {
   addPhone,
 } from "../reducers/users";
 
-const BACKEND_ADDRESS = "http://172.16.188.143:3000";
+const BACKEND_ADDRESS = "http://172.17.188.10:3000";
 
 export default function ProfileCreation({ navigation }) {
   // useSelector & useDispatch

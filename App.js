@@ -1,5 +1,5 @@
 import MainNavigator from "./navigation/MainNavigator";
-import HomeScreen from "./screens/HomeScreen"
+import HomeScreen from "./screens/HomeScreen";
 
 import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
@@ -16,6 +16,7 @@ import SplashScreen from "./screens/SplashScreen";
 import MailScreen from "./screens/MailScreen";
 import ProfileCreation from "./screens/ProfileCreation";
 import TagCreation from "./screens/TagCreation";
+import HomeRechercheScreen from "./screens/HomeRechercheScreen";
 
 const store = configureStore({
   reducer: { users, contacts },
@@ -24,8 +25,7 @@ const store = configureStore({
 export default function App() {
   return (
     <Provider store={store}>
-
-    <MainNavigator />
+      <HomeRechercheScreen />
     </Provider>
   );
 }
