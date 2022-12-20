@@ -30,7 +30,7 @@ export default function HomeLoadContact({navigation}) {
   let [myContacts, setMyContacts] = useState([]);
 
   const BACKEND_ADDRESS = setAdress(); //"http://192.168.1.92:3000";
-console.log(BACKEND_ADDRESS);
+// console.log(BACKEND_ADDRESS);
   useEffect(() => {
 
     (async () => {
