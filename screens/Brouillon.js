@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   ImageBackground,
   Platform,
@@ -12,9 +11,7 @@ import {
 import { AutocompleteDropdown } from "react-native-autocomplete-dropdown";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { useState } from 'react';
-import { ImageBackground, Platform, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
 //import { AutocompleteDropdown } from 'react-native-autocomplete-dropdown';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import Tag from "../components/Tag";
 

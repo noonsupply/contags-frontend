@@ -10,7 +10,6 @@ import HomeLoadContact from "./screens/HomeLoadContact";
 import Brouillon from "./screens/Brouillon";
 import ExempleModal from "./screens/ExempleModal";
 import ExempleSearchBar from "./screens/ExempleSearchBar";
-import HomeLoadContact from "./screens/HomeLoadContact";
 
 import TagsDefinition from "./components/TagsDefinition";
 import SplashScreen from "./screens/SplashScreen";

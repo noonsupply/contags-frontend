@@ -16,39 +16,21 @@ import { EvilIcons } from "@expo/vector-icons";
 import { useSelector } from "react-redux";
 import ContactScreen from "./ContactScreen";
 
-<<<<<<< HEAD
-export default function HomeScreen({ navigation }) {
-  return (
-    <View style={styles.container}>
-      <View style={styles.case}>
-        <View style={styles.caseIcon}>
-          <FontAwesome name="user-circle" size={35} color="#0031B8" />
-        </View>
-        <Text style={styles.name}>NOM Prénom</Text>
-        <TouchableOpacity style={styles.param}>
-          <Entypo name="dots-three-vertical" size={24} color="black" />
-=======
 
 export default function HomeScreen({ navigation }) {
   const addContact = useSelector((state) => state.contacts.value);
 
-
-
   const contacts = addContact.map((data, i) => {
-
-    const tableauPhone = data.phones[0].number;
-    const tableauEmail = data.emails;
+    // const tableauPhone = data.phones[0].number;
+    // const tableauEmail = data.emails;
     const key = i;
 
-let email
+      // let email
 
-if(tableauEmail!== undefined){
+      // if(tableauEmail!== undefined){
 
-  email = Object.values(tableauEmail)
-}
-    
-
-
+      //   email = Object.values(tableauEmail)
+      // }
     return (
       <View style={styles.container} key={i}>
         <TouchableOpacity style={styles.case} onPress={() => navigation.navigate('ContactScreen', {lastName: data.lastName, firstName: data.firstName, /* dob: data.dob, phonenr: tableauPhone, email : email, */ key: key})}>
@@ -56,12 +38,11 @@ if(tableauEmail!== undefined){
             <FontAwesome name="user-circle" size={35} color="#0031B8" />
           </View>
           <Text style={styles.name}>
-            {data.name} {data.firstName}
+            {data.lastName} {data.firstName}
           </Text>
           <TouchableOpacity style={styles.param}>
             <Entypo name="dots-three-vertical" size={24} color="black" />
           </TouchableOpacity>
->>>>>>> 12f863436d089962b339ef13c2dc1b632d30197e
         </TouchableOpacity>
       </View>
     );
