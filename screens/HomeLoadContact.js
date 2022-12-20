@@ -15,15 +15,14 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
-
 export default function HomeLoadContact() {
   let [error, setError] = useState(undefined);
-  let [contacts, setContacts] = useState(undefined);
-  const userInfo = useSelector((state) => state.user.value);
+  let [myContacts, setMyContacts] = useState([]);
 
-
+  const BACKEND_ADDRESS = "http://172.16.188.135:3000";
 
   useEffect(() => {
+
     (async () => {
       const { status } = await Contacts.requestPermissionsAsync();
       if (status === "granted") {
@@ -38,7 +37,28 @@ export default function HomeLoadContact() {
         });
 
         if (data.length > 0) {
-          setContacts(data);
+          const contactPush = data.map(element => { 
+
+            const tableauPhone = element.phoneNumbers;
+            let phoneTableau = []
+            tableauPhone.forEach(phoneElement => phoneTableau.push(phoneElement));
+          
+            return{
+            lastName: element.lastName,
+            firstName: element.firstName,
+            
+            phones: phoneTableau
+            /* {phoneType: element.phoneNumbers[0].label,
+              number: element.phoneNumbers[0].number,
+              country: element.phoneNumbers[0].countryCode,
+              areaCode: element.phoneNumbers[0].areaCode,
+            }, */
+            
+            /* emails: {
+              email: element.emails[0]}, */
+          }})
+          
+          setMyContacts(contactPush);
         } else {
           setError("No contacts found");
         }
@@ -47,34 +67,32 @@ export default function HomeLoadContact() {
       }
     })();
   }, []);
+  const  handleAddContactAuto = () => {
 
-  const handleAddContactAuto = () => {
-    fetch("http://localhost:3000/addContact", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        token: userInfo.token,
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data)
-        
-        window.location.reload();
-      });
+    //for (let i = 0; i < 1000; i++) {
+     fetch("http://172.16.188.135:3000/users/addAllContact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          token: "t320Oc5FBgBjccN3hoqA334j7sT5XO5I",
+          contacts: myContacts,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          window.location.reload();
+        });
+    //}
   };
 
-
-  let getContactData = (data, property) => {
-    if (data) {
-      return data.map((data, index) => {
-
-
+  let getContactData = (contacts, property) => {
+    if (contacts) {
+      return contacts.map((contacts, index) => {
         return (
           <View>
             <View key={index}>
               <Text>
-                {data.label}: {data[property]}
+                {contacts.label}: {contacts[property]}
               </Text>
             </View>
           </View>
@@ -84,8 +102,8 @@ export default function HomeLoadContact() {
   };
 
   let getContactRows = () => {
-    if (contacts !== undefined) {
-      return contacts.map((contact, index) => {
+    if (myContacts !== undefined) {
+      return myContacts.map((contact, index) => {
         return (
           <View key={index} style={styles.contact}>
             <Text>
@@ -110,27 +128,29 @@ export default function HomeLoadContact() {
   return (
     <SafeAreaView style={styles.container}>
       <TextInput
-  style={{ backgroundColor: "#DCDCDC",
-width: "80%",
-height: "5%",
-borderRadius: "5px",
-paddingLeft: 15,
-marginTop: 15 }}
-  editable={false}
-  placeholder="🔎 Search                                                      ✖️" 
-/>
-          <Text
-            style={{
-              color: "#595959",
-              fontWeight: "1px",
-              fontSize: "18px",
-              paddingTop: 10,
-              marginTop: 200,
-              textAlign: "center",
-            }}
-          >
-            Importez ou saisissez un contact manuellement
-          </Text>
+        style={{
+          backgroundColor: "#DCDCDC",
+          width: "80%",
+          height: "5%",
+          borderRadius: "5px",
+          paddingLeft: 15,
+          marginTop: 15,
+        }}
+        editable={false}
+        placeholder="🔎 Search                                                      ✖️"
+      />
+      <Text
+        style={{
+          color: "#595959",
+          fontWeight: "1px",
+          fontSize: "18px",
+          paddingTop: 10,
+          marginTop: 200,
+          textAlign: "center",
+        }}
+      >
+        Importez ou saisissez un contact manuellement
+      </Text>
 
       <Pressable
         style={{
@@ -145,9 +165,9 @@ marginTop: 15 }}
           height: 50,
           borderColor: "blue",
           justifyContent: "center",
-          alignItems: "center"
+          alignItems: "center",
         }}
-        onPress={() => alert(handleAddContactAuto())}
+        onPress={() => handleAddContactAuto()}
       >
         <Text>
           <Text
@@ -165,8 +185,7 @@ marginTop: 15 }}
           <Text
             style={{ color: "#0031b8", fontWeight: "bold", fontSize: "30px" }}
           >
-            {"   "}
-            +
+            {"   "}+
           </Text>
         </Text>
       </Pressable>
@@ -217,7 +236,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderRadius: 50,
     alignSelf: "flex-end",
-
   },
 
   btnAddContactMain: {
@@ -236,6 +254,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     letterSpacing: 0.25,
     color: "#0031b8",
-    backgroundColor: "red"
+    backgroundColor: "red",
   },
 });
