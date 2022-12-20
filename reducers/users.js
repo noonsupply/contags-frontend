@@ -5,7 +5,7 @@ const initialState = {
     lastName: "",
     firstName: "",
     token: "",
-    emailMain: "gabin.subri@gmail.com",
+    emailMain: "",
     emails: [],
     phones: [],
     dob: null,
