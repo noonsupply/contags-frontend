@@ -18,18 +18,17 @@ import ContactScreen from "./ContactScreen";
 
 export default function HomeScreen({ navigation }) {
   const addContact = useSelector((state) => state.contacts.value);
-  console.log("addContact", addContact);
   const contacts = addContact.map((data, i) => {
     // const tableauPhone = data.phones[0].number;
     // const tableauEmail = data.emails;
     const key = i;
 
-    // let email;
+    // let email
 
-    // if (tableauEmail !== undefined) {
-    //   email = Object.values(tableauEmail);
+    // if(tableauEmail!== undefined){
+
+    //   email = Object.values(tableauEmail)
     // }
-
     return (
       <View style={styles.container} key={i}>
         <TouchableOpacity

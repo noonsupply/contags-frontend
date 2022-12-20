@@ -14,7 +14,7 @@ function Tag(props) {
                     styles.form]}>
             <Text style={[
                         styles.tagText,
-                        props.tag.color !== "white"?{color : "#FFFFFF"} : {color : props.tag.border}]}>
+                        props.tag.color !== "white" && props.tag.color !== "#FFFFFF" ?{color : "#FFFFFF"} : {color : props.tag.border}]}>
             {props.tag.title || "Nom du tag"}
             </Text>
          </View>
@@ -29,20 +29,11 @@ const styles = StyleSheet.create({
         flexShrink: 1,
         height: 30,
         justifyContent: "center",
-        // marginBottom: 8,
-        marginLeft: 10,
-        marginRight: 10,
-        marginTop: 7,
-        marginBottom : 7,
-        paddingLeft: 12,
-        paddingRight: 12,
-        //backgroundColor : "#D90000", //props.tag.color ,
-        flexDirection : "row",
-        justifyContent : "center",
+        marginHorizontal: 10,
+        marginVertical: 7,
       },
 
       tagText: {
-        //color: "#FFFFFF",
         fontSize: 14,
         fontWeight: "bold",
       },

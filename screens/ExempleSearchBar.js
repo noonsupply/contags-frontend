@@ -22,10 +22,10 @@ import TagSearchBar from "../components/TagSearchBar";
 
 export default function ExempleSearchBar() {
   const [tagsSelected, setTagsSelected] = useState([]);
-  const [dataSet, setDataSet] = useState([
-    { title: "Star Wars", color: "red", border: "none" },
-    { title: "voyages", color: "blue", border: "none" },
-  ]);
+  // const [dataSet, setDataSet] = useState([
+  //   { title: "Star Wars", color: "red", border: "none" },
+  //   { title: "voyages", color: "blue", border: "none" },
+  // ]);
 
   const searchTags = (query) => {
     // Prevent search with an empty query

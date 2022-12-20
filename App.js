@@ -25,7 +25,11 @@ const store = configureStore({
 export default function App() {
   return (
     <Provider store={store}>
-      <HomeRechercheScreen />
+      <MainNavigator />
+      {/* <ExempleModal /> */}
+      {/* <ExempleSearchBar /> */}
+      {/* <Brouillon />  */}
+      {/* <HomeLoadContact /> */}
     </Provider>
   );
 }

@@ -1,7 +1,17 @@
+import {
+  ImageBackground,
+  Platform,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+} from "react-native";
+import { AutocompleteDropdown } from "react-native-autocomplete-dropdown";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { useState } from 'react';
-import { ImageBackground, Platform, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
 //import { AutocompleteDropdown } from 'react-native-autocomplete-dropdown';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import Tag from "../components/Tag";
 
@@ -10,27 +20,29 @@ import { useEffect } from "react";
 import { updateContact, setContags } from "../reducers/contacts";
 
 export default function App() {
-  // const [dataSet, setDataSet] = useState([]);
+   const [dataSet, setDataSet] = useState([]);
   // const [citiesData, setCitiesData] = useState([]);
 
   const contacts = useSelector((state) => state.contacts.value);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const indexContact = contacts.findIndex(
-      (elt) => elt.lastName === "Giroud" && elt.firstName === "Rania"
-    );
-    if (indexContact !== -1) {
-      dispatch(setContags(contacts));
-      //   dispatch(updateContact({index : indexContact, newDatas: {lastName : "Giroud", firstName : "Nico",
-      //   emails:[{emailType:"essai", email:"test@"}],
-      //   phones:[{phoneType:"mobile", number : "01", country:"Chine", areaCode : ""}, {phoneType:"home", number : "07", country:"Tunisie", areaCode : ""}]
-      // }}))
-      console.log("done");
-    } else {
-      console.log("non trouvé");
-    }
-  }, []);
+    // const indexContact = contacts.findIndex(
+    //   (elt) => elt.lastName === "Giroud" && elt.firstName === "Rania"
+    // );
+    // if (indexContact !== -1) {
+    //   dispatch(setContags(contacts));
+    //   //   dispatch(updateContact({index : indexContact, newDatas: {lastName : "Giroud", firstName : "Nico",
+    //   //   emails:[{emailType:"essai", email:"test@"}],
+    //   //   phones:[{phoneType:"mobile", number : "01", country:"Chine", areaCode : ""}, {phoneType:"home", number : "07", country:"Tunisie", areaCode : ""}]
+    //   // }}))
+    //   console.log("done");
+    // } else {
+    //   console.log("non trouvé");
+    // }
+    setDataSet([{id: 0, title : "Nico" },
+    {id : 1, title : "Esssai"}]);
+      }, []);
 
   // const searchCity = (query) => {
   //   // Prevent search with an empty query
@@ -38,9 +50,7 @@ export default function App() {
   //     return;
   //   }
 
-  //       setDataSet([{id: 0, title : "Nico" },
-  //     {id : 1, title : "Esssai"}]);
-  // };
+ 
 
   // const cities = citiesData.map((data, i) => {
   //   return (
@@ -54,6 +64,15 @@ export default function App() {
   //   );
   // });
 
+  const handleTest=() =>{
+   const myContact = {"lastName":"Deray","firstName":"Youness","emails":[{"emailType":"personnal","email":"Deray.Youness@yahoo.fr"}],"phones":[{"phoneType":"perosnnal","number":"0722192251","country":"France","areaCode":"+33"}],"dob":"2022-12-19T13:57:55.542Z","tags":[{"title":"ski","color":"lightgray","border":"none"},{"title":"famille","color":"orange","border":"none"}],"contactedTimesCounter":{"phoneCounter":1,"smsCounter":4,"emailCounter":9}};
+   
+  }
+
+  const handleTagPress=() =>{
+    console.log(item)
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Where are we going?</Text>
@@ -63,7 +82,7 @@ export default function App() {
         dataSet={dataSet}
         renderItem={({ item, text }) => (
           <TouchableOpacity onPress={() => handleTagPress(item)}>
-            <Tag tag={{title : item, color : "blue", border : "none"}} />
+            <Tag tag={{title : item.title, color : "blue", border : "none"}} />
           </TouchableOpacity>
         )}
         textInputProps={{ placeholder: 'Search city' }}
@@ -72,7 +91,12 @@ export default function App() {
         suggestionsListContainerStyle={styles.suggestionListContainer}
         closeOnSubmit
       /> */}
-
+       {/* {/* <Pressable
+        style={[styles.button, styles.buttonOpen]}
+        onPress={() => handleTest()}
+      > 
+        <Text style={styles.textStyle}>Test route</Text>
+      </Pressable> */}
       <ScrollView style={styles.scrollContainer}>
         <Text>ceci est un essai 1 </Text>
         <Text>ceci est un essai 2 </Text>

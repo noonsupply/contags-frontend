@@ -14,9 +14,9 @@ import * as Contacts from "expo-contacts";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import { setAdress } from "../module/adressIP";
 import { useDispatch } from "react-redux";
 import { setContact } from "../reducers/contacts";
-import { localeData } from "moment/moment";
 //import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 export default function HomeLoadContact({ navigation }) {
@@ -28,11 +28,12 @@ export default function HomeLoadContact({ navigation }) {
   let [error, setError] = useState(undefined);
   let [myContacts, setMyContacts] = useState([]);
 
-  const BACKEND_ADDRESS = "http://172.17.188.10:3000";
-
+  const BACKEND_ADDRESS = setAdress(); //"http://192.168.1.92:3000";
+  console.log(BACKEND_ADDRESS);
   useEffect(() => {
     (async () => {
       const { status } = await Contacts.requestPermissionsAsync();
+
       if (status === "granted") {
         const { data } = await Contacts.getContactsAsync({
           fields: [
@@ -43,6 +44,7 @@ export default function HomeLoadContact({ navigation }) {
             Contacts.Fields.PhoneNumbers,
           ],
         });
+        // console.log("data", data)
 
         if (data.length > 0) {
           const contactPush = data.map((element) => {
@@ -58,6 +60,7 @@ export default function HomeLoadContact({ navigation }) {
             }
 
             const tableauPhone = element.phoneNumbers;
+            //console.log('tableauPhone', tableauPhone)
             let phoneTableau = [];
             if (tableauPhone) {
               tableauPhone.forEach((phoneElement) =>
@@ -76,7 +79,7 @@ export default function HomeLoadContact({ navigation }) {
               phones: phoneTableau,
             };
           });
-
+          // console.log("contactPush",contactPush)
           setMyContacts(contactPush);
         } else {
           setError("No contacts found");
@@ -97,14 +100,12 @@ export default function HomeLoadContact({ navigation }) {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log("data", data);
         if (data.result) {
           dispatch(setContact(myContacts));
           alert("Import des contacts réalisé avec succès");
           navigation.navigate("HomeScreen");
         }
       });
-    alert("coucou");
   };
 
   let getContactData = (contacts, property) => {
@@ -164,7 +165,7 @@ export default function HomeLoadContact({ navigation }) {
       <Text
         style={{
           color: "#595959",
-          fontWeight: "1px",
+          // fontWeight: 1,
           fontSize: 18,
           paddingTop: 10,
           marginTop: 200,
@@ -195,7 +196,7 @@ export default function HomeLoadContact({ navigation }) {
           <Text
             style={{
               color: "#0031b8",
-              fontWeight: "1px",
+              // fontWeight: 1,
               fontSize: 18,
               textAlign: "center",
               fontWeight: "bold",

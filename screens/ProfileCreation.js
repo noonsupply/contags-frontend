@@ -22,8 +22,9 @@ import {
   updateFirstName,
   addPhone,
 } from "../reducers/users";
+import { setAdress } from "../module/adressIP";
 
-const BACKEND_ADDRESS = "http://172.17.188.10:3000";
+const BACKEND_ADDRESS = setAdress(); //"http://192.168.1.92:3000";
 
 export default function ProfileCreation({ navigation }) {
   // useSelector & useDispatch
@@ -169,6 +170,7 @@ export default function ProfileCreation({ navigation }) {
       !phoneNumber ||
       !regExPhoneNum.test(formattedPhoneNumber)
     ) {
+      // Le return vide sert à stopper le traitement pour éviter de passer à la screen suivante si une information n'est pas renseignée
       return;
     }
 

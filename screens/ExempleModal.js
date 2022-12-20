@@ -16,8 +16,9 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 
 import TagsDefinition from "../components/TagsDefinition";
+import { setAdress } from "../module/adressIP";
 
-const backendAdress = "http://172.17.188.10:3000";
+const backendAdress = setAdress();
 
 export default function ExempleModal() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -30,7 +31,6 @@ export default function ExempleModal() {
   };
 
   const handleSave = () => {
-    console.log("le user : ", user);
     fetch(`${backendAdress}/users/saveTagsPerso`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -46,7 +46,6 @@ export default function ExempleModal() {
       });
   };
 
-  console.log("tags", contacts[2].tags);
   return (
     <View style={styles.container}>
       {/* <TagsDefinition /> */}
@@ -62,8 +61,8 @@ export default function ExempleModal() {
         <View style={styles.modalContainer}>
           <TagsDefinition
             handleCloseModal={handleCloseModal}
-            contact={null}
-            user={user}
+            contact={contacts[1]}
+            user={null}
           />
         </View>
       </Modal>

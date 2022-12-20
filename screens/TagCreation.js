@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   Image,
@@ -12,9 +12,14 @@ import {
   KeyboardAvoidingView,
 } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import users from "../reducers/users";
+import Tag from "../components/Tag";
+
+const BACKEND_ADDRESS = "http://172.16.191.17:3000";
 
 export default function TagCreation({ navigation }) {
+  const [tagArr, setTagArr] = useState([]);
+
+  // Fonctions de navigation
   const handleSubmit = () => {
     navigation.navigate("HomeLoadContact");
   };
@@ -22,6 +27,8 @@ export default function TagCreation({ navigation }) {
   const handleReturn = () => {
     navigation.navigate("ProfileCreation");
   };
+
+  // Fonctions d'affichage conditionnel (données saisies dans ProfileCreation)
 
   function UserFirstName() {
     const userFirstName = useSelector((state) => state.users.value.firstName);
@@ -33,7 +40,7 @@ export default function TagCreation({ navigation }) {
   }
 
   function UserLastName() {
-    const userLastName = useSelector((state) => state.users.value.name);
+    const userLastName = useSelector((state) => state.users.value.lastName);
     return (
       <View style={styles.tagFullDarkBlue}>
         <Text style={styles.tagTextWhite}>{userLastName}</Text>
@@ -44,9 +51,8 @@ export default function TagCreation({ navigation }) {
   function UserPhoneNumber() {
     const phoneNumberArr = useSelector((state) => state.users.value.phones);
     const userPhoneNumber = phoneNumberArr.map((mainPhoneNumber) => {
-      return mainPhoneNumber.number
-    })
-    // console.log("Le NUMERO DE TEL de l'utilisateur est:", userPhoneNumber);
+      return mainPhoneNumber.number;
+    });
     return (
       <View style={styles.tagFullDarkBlue}>
         <Text style={styles.tagTextWhite}>{userPhoneNumber}</Text>
@@ -63,133 +69,78 @@ export default function TagCreation({ navigation }) {
     );
   }
 
+  useEffect(() => {
+    fetch(`${BACKEND_ADDRESS}/getProposedTags`)
+      .then((response) => response.json())
+      .then((data) => {
+        setTagArr(data.proposedTags);
+      });
+  }, []);
+
+  const ProposedTags = tagArr.map((element, index) => {
+    return (
+      <View key={index}>
+        <Tag tag={element} key={index} />
+      </View>
+    );
+  });
+
   return (
     <SafeAreaView style={styles.safeAreaView}>
       <StatusBar backgroundColor={"#FFFFFF"} barStyle={"dark-content"} />
 
-        <KeyboardAvoidingView>
-          <View style={styles.globalContainer}>
-            <View style={styles.mainContainer}>
-              <View style={styles.textContainer}>
-                <Text style={styles.text}>
-                  Vos données essentielles ont été transformées en tags :
-                </Text>
-              </View>
-
-              <View style={styles.tagContainer}>
-                <UserFirstName />
-                <UserLastName />
-                <UserPhoneNumber />
-                <UserMainEmail />
-              </View>
-
-              <View style={styles.textContainer}>
-                <Text style={styles.text}>
-                  Sélectionnez des tags qui vous correspondent parmi les
-                  propositions ou ajoutez directement des tags personnalisés :
-                </Text>
-              </View>
-
-
-              <View style={styles.templateTagContainer}>
-              <ScrollView>
-                <View style={styles.tagFullDarkBlue}>
-                  <Text style={styles.tagTextWhite}>Amis</Text>
-                </View>
-                <View style={styles.tagFullDarkBlue}>
-                  <Text style={styles.tagTextWhite}>Famille</Text>
-                </View>
-                <View style={styles.tagFullDarkBlue}>
-                  <Text style={styles.tagTextWhite}>Collègues</Text>
-                </View>
-                <View style={styles.tagFullDarkBlue}>
-                  <Text style={styles.tagTextWhite}>
-                    Football
-                  </Text>
-                </View>
-                <View style={styles.tagFullDarkBlue}>
-                  <Text style={styles.tagTextWhite}>Basket</Text>
-                </View>
-                <View style={styles.tagFullDarkBlue}>
-                  <Text style={styles.tagTextWhite}>Tennis</Text>
-                </View>
-                <View style={styles.tagFullDarkBlue}>
-                  <Text style={styles.tagTextWhite}>Rugby</Text>
-                </View>
-                <View style={styles.tagFullDarkBlue}>
-                  <Text style={styles.tagTextWhite}>Lecture</Text>
-                </View>
-                <View style={styles.tagFullDarkBlue}>
-                  <Text style={styles.tagTextWhite}>Cinéma</Text>
-                </View>
-                <View style={styles.tagFullDarkBlue}>
-                  <Text style={styles.tagTextWhite}>Jeux</Text>
-                </View>
-                <View style={styles.tagFullDarkBlue}>
-                  <Text style={styles.tagTextWhite}>Randonnée</Text>
-                </View>
-                <View style={styles.tagFullDarkBlue}>
-                  <Text style={styles.tagTextWhite}>Discord</Text>
-                </View>
-                <View style={styles.tagFullDarkBlue}>
-                  <Text style={styles.tagTextWhite}>Twitch</Text>
-                </View>
-                <View style={styles.tagFullDarkBlue}>
-                  <Text style={styles.tagTextWhite}>Facebook</Text>
-                </View>
-                <View style={styles.tagFullDarkBlue}>
-                  <Text style={styles.tagTextWhite}>Instagram</Text>
-                </View>
-                <View style={styles.tagFullDarkBlue}>
-                  <Text style={styles.tagTextWhite}>Tik Tok</Text>
-                </View>
-                <View style={styles.tagFullDarkBlue}>
-                  <Text style={styles.tagTextWhite}>Twitter</Text>
-                </View>
-                <View style={styles.tagFullDarkBlue}>
-                  <Text style={styles.tagTextWhite}>Youtube</Text>
-                </View>
-                <View style={styles.tagFullDarkBlue}>
-                  <Text style={styles.tagTextWhite}>École</Text>
-                </View>
-                <View style={styles.tagFullDarkBlue}>
-                  <Text style={styles.tagTextWhite}>Collège</Text>
-                </View>
-                <View style={styles.tagFullDarkBlue}>
-                  <Text style={styles.tagTextWhite}>Lycée</Text>
-                </View>
-                <View style={styles.tagFullDarkBlue}>
-                  <Text style={styles.tagTextWhite}>Université</Text>
-                </View>
-                </ScrollView>
-              </View>
-
+      <KeyboardAvoidingView>
+        <View style={styles.globalContainer}>
+          <View style={styles.mainContainer}>
+            <View style={styles.textContainer}>
+              <Text style={styles.text}>
+                Vos données essentielles ont été transformées en tags :
+              </Text>
             </View>
 
-            <View style={styles.navigationContainer}>
-              <TouchableOpacity
-                style={styles.btnBack}
-                onPress={() => handleReturn()}
-              >
-                <FontAwesome color="#FFFFFF" name="chevron-left" />
-              </TouchableOpacity>
+            <View style={styles.tagContainer}>
+              <UserFirstName />
+              <UserLastName />
+              <UserPhoneNumber />
+              <UserMainEmail />
+            </View>
 
-              <TouchableOpacity
-                style={styles.btnSkip}
-                onPress={() => handleSubmit()}
-              >
-                <Text style={styles.btnText}>Passer cette étape</Text>
-              </TouchableOpacity>
+            <View style={styles.textContainer}>
+              <Text style={styles.text}>
+                Sélectionnez des tags qui vous correspondent parmi les
+                propositions ou ajoutez directement des tags personnalisés :
+              </Text>
+            </View>
 
-              <TouchableOpacity
-                style={styles.btnForward}
-                onPress={() => handleSubmit()}
-              >
-                <FontAwesome color="#FFFFFF" name="chevron-right" />
-              </TouchableOpacity>
+            <View style={styles.templateTagContainer}>
+              <ScrollView>{ProposedTags}</ScrollView>
             </View>
           </View>
-        </KeyboardAvoidingView>
+
+          <View style={styles.navigationContainer}>
+            <TouchableOpacity
+              style={styles.btnBack}
+              onPress={() => handleReturn()}
+            >
+              <FontAwesome color="#FFFFFF" name="chevron-left" />
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.btnSkip}
+              onPress={() => handleSubmit()}
+            >
+              <Text style={styles.btnText}>Passer cette étape</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.btnForward}
+              onPress={() => handleSubmit()}
+            >
+              <FontAwesome color="#FFFFFF" name="chevron-right" />
+            </TouchableOpacity>
+          </View>
+        </View>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }
@@ -212,7 +163,7 @@ const styles = StyleSheet.create({
   // Main
 
   mainContainer: {
-    backgroundColor: "green",
+    // backgroundColor: "green",
     paddingVertical: 25,
   },
 
@@ -220,7 +171,7 @@ const styles = StyleSheet.create({
 
   textContainer: {
     marginHorizontal: 25,
-    backgroundColor: "maroon",
+    // backgroundColor: "maroon",
   },
 
   text: {
@@ -246,7 +197,7 @@ const styles = StyleSheet.create({
   // Navigation
 
   navigationContainer: {
-    backgroundColor: "orange",
+    // backgroundColor: "orange",
     height: "10%",
     // paddingVertical: 10,
     flexWrap: "wrap",
@@ -322,12 +273,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#0031B8",
     borderRadius: 20,
-    fontSize: 12,
     flexShrink: 1,
-    height: 35,
-    justifyContent: "flex-end",
-    marginVertical: 4,
-    marginHorizontal: 2,
+    height: 30,
+    justifyContent: "center",
+    marginHorizontal: 10,
+    marginVertical: 7,
   },
 
   tagFullGray: {
@@ -409,8 +359,6 @@ const styles = StyleSheet.create({
     paddingLeft: 12.5,
     paddingRight: 12.5,
   },
-
-
 
   // tagGray: {
   //   alignItems: "center",
@@ -519,6 +467,4 @@ const styles = StyleSheet.create({
   //   paddingLeft: 12.5,
   //   paddingRight: 12.5,
   // },
-
-  
 });
