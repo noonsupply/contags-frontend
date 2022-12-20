@@ -13,8 +13,9 @@ import {
 } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Tag from "../components/Tag";
+import { setAdress } from "../module/adressIP";
 
-const BACKEND_ADDRESS = "http://172.16.191.17:3000";
+const BACKEND_ADDRESS = setAdress();
 
 export default function TagCreation({ navigation }) {
   const [tagArr, setTagArr] = useState([]);
