@@ -11,7 +11,6 @@ import HomeScreen from "../screens/HomeScreen";
 import ContactScreen from "../screens/ContactScreen";
 import HomeLoadContact from "../screens/HomeLoadContact";
 import SignInPonctuelScreen from "../screens/SignInPonctuelScreen";
-import ModalSetting from "../screens/ModalSetting";
 import HomeRechercheScreen from "../screens/HomeRechercheScreen";
 
 const Stack = createStackNavigator();
@@ -50,18 +49,6 @@ const MainNavigator = () => {
           options={{ animationEnabled: true, header: () => null }}
           component={TagCreation}
         />
-
-        <Stack.Screen
-          name="HomeLoadContact"
-          options={{ animationEnabled: true, header: () => null }}
-          component={HomeLoadContact}
-        />
-
-        <Stack.Screen
-          name="HomeLoad"
-          options={{ animationEnabled: true, header: () => null }}
-          component={HomeLoadContact}
-        />
         <Stack.Screen
           name="HomeLoadContact"
           options={{ animationEnabled: true, header: () => null }}
@@ -79,11 +66,6 @@ const MainNavigator = () => {
           component={ContactScreen}
         />
 
-        <Stack.Screen
-          name="ModalSetting"
-          options={{ animationEnabled: true, header: () => null }}
-          component={ModalSetting}
-        />
         {/* <Stack.Screen
           name="HomeRechercheScreen"
           options={{ animationEnabled: true, header: () => null }}

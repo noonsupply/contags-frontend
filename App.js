@@ -7,7 +7,6 @@ import { configureStore } from "@reduxjs/toolkit";
 import users from "./reducers/users";
 import contacts from "./reducers/contacts";
 import HomeLoadContact from "./screens/HomeLoadContact";
-import Brouillon from "./screens/Brouillon";
 import ExempleModal from "./screens/ExempleModal";
 import ExempleSearchBar from "./screens/ExempleSearchBar";
 
@@ -28,7 +27,6 @@ export default function App() {
       <MainNavigator />
       {/* <ExempleModal /> */}
       {/* <ExempleSearchBar /> */}
-      {/* <Brouillon />  */}
       {/* <HomeLoadContact /> */}
     </Provider>
   );
