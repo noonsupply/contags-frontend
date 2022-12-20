@@ -15,12 +15,11 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { setAdress } from "../module/adressIP";
-import { useDispatch } from 'react-redux';
-import {setContact} from "../reducers/contacts"
+import { useDispatch } from "react-redux";
+import { setContact } from "../reducers/contacts";
 //import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-
-export default function HomeLoadContact({navigation}) {
+export default function HomeLoadContact({ navigation }) {
   const dispatch = useDispatch();
 
   const contacts = useSelector((state) => state.contacts.value);
@@ -29,13 +28,13 @@ export default function HomeLoadContact({navigation}) {
   let [error, setError] = useState(undefined);
   let [myContacts, setMyContacts] = useState([]);
 
-  const BACKEND_ADDRESS = setAdress(); //"http://192.168.1.92:3000";
-console.log(BACKEND_ADDRESS);
-  useEffect(() => {
+  const BACKEND_ADDRESS = setAdress();
 
+
+  useEffect(() => {
     (async () => {
       const { status } = await Contacts.requestPermissionsAsync();
-      
+
       if (status === "granted") {
         const { data } = await Contacts.getContactsAsync({
           fields: [
@@ -49,29 +48,40 @@ console.log(BACKEND_ADDRESS);
         // console.log("data", data)
 
         if (data.length > 0) {
-          const contactPush = data.map(element => { 
+          const contactPush = data.map((element) => {
             const tableauEmail = element.emails;
-            let mailTableau = []
-            if(tableauEmail!==undefined){
-              
-            tableauEmail.forEach(emailElement => mailTableau.push({emailType: emailElement.label, email: emailElement.email }));
+            let mailTableau = [];
+            if (tableauEmail !== undefined) {
+              tableauEmail.forEach((emailElement) =>
+                mailTableau.push({
+                  emailType: emailElement.label,
+                  email: emailElement.email,
+                })
+              );
             }
 
             const tableauPhone = element.phoneNumbers;
             //console.log('tableauPhone', tableauPhone)
-            let phoneTableau = []
-            if(tableauPhone){
-              tableauPhone.forEach(phoneElement => phoneTableau.push({phoneType: phoneElement.label, number: phoneElement.number, country: "", areaCode: "" }));
-            }  
-            return{
-            lastName: element.lastName,
-            firstName: element.firstName,
-            emails: mailTableau,
-            phones: phoneTableau,
-          }})
+            let phoneTableau = [];
+            if (tableauPhone) {
+              tableauPhone.forEach((phoneElement) =>
+                phoneTableau.push({
+                  phoneType: phoneElement.label,
+                  number: phoneElement.number,
+                  country: "",
+                  areaCode: "",
+                })
+              );
+            }
+            return {
+              lastName: element.lastName,
+              firstName: element.firstName,
+              emails: mailTableau,
+              phones: phoneTableau,
+            };
+          });
           // console.log("contactPush",contactPush)
           setMyContacts(contactPush);
-          
         } else {
           setError("No contacts found");
         }
@@ -80,23 +90,23 @@ console.log(BACKEND_ADDRESS);
       }
     })();
   }, []);
-  const  handleAddContactAuto = () => {
-     fetch(`${BACKEND_ADDRESS}/users/addAllContact`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          token: user.token,
-          contacts: myContacts,
-        }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if(data.result){
-            dispatch(setContact(myContacts))
-            alert("Import des contacts réalisé avec succès")
-            navigation.navigate("HomeScreen");
-          }
-        });
+  const handleAddContactAuto = () => {
+    fetch(`${BACKEND_ADDRESS}/users/addAllContact`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        token: user.token,
+        contacts: myContacts,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.result) {
+          dispatch(setContact(myContacts));
+          alert("Import des contacts réalisé avec succès");
+          navigation.navigate("HomeScreen");
+        }
+      });
   };
 
   let getContactData = (contacts, property) => {
@@ -196,9 +206,7 @@ console.log(BACKEND_ADDRESS);
           >
             Importer mes contacts
           </Text>
-          <Text
-            style={{ color: "#0031b8", fontWeight: "bold", fontSize: 30 }}
-          >
+          <Text style={{ color: "#0031b8", fontWeight: "bold", fontSize: 30 }}>
             {"   "}+
           </Text>
         </Text>
