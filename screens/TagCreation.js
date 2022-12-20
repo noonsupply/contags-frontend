@@ -13,9 +13,9 @@ import {
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 export default function TagCreation({ navigation }) {
-  // const handleCreation = () => {
-  //   navigation.navigate("ProfileCreation");
-
+ const handleCreation = () => {
+     navigation.navigate("ProfileCreation");
+ }
 
   return (
     <SafeAreaView style={styles.safeAreaView}>
