@@ -11,6 +11,7 @@ import HomeScreen from "../screens/HomeScreen";
 import ContactScreen from "../screens/ContactScreen";
 import HomeLoadContact from "../screens/HomeLoadContact";
 import SignInPonctuelScreen from "../screens/SignInPonctuelScreen";
+import HomeRechercheScreen from "../screens/HomeRechercheScreen";
 
 const Stack = createStackNavigator();
 
@@ -63,6 +64,12 @@ const MainNavigator = () => {
           options={{ animationEnabled: true, header: () => null }}
           component={ContactScreen}
         />
+
+        {/* <Stack.Screen
+          name="HomeRechercheScreen"
+          options={{ animationEnabled: true, header: () => null }}
+          component={HomeRechercheScreen}
+        /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );

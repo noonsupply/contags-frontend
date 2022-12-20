@@ -11,7 +11,6 @@ import {
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
-import PasswordScreen from "./PasswordScreen";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
