@@ -12,7 +12,7 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { Entypo } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
 
-export default function PasswordScreen({ navigation }) {
+export default function HomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.case}>

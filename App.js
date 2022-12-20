@@ -8,6 +8,7 @@ import contacts from "./reducers/contacts";
 import Brouillon from "./screens/Brouillon";
 import ExempleModal from "./screens/ExempleModal";
 import ExempleSearchBar from "./screens/ExempleSearchBar";
+import HomeLoadContact from "./screens/HomeLoadContact";
 
 import TagsDefinition from "./components/TagsDefinition";
 import SplashScreen from "./screens/SplashScreen";
@@ -22,16 +23,11 @@ const store = configureStore({
 export default function App() {
   return (
     <Provider store={store}>
-<<<<<<< HEAD
-
-    <MainNavigator />
-=======
     <MainNavigator />
     {/* <ExempleModal /> */}
     {/* <ExempleSearchBar /> */}
-    {/* <Brouillon /> */} 
->>>>>>> a891ba5f1388b6893dd57daef358c76d6ed3413f
-
+     {/* <Brouillon />  */}
+    {/* <HomeLoadContact /> */}
     </Provider>
   );
 }

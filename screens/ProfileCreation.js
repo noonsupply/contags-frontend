@@ -22,8 +22,9 @@ import {
   updateFirstName,
   addPhone,
 } from "../reducers/users";
+import { setAdress } from "../module/adressIP";
 
-const BACKEND_ADDRESS = "http://172.16.191.11:3000";
+const BACKEND_ADDRESS = setAdress(); //"http://192.168.1.92:3000";
 
 export default function ProfileCreation({ navigation }) {
   // useSelector & useDispatch

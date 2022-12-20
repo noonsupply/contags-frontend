@@ -11,7 +11,7 @@ import {
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { Entypo } from "@expo/vector-icons";
 
-export default function PasswordScreen({ navigation }) {
+export default function ContactScreen({ navigation }) {
   return (
     <KeyboardAvoidingView behavior="position" style={styles.container}>
       <View style={styles.caseHeader}>

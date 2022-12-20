@@ -19,10 +19,11 @@ import { useTogglePasswordVisibility2 } from "../module/useTogglePasswordVisibil
 import { updateToken } from "../reducers/users";
 import HomeScreen from "./HomeScreen";
 import { checkBody } from "../module/checkbody";
+import { setAdress } from "../module/adressIP";
 
-const BACKEND_ADDRESS = "http://172.17.188.30:3000";
+const BACKEND_ADDRESS = setAdress();
 
-export default function PasswordScreen({ navigation }) {
+export default function SignInPonctuleScreen({ navigation }) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.users.value);
   const { passwordVisibility, rightIcon, handlePasswordVisibility } =

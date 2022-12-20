@@ -16,8 +16,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { useTogglePasswordVisibility } from "../module/useTogglePasswordVisibility";
 import { useTogglePasswordVisibility2 } from "../module/useTogglePasswordVisibility2";
 import { updateToken } from "../reducers/users";
+import { setAdress } from "../module/adressIP";
 
-const backendAdress = "http://172.17.188.30:3000";
+const backendAdress = setAdress(); //"http://192.168.1.92:3000";
 
 export default function PasswordScreen({ navigation }) {
   const dispatch = useDispatch();
@@ -80,7 +81,7 @@ export default function PasswordScreen({ navigation }) {
     }
 
     if (Password1 === Password2) {
-      console.log("route", user);
+      console.log("route", backendAdress);
       fetch(`${backendAdress}/users/create`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },

@@ -14,17 +14,19 @@ import * as Contacts from "expo-contacts";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import { setAdress } from "../module/adressIP";
 
 export default function HomeLoadContact() {
   let [error, setError] = useState(undefined);
   let [myContacts, setMyContacts] = useState([]);
 
-  const BACKEND_ADDRESS = "http://172.16.188.135:3000";
-
+  const BACKEND_ADDRESS = setAdress(); //"http://192.168.1.92:3000";
+console.log(BACKEND_ADDRESS);
   useEffect(() => {
 
     (async () => {
       const { status } = await Contacts.requestPermissionsAsync();
+      
       if (status === "granted") {
         const { data } = await Contacts.getContactsAsync({
           fields: [
@@ -35,29 +37,44 @@ export default function HomeLoadContact() {
             Contacts.Fields.PhoneNumbers,
           ],
         });
+        // console.log("data", data)
 
         if (data.length > 0) {
           const contactPush = data.map(element => { 
 
             const tableauPhone = element.phoneNumbers;
+            //console.log('tableauPhone', tableauPhone)
             let phoneTableau = []
-            tableauPhone.forEach(phoneElement => phoneTableau.push(phoneElement));
-          
+            if(tableauPhone){
+              tableauPhone.forEach(phoneElement => phoneTableau.push( {phoneType:phoneElement.label,
+                number: phoneElement.number,
+                country: "",
+                areaCode: "",
+              }));
+            }
+            
+            // console.log('phoneTableau', phoneTableau)
             return{
             lastName: element.lastName,
             firstName: element.firstName,
             
-            phones: phoneTableau
+            phones: phoneTableau,
             /* {phoneType: element.phoneNumbers[0].label,
               number: element.phoneNumbers[0].number,
               country: element.phoneNumbers[0].countryCode,
               areaCode: element.phoneNumbers[0].areaCode,
             }, */
-            
+            emails : [],
+            dob : "",
+            tags : [],
+            contactedTimesCounter: [{phoneCounter: 0,
+              smsCounter: 0,
+              emailCounter: 0}],
             /* emails: {
               email: element.emails[0]}, */
+
           }})
-          
+          // console.log("contactPush",contactPush)
           setMyContacts(contactPush);
         } else {
           setError("No contacts found");
@@ -68,19 +85,19 @@ export default function HomeLoadContact() {
     })();
   }, []);
   const  handleAddContactAuto = () => {
-
+    
     //for (let i = 0; i < 1000; i++) {
-     fetch("http://172.16.188.135:3000/users/addAllContact", {
+     fetch(`${BACKEND_ADDRESS}/users/addAllContact`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          token: "t320Oc5FBgBjccN3hoqA334j7sT5XO5I",
+          token: "bZKlcJvsxiKqJiVLwzm2cByiJBQ3e0cV",
           contacts: myContacts,
         }),
       })
         .then((res) => res.json())
         .then((data) => {
-          window.location.reload();
+          
         });
     //}
   };
@@ -132,7 +149,7 @@ export default function HomeLoadContact() {
           backgroundColor: "#DCDCDC",
           width: "80%",
           height: "5%",
-          borderRadius: "5px",
+          borderRadius: 5,
           paddingLeft: 15,
           marginTop: 15,
         }}
@@ -142,8 +159,8 @@ export default function HomeLoadContact() {
       <Text
         style={{
           color: "#595959",
-          fontWeight: "1px",
-          fontSize: "18px",
+          // fontWeight: 1,
+          fontSize: 18,
           paddingTop: 10,
           marginTop: 200,
           textAlign: "center",
@@ -173,8 +190,8 @@ export default function HomeLoadContact() {
           <Text
             style={{
               color: "#0031b8",
-              fontWeight: "1px",
-              fontSize: "18px",
+              // fontWeight: 1,
+              fontSize: 18,
               textAlign: "center",
               fontWeight: "bold",
               textAlignVertical: "center",
@@ -183,7 +200,7 @@ export default function HomeLoadContact() {
             Importer mes contacts
           </Text>
           <Text
-            style={{ color: "#0031b8", fontWeight: "bold", fontSize: "30px" }}
+            style={{ color: "#0031b8", fontWeight: "bold", fontSize: 30 }}
           >
             {"   "}+
           </Text>
