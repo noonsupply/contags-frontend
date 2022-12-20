@@ -12,6 +12,7 @@ import ContactScreen from "../screens/ContactScreen";
 import SignInPonctuelScreen from "../screens/SignInPonctuelScreen";
 import HomeLoadContact from "../screens/HomeLoadContact";
 import ModalSetting from "../screens/ModalSetting";
+import HomeRechercheScreen from "../screens/HomeRechercheScreen";
 
 const Stack = createStackNavigator();
 
@@ -19,17 +20,17 @@ const MainNavigator = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="SpashScreen">
-        <Stack.Screen
+        {/* <Stack.Screen
           name="Splash"
           options={{ animationEnabled: false, header: () => null }}
           component={SplashScreen}
-        />
+        /> */}
         {/* <Stack.Screen
           name="SignInPonctuelScreen"
           options={{ animationEnabled: true, header: () => null }}
           component={SignInPonctuelScreen}
         /> */}
-        <Stack.Screen
+        {/* <Stack.Screen
           name="MailScreen"
           options={{ animationEnabled: true, header: () => null }}
           component={MailScreen}
@@ -66,13 +67,18 @@ const MainNavigator = () => {
           name="ContactScreen"
           options={{ animationEnabled: true, header: () => null }}
           component={ContactScreen}
-        />
+        /> */}
 
         {/* <Stack.Screen
           name="ModalSetting"
           options={{ animationEnabled: true, header: () => null }}
           component={ModalSetting}
         /> */}
+        <Stack.Screen
+          name="HomeRechercheScreen"
+          options={{ animationEnabled: true, header: () => null }}
+          component={HomeRechercheScreen}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
