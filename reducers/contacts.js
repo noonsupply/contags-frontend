@@ -74,6 +74,7 @@ export const contactsSlice = createSlice({
         console.log(state.value.length)
     },
 
+
     //addEmail permet d'ajouter un email à  un contact
     //action.payload doit être de la forme {contact : obj_contact, email: obj_email}
     addEmail : (state, action) => {
@@ -132,13 +133,20 @@ export const contactsSlice = createSlice({
         }
     },
 
-    setContags : (state, action) => {
-            state.value = action.payload;
-            console.log(state.value);
+    setContact : (state, action) => {
+        state.value = action.payload;
+     //console.log(state.value)
     },
-   
+
+//action.payload => Un objet avec un nouveau contact
+    updateContactFrom: (state, action) => {
+
+
+      
+    }
  },
 });
 
 export const { addContact,  setTags, addOneTag , updateContact, addEmail, addPhone, updatePhone, updateEmail, updateTags,  setContags } = contactsSlice.actions;
+
 export default contactsSlice.reducer;

@@ -18,12 +18,16 @@ import { useTogglePasswordVisibility2 } from "../module/useTogglePasswordVisibil
 import { updateToken } from "../reducers/users";
 import { setAdress } from "../module/adressIP";
 
+<<<<<<< HEAD
 const backendAdress = setAdress(); //"http://192.168.1.92:3000";
+=======
+const BACKEND_ADDRESS = "http://172.16.188.143:3000";
+>>>>>>> 12f863436d089962b339ef13c2dc1b632d30197e
 
 export default function PasswordScreen({ navigation }) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.users.value);
-  console.log("start", user);
+  // console.log("start", user);
   const handleReturn = () => {
     navigation.navigate("MailScreen");
   };
@@ -62,7 +66,7 @@ export default function PasswordScreen({ navigation }) {
   }
   function PwdFormatAlert(props) {
     if (!regexMdp.test(Password1) && props.onceClicked) {
-      console.log("on rentre dans la fonction regex");
+      // console.log("on rentre dans la fonction regex");
       return (
         <View style={styles.Info}>
           <Text style={styles.textInfoX}>
@@ -76,13 +80,19 @@ export default function PasswordScreen({ navigation }) {
   const handleSubmit = () => {
     setOnClick(true);
 
-    if (!regexMdp.test(Password1) || !regexMdp.test(Password2)) {
-      return <PwdFormatAlert onceClicked={onClick} />;
-    }
+    // if (!regexMdp.test(Password1) || !regexMdp.test(Password2)) {
+    //   return <PwdFormatAlert onceClicked={onClick} />;
+    // }
 
+<<<<<<< HEAD
     if (Password1 === Password2) {
       console.log("route", backendAdress);
       fetch(`${backendAdress}/users/create`, {
+=======
+    if (Password1 === Password2 && regexMdp.test(Password1)) {
+      console.log("route", user);
+      fetch(`${BACKEND_ADDRESS}/users/create`, {
+>>>>>>> 12f863436d089962b339ef13c2dc1b632d30197e
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -91,16 +101,15 @@ export default function PasswordScreen({ navigation }) {
         }),
       })
         .then((response) => response.json())
-
         .then((data) => {
           // console.log("je rerentre")
           // console.log(data);
           if (data.result) {
             dispatch(updateToken(data.token));
-            navigation.navigate("ProfileCreation");
             // console.log("fin");
           }
         });
+      navigation.navigate("ProfileCreation");
     }
   };
 

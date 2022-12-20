@@ -14,14 +14,30 @@ import * as Contacts from "expo-contacts";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+<<<<<<< HEAD
 import { setAdress } from "../module/adressIP";
+=======
+import { useDispatch } from 'react-redux';
+import {setContact} from "../reducers/contacts"
+//import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-export default function HomeLoadContact() {
+
+export default function HomeLoadContact({navigation}) {
+  const dispatch = useDispatch();
+
+  const contacts = useSelector((state) => state.contacts.value);
+>>>>>>> 12f863436d089962b339ef13c2dc1b632d30197e
+
   let [error, setError] = useState(undefined);
   let [myContacts, setMyContacts] = useState([]);
 
+<<<<<<< HEAD
   const BACKEND_ADDRESS = setAdress(); //"http://192.168.1.92:3000";
 console.log(BACKEND_ADDRESS);
+=======
+  const BACKEND_ADDRESS = "http://172.16.188.143:3000";
+
+>>>>>>> 12f863436d089962b339ef13c2dc1b632d30197e
   useEffect(() => {
 
     (async () => {
@@ -41,10 +57,17 @@ console.log(BACKEND_ADDRESS);
 
         if (data.length > 0) {
           const contactPush = data.map(element => { 
+            const tableauEmail = element.emails;
+            let mailTableau = []
+            if(tableauEmail!==undefined){
+              
+            tableauEmail.forEach(emailElement => mailTableau.push({emailType: emailElement.label, email: emailElement.email }));
+            }
 
             const tableauPhone = element.phoneNumbers;
             //console.log('tableauPhone', tableauPhone)
             let phoneTableau = []
+<<<<<<< HEAD
             if(tableauPhone){
               tableauPhone.forEach(phoneElement => phoneTableau.push( {phoneType:phoneElement.label,
                 number: phoneElement.number,
@@ -73,9 +96,19 @@ console.log(BACKEND_ADDRESS);
             /* emails: {
               email: element.emails[0]}, */
 
+=======
+            tableauPhone.forEach(phoneElement => phoneTableau.push({phoneType: phoneElement.label, number: phoneElement.number, country: phoneElement.countryCode, areaCode: phoneElement.countryCode }));
+
+            return{
+            lastName: element.lastName,
+            firstName: element.firstName,
+            emails: mailTableau,
+            phones: phoneTableau,
+>>>>>>> 12f863436d089962b339ef13c2dc1b632d30197e
           }})
           // console.log("contactPush",contactPush)
           setMyContacts(contactPush);
+          
         } else {
           setError("No contacts found");
         }
@@ -85,8 +118,12 @@ console.log(BACKEND_ADDRESS);
     })();
   }, []);
   const  handleAddContactAuto = () => {
+<<<<<<< HEAD
     
     //for (let i = 0; i < 1000; i++) {
+=======
+
+>>>>>>> 12f863436d089962b339ef13c2dc1b632d30197e
      fetch(`${BACKEND_ADDRESS}/users/addAllContact`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -97,9 +134,16 @@ console.log(BACKEND_ADDRESS);
       })
         .then((res) => res.json())
         .then((data) => {
+<<<<<<< HEAD
           
+=======
+          if(data.result){
+            dispatch(setContact(myContacts))
+          }
+          alert("Import des contacts réalisé avec succès")
+          navigation.navigate("HomeScreen");
+>>>>>>> 12f863436d089962b339ef13c2dc1b632d30197e
         });
-    //}
   };
 
   let getContactData = (contacts, property) => {

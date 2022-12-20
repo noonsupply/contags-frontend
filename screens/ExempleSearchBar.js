@@ -1,14 +1,14 @@
 import React from "react";
 import {
-  TextInput,
-  SafeAreaView,
-  Modal,
-  StyleSheet,
-  Text,
-  Pressable,
-  View,
-} from "react-native";
-// import { AutocompleteDropdown } from 'react-native-autocomplete-dropdown';
+    TextInput,
+    SafeAreaView,
+    Modal,
+    StyleSheet,
+    Text,
+    Pressable,
+    View,
+} from 'react-native';
+//import { AutocompleteDropdown } from 'react-native-autocomplete-dropdown';
 
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import FontAwesomeIcon from "@expo/vector-icons";
