@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import {
-  Image,
   Text,
   SafeAreaView,
   ScrollView,
@@ -15,7 +14,7 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Tag from "../components/Tag";
 import { setAdress } from "../module/adressIP";
 
-const BACKEND_ADDRESS = setAdress(); //"http://192.168.1.92:3000";
+const BACKEND_ADDRESS = setAdress();
 
 export default function TagCreation({ navigation }) {
   const [tagArr, setTagArr] = useState([]);
