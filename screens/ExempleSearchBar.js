@@ -1,14 +1,14 @@
 import React from "react";
 import {
-  TextInput,
-  SafeAreaView,
-  Modal,
-  StyleSheet,
-  Text,
-  Pressable,
-  View,
-} from "react-native";
-// import { AutocompleteDropdown } from 'react-native-autocomplete-dropdown';
+    TextInput,
+    SafeAreaView,
+    Modal,
+    StyleSheet,
+    Text,
+    Pressable,
+    View,
+} from 'react-native';
+//import { AutocompleteDropdown } from 'react-native-autocomplete-dropdown';
 
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import FontAwesomeIcon from "@expo/vector-icons";
@@ -22,10 +22,10 @@ import TagSearchBar from "../components/TagSearchBar";
 
 export default function ExempleSearchBar() {
   const [tagsSelected, setTagsSelected] = useState([]);
-  const [dataSet, setDataSet] = useState([
-    { title: "Star Wars", color: "red", border: "none" },
-    { title: "voyages", color: "blue", border: "none" },
-  ]);
+  // const [dataSet, setDataSet] = useState([
+  //   { title: "Star Wars", color: "red", border: "none" },
+  //   { title: "voyages", color: "blue", border: "none" },
+  // ]);
 
   const searchTags = (query) => {
     // Prevent search with an empty query
