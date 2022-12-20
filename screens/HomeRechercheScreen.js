@@ -16,7 +16,7 @@ import { EvilIcons } from "@expo/vector-icons";
 import { useSelector } from "react-redux";
 import ContactScreen from "./ContactScreen";
 
-export default function HomeScreen({ navigation }) {
+export default function HomeRechercheScreen({ navigation }) {
   const addContact = useSelector((state) => state.contacts.value);
 
   const contacts = addContact.map((data, i) => {
