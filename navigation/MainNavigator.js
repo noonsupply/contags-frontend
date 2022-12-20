@@ -18,18 +18,18 @@ const Stack = createStackNavigator();
 const MainNavigator = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="HomeScreen">
-       {/* <Stack.Screen
+      <Stack.Navigator initialRouteName="Splash">
+       <Stack.Screen
           name="Splash"
           options={{ animationEnabled: false, header: () => null }}
           component={SplashScreen}
-        />  */}
+        /> 
         {/*  <Stack.Screen
           name="SignInPonctuelScreen"
           options={{ animationEnabled: true, header: () => null }}
           component={SignInPonctuelScreen}
         /> */}
-        {/* <Stack.Screen
+        <Stack.Screen
           name="MailScreen"
           options={{ animationEnabled: true, header: () => null }}
           component={MailScreen}
@@ -48,19 +48,14 @@ const MainNavigator = () => {
           name="TagCreation"
           options={{ animationEnabled: true, header: () => null }}
           component={TagCreation}
-        />  */}
+        />  
 
-        {/* <Stack.Screen
+        <Stack.Screen
           name="HomeLoadContact"
           options={{ animationEnabled: true, header: () => null }}
           component={HomeLoadContact}
-        /> */}
+        />
 
-        {/* <Stack.Screen
-          name="HomeLoad"
-          options={{ animationEnabled: true, header: () => null }}
-          component={HomeLoadContact}
-        /> */}
         <Stack.Screen
           name="HomeScreen"
           options={{ animationEnabled: true, header: () => null }}
