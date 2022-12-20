@@ -60,8 +60,8 @@ export default function ExempleModal() {
         }}
       ><View style={styles.modalContainer}>
         <TagsDefinition handleCloseModal={handleCloseModal} 
-                        contact={contacts[1]}
-                        user={null}
+                        // contact={contacts[1]}
+                        // user={null}
       /></View>
       </Modal>
         <Pressable
