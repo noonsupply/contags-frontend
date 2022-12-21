@@ -9,10 +9,7 @@ import ProfileCreation from "../screens/ProfileCreation";
 import TagCreation from "../screens/TagCreation";
 import HomeScreen from "../screens/HomeScreen";
 import ContactsScreen from "../screens/ContactsScreen";
-<<<<<<< HEAD
-=======
 import ContactAddManually from "../screens/ContactAddManually";
->>>>>>> main
 import HomeLoadContact from "../screens/HomeLoadContact";
 import SignInPonctuelScreen from "../screens/SignInPonctuelScreen";
 import HomeRechercheScreen from "../screens/HomeRechercheScreen";

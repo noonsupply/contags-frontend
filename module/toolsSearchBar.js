@@ -33,4 +33,55 @@ function getTagsCombination(listContacts) {
     return removeDuplicates(onlyTags).filter(elt=> elt !== theTag);
   } 
 
-  module.exports = { getAllTags, getTagsCombination,getAssociateTags };
+  // fonction cherchant si un tableau contient le tag cherché
+  function searchTagInArray(tagSearch, arrayTags){
+      return arrayTags.some(eltTag => eltTag.title === tagSearch.title)
+  }
+
+ // fonction permettant de vérifier si un tableau contient tous les tags 
+ function searchAllTagsInArray(tagsSearch, arrayTags){
+    let findAllTag = true;
+    // on parcourt la liste des tagsSearch
+    let i=0;
+    while(i<tagsSearch.length && findAllTag){
+      searchTagInArray(tagsSearch[i], arrayTags)? findAllTag = true : findAllTag = false;
+      i++
+    }
+    return findAllTag;
+ } 
+
+  // fonction permettant de récupérer les contacts ayant les tags cherchés
+  // tagsSearch est un tableau d'objet tags et allContacts le tableau 
+  function getContactsWithTags(tagsSearch, allContacts){
+      const contactsWithOneTag = [];
+      const contactsWithAllTags = [];
+      
+      // vérification qu'on a des données
+      if(allContacts || allContacts.length === 0 ){
+        return {}
+      }
+
+      if(!tagsSearch || tagsSearch.length ===0){
+        return {}
+      }
+
+      //on parcourt le tableau de contact
+      for(let itemContact of allContacts){  
+          // on parcourt le tableau de tags
+            for(let itemTag of tagsSearch){
+                // on vérifie si ce contact possède bien le tag
+                if(searchTagInArray(itemTag, itemContact.tags)){
+                      // on vérifie si ce contact possède tous les tags
+                      if(searchAllTagsInArray(tagsSearch,itemContact.tags)){
+                        contactsWithAllTags.push(itemContact)
+                      }else{
+                        contactsWithOneTag.push(itemContact);
+                      }
+                }
+            }
+      }
+        
+    return {}
+  }
+
+  module.exports = { getAllTags, getTagsCombination,getAssociateTags, searchTagInArray, searchAllTagsInArray };

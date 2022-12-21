@@ -20,6 +20,8 @@ import { useSelector } from "react-redux";
 import TagsDefinition from "../components/TagsDefinition";
 import TagSearchBar from "../components/TagSearchBar";
 
+import { searchTagInArray,  searchAllTagsInArray } from "../module/toolsSearchBar";
+
 export default function ExempleSearchBar() {
   const [tagsSelected, setTagsSelected] = useState([]);
   // const [dataSet, setDataSet] = useState([
@@ -33,6 +35,8 @@ export default function ExempleSearchBar() {
       return;
     }
   };
+
+ console.log("essai", searchAllTagsInArray([{title : "Nico"}, {title : "gdf"}], [{title : 'test'}, {title : "yes"}, {title : "Nico"}] ))
 
   return (
     <SafeAreaView style={styles.container}>

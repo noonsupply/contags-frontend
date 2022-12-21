@@ -27,7 +27,7 @@ function TagDelete(props) {
                     styles.form]}>
                 <Text style={[
                         styles.tagText,
-                        props.tag.color !== "white"?{color : "#FFFFFF"} : {color : props.tag.border}]}>
+                        props.tag.color !== "white" && props.tag.color !== "#FFFFFF"?{color : "#FFFFFF"} : {color : props.tag.border}]}>
                         {props.tag.title || "Nom du tag"}
                 </Text>
                 

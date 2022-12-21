@@ -199,7 +199,7 @@ export default function ContactsScreen({ route, navigation }) {
 
   // fonction pour gérer l'ajout des tags dans la modale (on considère que le contact existe sinon on est revenu à la page précédente)
   const addTags = (tagsFromModal) => {
-    setTheTags(updateArrayTags(theTags.tags, tagsFromModal));
+    setTheTags(updateArrayTags(theTags, tagsFromModal));
   };
 
   // fonction permettant de supprimer un tag de theTags (donc de l'affichage) en props dans le component TagDelete
