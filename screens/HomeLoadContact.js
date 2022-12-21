@@ -28,8 +28,8 @@ export default function HomeLoadContact({ navigation }) {
   let [error, setError] = useState(undefined);
   let [myContacts, setMyContacts] = useState([]);
 
-  const BACKEND_ADDRESS = setAdress(); //"http://192.168.1.92:3000";
-  // console.log(BACKEND_ADDRESS);
+  const BACKEND_ADDRESS = setAdress();
+
   useEffect(() => {
     (async () => {
       const { status } = await Contacts.requestPermissionsAsync();

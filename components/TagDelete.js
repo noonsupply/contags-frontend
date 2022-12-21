@@ -19,11 +19,11 @@ function TagDelete(props) {
   }
     return (
           <View style = {[styles.container,
-                         {width: theWidth}]}>
+                          {width: theWidth}]}>
             <View style={[
                     {backgroundColor: props.tag.color},
                     props.tag.border !== "none"? {borderWidth : 2} : {borderWidth : 0},
-                    props.tag.border !== "none"? {borderColor : props.tag.border} : {borderColor : 'white'},
+                    props.tag.border !== "none"? {borderColor : props.tag.border} : {borderColor : "#FFFFFF"},
                     styles.form]}>
                 <Text style={[
                         styles.tagText,

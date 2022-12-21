@@ -60,14 +60,19 @@ function TagsDefinition(props) {
     // fonction gérant la validation des tags
     const handleValidate= () => {
         // on enregistre dans le bon reducer
-        if(props.user !== null){
-            dispatch(updateTagsPerso(updateArrayTags(props.user.tagsPerso, listTags)));
-        }
-        if(props.contact !== null){
-            const indexContact = contacts.findIndex(elt => elt.lastName === props.contact.lastName && elt.firstName === props.contact.firstName);
-            if(indexContact !== -1){
-                dispatch(setTags({indexContact : indexContact, tags: updateArrayTags(props.contact.tags, listTags)}));
-            }
+        // if(props.user !== null){
+        //     dispatch(updateTagsPerso(updateArrayTags(props.user.tagsPerso, listTags)));
+        // }
+        // if(props.contact !== null){
+        //     const indexContact = contacts.findIndex(elt => elt.lastName === props.contact.lastName && elt.firstName === props.contact.firstName);
+        //     if(indexContact !== -1){
+        //         dispatch(setTags({indexContact : indexContact, tags: updateArrayTags(props.contact.tags, listTags)}));
+        //     }
+        //}
+
+        // on renvoit les données dans la page où la modal s'ouvre seulement s'il y a eu des tags rajoutés
+        if(listTags.length>0){
+            props.addTags(listTags);
         }
         
         props.handleCloseModal();
