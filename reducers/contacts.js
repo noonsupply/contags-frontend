@@ -23,7 +23,8 @@ export const contactsSlice = createSlice({
   // addContact permet d'ajouter un contact dans ce reducer qui est un tableau représentant l'ensemble des contacts
   // action.payload sera un objet contact
    addContact: (state, action) => {
-    state.value.push(action.payload);
+        state.value.push(action.payload)
+//console.log(action.payload)
    },
    // replaceAllTags permet de remplacer le tableau de tags à un contact : 
    //action.payload doit être de la forme {indexContact : index_du_contact, tags: tableau_tags}

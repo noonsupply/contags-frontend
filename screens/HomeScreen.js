@@ -14,17 +14,22 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { Entypo } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
 import { useSelector } from "react-redux";
+import ContactScreen from "./ContactScreen";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function HomeScreen({ navigation }) {
   const addContact = useSelector((state) => state.contacts.value);
+
   const contacts = addContact.map((data, i) => {
-    // const tableauPhone = data.phones[0].number;
-    // const tableauEmail = data.emails;
+    const tableauPhone = data.phones[0].number;
+    const tableauEmail = data.emails;
     const key = i;
 
-    // let email
+    let email;
 
-    // if(tableauEmail!== undefined){
+    if (tableauEmail !== undefined) {
+      email = Object.values(tableauEmail);
+    }
 
     //   email = Object.values(tableauEmail)
     // }
@@ -55,20 +60,22 @@ export default function HomeScreen({ navigation }) {
   });
 
   return (
-    <ScrollView>
-      <View style={styles.container}>{contacts}</View>
-      <View style={styles.contactContainer}></View>
-
-      <View style={styles.btnContainer}>
-        <Text>Ajouter manuellement</Text>
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={styles.header}></View>
+      <ScrollView>
+        <View style={styles.contactContainer}>
+          <View style={styles.container}>{contacts}</View>
+        </View>
+      </ScrollView>
+      <View style={styles.footer}>
         <TouchableOpacity
-          style={styles.btnAddContact}
-          onPress={() => alert("Bonjour")}
+          style={styles.addManually}
+          onPress={() => navigation.navigate("ContactAddManually")}
         >
-          <FontAwesome color="#ffffff" name="plus" />
+          <Text style={styles.txtBtnAjouter}>Ajouter Manuellement</Text>
         </TouchableOpacity>
       </View>
-    </ScrollView>
+    </SafeAreaView>
   );
 }
 
@@ -78,13 +85,27 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffffff",
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 20,
+    paddingTop: 20,
+  },
+
+  addManually: {
+    height: 50,
+    width: 150,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 5,
+    marginLeft: 230,
+    backgroundColor: "#0031b8",
+  },
+
+  txtBtnAjouter: {
+    color: "white",
+    fontSize: 18,
+    textAlign: "center",
   },
 
   contactContainer: {
-    flex: 0.5,
-    height: 100,
-    marginTop: 50,
+    flex: 1,
   },
 
   case: {
@@ -112,16 +133,22 @@ const styles = StyleSheet.create({
     width: 200,
     marginRight: 40,
   },
-  param: {},
 
   btnContainer: {
-    flexWrap: "wrap",
-    flexDirection: "column",
-    justifyContent: "space-between",
     width: 150,
     height: 80,
-    alignItems: "stretch",
-    textAlign: "right",
     marginLeft: 200,
+    backgroundColor: "blue",
+  },
+
+  btnAddContact: {
+    backgroundColor: "black",
+    width: 90,
+    height: 50,
+  },
+
+  footer: {
+    height: 40,
+    marginTop: 20,
   },
 });

@@ -8,7 +8,13 @@ import PasswordScreen from "../screens/PasswordScreen";
 import ProfileCreation from "../screens/ProfileCreation";
 import TagCreation from "../screens/TagCreation";
 import HomeScreen from "../screens/HomeScreen";
+<<<<<<< HEAD
 import ContactsScreen from "../screens/ContactsScreen";
+=======
+import ContactScreen from "../screens/ContactScreen";
+import ModalSetting from "../screens/ModalSetting";
+import ContactAddManually from "../screens/ContactAddManually";
+>>>>>>> 76b7d74908786f145e37aa2a6a4b0b3879216068
 import HomeLoadContact from "../screens/HomeLoadContact";
 import SignInPonctuelScreen from "../screens/SignInPonctuelScreen";
 import HomeRechercheScreen from "../screens/HomeRechercheScreen";
@@ -64,6 +70,13 @@ const MainNavigator = () => {
           options={{ animationEnabled: true, header: () => null }}
           component={ContactsScreen}
         />
+
+        <Stack.Screen
+          name="ContactAddManually"
+          options={{ animationEnabled: true, header: () => null }}
+          component={ContactAddManually}
+        />
+
 
         {/* <Stack.Screen
           name="HomeRechercheScreen"
