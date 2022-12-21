@@ -7,6 +7,7 @@ import {
   Modal,
   KeyboardAvoidingView,
   ScrollView,
+  StatusBar,
 } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { Entypo } from "@expo/vector-icons";
@@ -200,12 +201,7 @@ export default function ContactsScreen({ route, navigation }) {
 
   // fonction pour gérer l'ajout des tags dans la modale (on considère que le contact existe sinon on est revenu à la page précédente)
   const addTags = (tagsFromModal) => {
-    console.log("addTags", tagsFromModal);
-    console.log(
-      "update",
-      updateArrayTags(theContactUpdating.tags, tagsFromModal)
-    );
-    setTheTags(updateArrayTags(theContactUpdating.tags, tagsFromModal));
+    setTheTags(updateArrayTags(theTags.tags, tagsFromModal));
   };
 
   // fonction permettant de supprimer un tag de theTags (donc de l'affichage) en props dans le component TagDelete
@@ -234,149 +230,152 @@ export default function ContactsScreen({ route, navigation }) {
 
   return (
     <KeyboardAvoidingView behavior="position" style={styles.container}>
-      {/* Modal à afficher */}
-      <ScrollView>
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => {
-            setModalVisible(!modalVisible);
-          }}
-        >
-          <View style={styles.modalContainer}>
-            <TagsDefinition
-              handleCloseModal={handleCloseModal}
-              // contact={contacts[1]}
-              // user={null}
-              addTags={addTags}
-            />
-          </View>
-        </Modal>
-        <View style={styles.caseHeader}>
-          <View style={styles.header}>
-            <FontAwesome
-              name="chevron-left"
-              size={20}
-              color="#0031B8"
-              onPress={() => handleReturn()}
-            />
-          </View>
-        </View>
-        <View style={styles.icon}>
-          <FontAwesome name="user-circle" size={100} color="#0031B8" />
-        </View>
-        <View style={styles.fastAction}>
-          <FontAwesome name="phone" size={30} color="#0031B8" />
-          <Entypo name="message" size={30} color="#0031B8" />
-          <FontAwesome name="envelope" size={30} color="#0031B8" />
-          <FontAwesome name="paper-plane" size={30} color="#0031B8" />
-        </View>
-        <View style={styles.caseBody}>
-          <View style={styles.nameandfirst}>
-            {/*Debut date de Nom*/}
-            <Text style={styles.colorText}>Nom</Text>
-            <View style={styles.casePrenom}>
-              <TextInput
-                style={styles.inputPrenom}
-                placeholder="Nom"
-                onChangeText={(value) => setLastName(value)}
-                value={lastName}
+      <SafeAreaView>
+        <StatusBar backgroundColor={"#FFFFFF"} barStyle={"dark-content"} />
+        {/* Modal à afficher */}
+        <ScrollView>
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => {
+              setModalVisible(!modalVisible);
+            }}
+          >
+            <View style={styles.modalContainer}>
+              <TagsDefinition
+                handleCloseModal={handleCloseModal}
+                // contact={contacts[1]}
+                // user={null}
+                addTags={addTags}
               />
             </View>
-            {/*Debut date de Prénom*/}
-            <Text style={styles.colorText}>Prénom</Text>
-            <View style={styles.casePrenom}>
-              <TextInput
-                style={styles.inputPrenom}
-                placeholder="Prénom"
-                onChangeText={(value) => setFirstName(value)}
-                value={firstName}
-              ></TextInput>
+          </Modal>
+          <View style={styles.caseHeader}>
+            <View style={styles.header}>
+              <FontAwesome
+                name="chevron-left"
+                size={20}
+                color="#0031B8"
+                onPress={() => handleReturn()}
+              />
             </View>
           </View>
-          <View style={styles.nameandfirst}>
-            {/*Debut date de naissance*/}
-            <Text style={styles.colorText}>Date de Naissance</Text>
-            <View style={styles.casePrenom}>
-              <TextInput
-                style={styles.inputPrenom}
-                placeholder="Date de Naissance"
-                onChangeText={(value) => setDob(value)}
-                value={dob}
-              ></TextInput>
-            </View>
+          <View style={styles.icon}>
+            <FontAwesome name="user-circle" size={100} color="#0031B8" />
           </View>
-          <View style={styles.nameandfirst}>
-            {/*Debut num perso*/}
-            <Text style={styles.colorText}>Numéro Perso</Text>
-            <View style={styles.casePrenom}>
-              <TextInput
-                style={styles.inputPrenom}
-                onChangeText={(value) => setPhoneNr1(value)}
-                value={phonenr1}
-              ></TextInput>
+          <View style={styles.fastAction}>
+            <FontAwesome name="phone" size={30} color="#0031B8" />
+            <Entypo name="message" size={30} color="#0031B8" />
+            <FontAwesome name="envelope" size={30} color="#0031B8" />
+            <FontAwesome name="paper-plane" size={30} color="#0031B8" />
+          </View>
+          <View style={styles.caseBody}>
+            <View style={styles.nameandfirst}>
+              {/*Debut date de Nom*/}
+              <Text style={styles.colorText}>Nom</Text>
+              <View style={styles.casePrenom}>
+                <TextInput
+                  style={styles.inputPrenom}
+                  placeholder="Nom"
+                  onChangeText={(value) => setLastName(value)}
+                  value={lastName}
+                />
+              </View>
+              {/*Debut date de Prénom*/}
+              <Text style={styles.colorText}>Prénom</Text>
+              <View style={styles.casePrenom}>
+                <TextInput
+                  style={styles.inputPrenom}
+                  placeholder="Prénom"
+                  onChangeText={(value) => setFirstName(value)}
+                  value={firstName}
+                ></TextInput>
+              </View>
             </View>
+            <View style={styles.nameandfirst}>
+              {/*Debut date de naissance*/}
+              <Text style={styles.colorText}>Date de Naissance</Text>
+              <View style={styles.casePrenom}>
+                <TextInput
+                  style={styles.inputPrenom}
+                  placeholder="Date de Naissance"
+                  onChangeText={(value) => setDob(value)}
+                  value={dob}
+                ></TextInput>
+              </View>
+            </View>
+            <View style={styles.nameandfirst}>
+              {/*Debut num perso*/}
+              <Text style={styles.colorText}>Numéro Perso</Text>
+              <View style={styles.casePrenom}>
+                <TextInput
+                  style={styles.inputPrenom}
+                  onChangeText={(value) => setPhoneNr1(value)}
+                  value={phonenr1}
+                ></TextInput>
+              </View>
 
-            {/*Debut num pro*/}
-            <Text style={styles.colorText}>Numéro Pro</Text>
-            <View style={styles.casePrenom}>
-              <TextInput
-                style={styles.inputPrenom}
-                onChangeText={(value) => setPhoneNr2(value)}
-                value={phonenr2}
-              ></TextInput>
+              {/*Debut num pro*/}
+              <Text style={styles.colorText}>Numéro Pro</Text>
+              <View style={styles.casePrenom}>
+                <TextInput
+                  style={styles.inputPrenom}
+                  onChangeText={(value) => setPhoneNr2(value)}
+                  value={phonenr2}
+                ></TextInput>
+              </View>
+            </View>
+            <View style={styles.nameandfirst}>
+              {/*Debut Mail perso*/}
+              <Text style={styles.colorText}>Mail Perso</Text>
+              <View style={styles.casePrenom}>
+                <TextInput
+                  style={styles.inputPrenom}
+                  onChangeText={(value) => setEmail1(value)}
+                  placeholder={"Email Perso"}
+                  autoCapitalize="none"
+                  keyboardType="email-address"
+                  textContentType="emailAddress"
+                  autoComplete="email"
+                  value={email1}
+                ></TextInput>
+              </View>
+              {/*Debut Mail pro*/}
+              <Text style={styles.colorText}>Mail Pro</Text>
+              <View style={styles.casePrenom}>
+                <TextInput
+                  style={styles.inputPrenom}
+                  onChangeText={(value) => setEmail2(value)}
+                  placeholder={"Email Pro"}
+                  autoCapitalize="none"
+                  keyboardType="email-address"
+                  textContentType="emailAddress"
+                  autoComplete="email"
+                  value={email2}
+                ></TextInput>
+              </View>
+              {/*Debut Tags*/}
+              <View style={styles.validateTagContainer}>{displayTags}</View>
+              {/* BOUTONS BAS DE PAGE */}
+              <View style={styles.bottomContainer}>
+                <TouchableOpacity
+                  style={styles.btnAddTag}
+                  onPress={() => handleAddTags()}
+                >
+                  <Text style={styles.mettreajour}>Ajouter des Tags</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.btnUpdateContact}
+                  onPress={() => handleSubmit()}
+                >
+                  <Text style={styles.mettreajour}>Mettre à jour</Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
-          <View style={styles.nameandfirst}>
-            {/*Debut Mail perso*/}
-            <Text style={styles.colorText}>Mail Perso</Text>
-            <View style={styles.casePrenom}>
-              <TextInput
-                style={styles.inputPrenom}
-                onChangeText={(value) => setEmail1(value)}
-                placeholder={"Email Perso"}
-                autoCapitalize="none"
-                keyboardType="email-address"
-                textContentType="emailAddress"
-                autoComplete="email"
-                value={email1}
-              ></TextInput>
-            </View>
-            {/*Debut Mail pro*/}
-            <Text style={styles.colorText}>Mail Pro</Text>
-            <View style={styles.casePrenom}>
-              <TextInput
-                style={styles.inputPrenom}
-                onChangeText={(value) => setEmail2(value)}
-                placeholder={"Email Pro"}
-                autoCapitalize="none"
-                keyboardType="email-address"
-                textContentType="emailAddress"
-                autoComplete="email"
-                value={email2}
-              ></TextInput>
-            </View>
-            {/*Debut Tags*/}
-            <View style={styles.validateTagContainer}>{displayTags}</View>
-            {/* BOUTONS BAS DE PAGE */}
-            <View style={styles.bottomContainer}>
-              <TouchableOpacity
-                style={styles.btnAddTag}
-                onPress={() => handleAddTags()}
-              >
-                <Text style={styles.mettreajour}>Ajouter des Tags</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.btnUpdateContact}
-                onPress={() => handleSubmit()}
-              >
-                <Text style={styles.mettreajour}>Mettre à jour</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-      </ScrollView>
+        </ScrollView>
+      </SafeAreaView>
     </KeyboardAvoidingView>
   );
 }
@@ -397,7 +396,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderRadius: 5,
     marginLeft: 130,
-    marginTop: 25,
   },
 
   container: {
@@ -406,7 +404,6 @@ const styles = StyleSheet.create({
   },
   caseHeader: {
     alignItems: "center",
-    marginTop: 30,
   },
   header: {
     flexDirection: "row",
