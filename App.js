@@ -16,6 +16,7 @@ import MailScreen from "./screens/MailScreen";
 import ProfileCreation from "./screens/ProfileCreation";
 import TagCreation from "./screens/TagCreation";
 import HomeRechercheScreen from "./screens/HomeRechercheScreen";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 const store = configureStore({
   reducer: { users, contacts },
@@ -24,7 +25,9 @@ const store = configureStore({
 export default function App() {
   return (
     <Provider store={store}>
-      <MainNavigator />
+      <SafeAreaProvider>
+        <MainNavigator />
+      </SafeAreaProvider>
     </Provider>
   );
 }
