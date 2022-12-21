@@ -8,11 +8,11 @@ import {
   StyleSheet,
   TouchableOpacity,
   View,
-  SafeAreaView,
   StatusBar,
   ScrollView,
   KeyboardAvoidingView,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import users from "../reducers/users";
@@ -214,11 +214,11 @@ export default function ProfileCreation({ navigation }) {
   };
 
   return (
-    <SafeAreaView style={styles.safeAreaView}>
+    <SafeAreaView style={styles.sav}>
       <StatusBar backgroundColor={"#FFFFFF"} barStyle={"dark-content"} />
 
       <ScrollView style={styles.scrollView}>
-        <KeyboardAvoidingView>
+        <KeyboardAvoidingView style={styles.kav}>
           <View style={styles.globalContainer}>
             <View style={styles.logoContainer}>
               <Image
@@ -301,19 +301,28 @@ export default function ProfileCreation({ navigation }) {
 const styles = StyleSheet.create({
   //  Views & Global container
 
-  safeAreaView: {
+  sav: {
     flex: 1,
     height: "100%",
     width: "100%",
-    backgroundColor: "#FFFFFF",
+    // backgroundColor: "#FFFFFF",
+    backgroundColor: "red",
   },
 
   scrollView: {
     flex: 1,
+    height: "100%",
+  },
+
+  kav: {
+    flex:1,
+    height: "100%",
   },
 
   globalContainer: {
     flex: 1,
+    backgroundColor: "blue",
+    height: "100%",
   },
 
   // Logo
