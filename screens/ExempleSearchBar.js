@@ -47,10 +47,11 @@ export default function ExempleSearchBar() {
         closeOnSubmit
       /> */}
       <TagSearchBar />
-      <Text style={styles.tt}>ceci est un essai 1</Text>
+      <View><Text style={styles.tt}>ceci est un essai 1</Text>
       <Text style={styles.tt}>ceci est un essai 2</Text>
       <Text style={styles.tt}>ceci est un essai 3</Text>
-      <Text style={styles.tt}>ceci est un essai 4</Text>
+      <Text style={styles.tt}>ceci est un essai 4</Text></View>
+      
     </View>
   );
 }
@@ -67,7 +68,5 @@ const styles = StyleSheet.create({
 
   tt: {
     fontSize: 20,
-    // zIndex : 0,
-    // position: "absolute",
   },
 });

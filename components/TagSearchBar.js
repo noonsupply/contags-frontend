@@ -139,9 +139,12 @@ const styles = StyleSheet.create({
     },
     list:{
       backgroundColor: 'yellow',
-      zIndex: 9,
         borderRadius: 5,
         flexWrap: "wrap",
+        zIndex :1,
+        top: 32,
+      left: 32,
+        position: "absolute",
     },
 
     
