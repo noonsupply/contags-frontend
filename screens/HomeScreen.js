@@ -15,6 +15,7 @@ import { Entypo } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
 import { useSelector } from "react-redux";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Feather } from "@expo/vector-icons";
 
 export default function HomeScreen({ navigation }) {
   const addContact = useSelector((state) => state.contacts.value);
@@ -60,7 +61,13 @@ export default function HomeScreen({ navigation }) {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View style={styles.header}></View>
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => navigation.navigate()}>
+          <Text style={styles.deco}>
+            <Feather name="log-out" size={24} color="black" />
+          </Text>
+        </TouchableOpacity>
+      </View>
       <ScrollView>
         <View style={styles.contactContainer}>
           <View style={styles.container}>{contacts}</View>
@@ -71,7 +78,7 @@ export default function HomeScreen({ navigation }) {
           style={styles.addManually}
           onPress={() => navigation.navigate("ContactAddManually")}
         >
-          <Text style={styles.txtBtnAjouter}>Ajouter Manuellement</Text>
+          <Text style={styles.txtBtnAjouter}>+</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -86,15 +93,20 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingTop: 20,
   },
-
+  deco: {
+    marginLeft: 30,
+    marginTop: 30,
+    marginBottom: 0,
+  },
   addManually: {
-    height: 50,
-    width: 150,
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: 5,
-    marginLeft: 230,
     backgroundColor: "#0031b8",
+    height: 50,
+    width: 50,
+    marginLeft: "75%",
+    marginBottom: "15%",
+    borderRadius: 50,
   },
 
   txtBtnAjouter: {
@@ -140,14 +152,13 @@ const styles = StyleSheet.create({
     backgroundColor: "blue",
   },
 
-  btnAddContact: {
-    backgroundColor: "black",
-    width: 90,
-    height: 50,
-  },
-
   footer: {
-    height: 40,
-    marginTop: 20,
+    position: "absolute",
+    top: "92%",
+    left: "13%",
+  },
+  header: {
+    backgroundColor: "#ffffff",
+    marginBottom: 0,
   },
 });

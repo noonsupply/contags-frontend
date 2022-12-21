@@ -60,17 +60,17 @@ const MainNavigator = () => {
           options={{ animationEnabled: true, header: () => null }}
           component={HomeScreen}
         />
-        <Stack.Screen
+        {/* <Stack.Screen
           name="ContactsScreen"
           options={{ animationEnabled: true, header: () => null }}
           component={ContactsScreen}
-        />
+        /> */}
 
-        {/* <Stack.Screen
+        <Stack.Screen
           name="ContactAddManually"
           options={{ animationEnabled: true, header: () => null }}
           component={ContactAddManually}
-        /> */}
+        />
 
         {/* <Stack.Screen
           name="HomeRechercheScreen"
