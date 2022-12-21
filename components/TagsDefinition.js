@@ -15,10 +15,11 @@ import {
 import { Entypo } from "@expo/vector-icons";
 //import 'font-awesome/css/font-awesome.min.css'
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import { updateTags } from "../reducers/contacts";
+import { setTags } from "../reducers/contacts";
 import { updateTagsPerso } from "../reducers/users";
+import {updateArrayTags} from "../module/toolsReducers"
 
 import TagDelete from "./TagDelete";
 import Tag from "./Tag";
@@ -36,6 +37,7 @@ function TagsDefinition(props) {
     const [listTags, setListTags] = useState([]);
 
     const dispatch = useDispatch();
+    const contacts = useSelector((state) => state.contacts.value);
 
     // fonctions gérant le click sur les couleurs
     const handlePressColor= (colorClick) => {
@@ -58,11 +60,19 @@ function TagsDefinition(props) {
     // fonction gérant la validation des tags
     const handleValidate= () => {
         // on enregistre dans le bon reducer
-        if(props.user !== null || props.user=== undefined){
-            dispatch(updateTagsPerso({tagsPerso: listTags}));
-        }
-        if(props.contact !== null || props.contact === undefined){
-            dispatch(updateTags({contact : props.contact, tags: listTags}));
+        // if(props.user !== null){
+        //     dispatch(updateTagsPerso(updateArrayTags(props.user.tagsPerso, listTags)));
+        // }
+        // if(props.contact !== null){
+        //     const indexContact = contacts.findIndex(elt => elt.lastName === props.contact.lastName && elt.firstName === props.contact.firstName);
+        //     if(indexContact !== -1){
+        //         dispatch(setTags({indexContact : indexContact, tags: updateArrayTags(props.contact.tags, listTags)}));
+        //     }
+        //}
+
+        // on renvoit les données dans la page où la modal s'ouvre seulement s'il y a eu des tags rajoutés
+        if(listTags.length>0){
+            props.addTags(listTags);
         }
         
         props.handleCloseModal();

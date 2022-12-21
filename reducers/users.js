@@ -10,6 +10,7 @@ const initialState = {
     phones: [],
     dob: null,
     lastConnection: null,
+    tagsPerso: [],
   },
 };
 
@@ -25,8 +26,8 @@ export const usersSlice = createSlice({
       state.value.emails.push(action.payload);
     },
 
-    updateName: (state, action) => {
-      state.value.name = action.payload;
+    updateLastName: (state, action) => {
+      state.value.lastName = action.payload;
     },
 
     updateFirstName: (state, action) => {
@@ -49,35 +50,36 @@ export const usersSlice = createSlice({
       state.value.lastConnection = action.payload;
     },
 
-    setTagsPerso:(state, action) => {
+    updateTagsPerso: (state, action) => {
       state.value.tagsPerso = action.payload;
+      console.log("user", state.value);
     },
 
     //updateTags permet de fusionner le tableau de tags du user avec un nouveau tableau de tag
     //action.payload doit être de la forme {tagsPerso: tableau_tags}
-    updateTagsPerso: (state, action) => {
-    if(state.value.tagsPerso && state.value.tagsPerso.length>0){
-      // on parcourt le tableau de tags des contacts : si on trouve un tag avec le même titre on le remplace sinon on le rajoute
-      for(let oneTag of action.payload.tagsPerso){
-          const searchTag = state.value.tagsPerso.findIndex(elt => elt.title === oneTag.title);
-          if(searchTag !== -1){
-              state.value.tagsPerso[searchTag] = oneTag;
-          }else{
-              state.value.tagsPerso.push(oneTag)
-          }
-      }
-     }else{
-         // il n'y avait pas de tags, on ajoute directement tous les tags/         
-         state.value.tagsPerso = action.payload.tagsPerso ;
-     }
-  },
+    // updateTagsPerso: (state, action) => {
+    // if(state.value.tagsPerso && state.value.tagsPerso.length>0){
+    //   // on parcourt le tableau de tags des contacts : si on trouve un tag avec le même titre on le remplace sinon on le rajoute
+    //   for(let oneTag of action.payload.tagsPerso){
+    //       const searchTag = state.value.tagsPerso.findIndex(elt => elt.title === oneTag.title);
+    //       if(searchTag !== -1){
+    //           state.value.tagsPerso[searchTag] = oneTag;
+    //       }else{
+    //           state.value.tagsPerso.push(oneTag)
+    //       }
+    //   }
+    //  }else{
+    //      // il n'y avait pas de tags, on ajoute directement tous les tags/
+    //      state.value.tagsPerso = action.payload.tagsPerso ;
+    //  }
+    //},
   },
 });
 
 export const {
   updateEmailMain,
   addEmail,
-  updateName,
+  updateLastName,
   updateFirstName,
   updateToken,
   addPhone,

@@ -14,6 +14,7 @@ import * as Contacts from "expo-contacts";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import { setAdress } from "../module/adressIP";
 import { useDispatch } from "react-redux";
 import { setContact } from "../reducers/contacts";
 //import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -22,15 +23,19 @@ export default function HomeLoadContact({ navigation }) {
   const dispatch = useDispatch();
 
   const contacts = useSelector((state) => state.contacts.value);
+  const user = useSelector((state) => state.users.value);
 
   let [error, setError] = useState(undefined);
   let [myContacts, setMyContacts] = useState([]);
 
-  const BACKEND_ADDRESS = "http://192.168.1.43:3000";
+  const BACKEND_ADDRESS = setAdress();
 
+  console.log(setAdress)
   useEffect(() => {
+    
     (async () => {
       const { status } = await Contacts.requestPermissionsAsync();
+
       if (status === "granted") {
         const { data } = await Contacts.getContactsAsync({
           fields: [
@@ -41,6 +46,7 @@ export default function HomeLoadContact({ navigation }) {
             Contacts.Fields.PhoneNumbers,
           ],
         });
+        // console.log("data", data)
 
         if (data.length > 0) {
           const contactPush = data.map((element) => {
@@ -73,7 +79,6 @@ export default function HomeLoadContact({ navigation }) {
               phones: phoneTableau,
             };
           });
-
           setMyContacts(contactPush);
         } else {
           setError("No contacts found");
@@ -88,7 +93,7 @@ export default function HomeLoadContact({ navigation }) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        token: "pw0aeY_jubIXlYijDXI-47ICxhbwup5f",
+        token: user.token,
         contacts: myContacts,
       }),
     })
@@ -149,7 +154,7 @@ export default function HomeLoadContact({ navigation }) {
           backgroundColor: "#DCDCDC",
           width: "80%",
           height: "5%",
-          borderRadius: "5px",
+          borderRadius: 5,
           paddingLeft: 15,
           marginTop: 15,
         }}
@@ -159,8 +164,8 @@ export default function HomeLoadContact({ navigation }) {
       <Text
         style={{
           color: "#595959",
-          fontWeight: "1px",
-          fontSize: "18px",
+          // fontWeight: 1,
+          fontSize: 18,
           paddingTop: 10,
           marginTop: 200,
           textAlign: "center",
@@ -190,8 +195,8 @@ export default function HomeLoadContact({ navigation }) {
           <Text
             style={{
               color: "#0031b8",
-              fontWeight: "1px",
-              fontSize: "18px",
+              // fontWeight: 1,
+              fontSize: 18,
               textAlign: "center",
               fontWeight: "bold",
               textAlignVertical: "center",
@@ -199,9 +204,7 @@ export default function HomeLoadContact({ navigation }) {
           >
             Importer mes contacts
           </Text>
-          <Text
-            style={{ color: "#0031b8", fontWeight: "bold", fontSize: "30px" }}
-          >
+          <Text style={{ color: "#0031b8", fontWeight: "bold", fontSize: 30 }}>
             {"   "}+
           </Text>
         </Text>

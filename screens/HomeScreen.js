@@ -31,6 +31,8 @@ export default function HomeScreen({ navigation }) {
       email = Object.values(tableauEmail);
     }
 
+    //   email = Object.values(tableauEmail)
+    // }
     return (
       <View style={styles.container} key={i}>
         <TouchableOpacity
@@ -47,7 +49,7 @@ export default function HomeScreen({ navigation }) {
             <FontAwesome name="user-circle" size={35} color="#0031B8" />
           </View>
           <Text style={styles.name}>
-            {data.name} {data.firstName}
+            {data.lastName} {data.firstName}
           </Text>
           <TouchableOpacity style={styles.param}>
             <Entypo name="dots-three-vertical" size={24} color="black" />
@@ -115,10 +117,10 @@ textAlign: "center"
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    shadowColor: "black",
-    shadowOffset: { width: -2, height: 4 },
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
+    // shadowColor: "black",
+    // shadowOffset: { width: -2, height: 4 },
+    // shadowOpacity: 0.2,
+    // shadowRadius: 3,
   },
   caseIcon: {
     borderRadius: 70,
