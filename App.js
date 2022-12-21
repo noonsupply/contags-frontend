@@ -15,6 +15,7 @@ import SplashScreen from "./screens/SplashScreen";
 import MailScreen from "./screens/MailScreen";
 import ProfileCreation from "./screens/ProfileCreation";
 import TagCreation from "./screens/TagCreation";
+import ContactAddManually from "./screens/ContactAddManually";
 import HomeRechercheScreen from "./screens/HomeRechercheScreen";
 
 const store = configureStore({
@@ -24,8 +25,8 @@ const store = configureStore({
 export default function App() {
   return (
     <Provider store={store}>
-      {/* <MainNavigator /> */}
-      <ExempleSearchBar />
+      <MainNavigator />
+      {/* <ExempleSearchBar /> */}
     </Provider>
   );
 }

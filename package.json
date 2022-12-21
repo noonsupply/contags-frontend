@@ -22,6 +22,7 @@
     "expo": "~47.0.8",
     "expo-contacts": "^11.0.1",
     "expo-font": "^11.0.1",
+    "expo-image-picker": "^14.0.2",
     "expo-status-bar": "~1.4.2",
     "font-awesome": "^4.7.0",
     "moment": "^2.29.4",
