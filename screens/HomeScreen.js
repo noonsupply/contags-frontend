@@ -14,7 +14,6 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { Entypo } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
 import { useSelector } from "react-redux";
-import ContactsScreen from "./ContactScreen";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function HomeScreen({ navigation }) {
@@ -60,21 +59,21 @@ export default function HomeScreen({ navigation }) {
   });
 
   return (
-    <SafeAreaView style={{flex: 1}}>
-        <View  style={styles.header} >
-
-        </View>
-        <ScrollView>
-          <View style={styles.contactContainer}>
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={styles.header}></View>
+      <ScrollView>
+        <View style={styles.contactContainer}>
           <View style={styles.container}>{contacts}</View>
         </View>
-        </ScrollView>
-        <View style={styles.footer}>
-            <TouchableOpacity style={styles.addManually} onPress={() => navigation.navigate('ContactAddManually')}>
-              <Text style={styles.txtBtnAjouter}>Ajouter Manuellement</Text>
-            </TouchableOpacity>
-        </View>
-      
+      </ScrollView>
+      <View style={styles.footer}>
+        <TouchableOpacity
+          style={styles.addManually}
+          onPress={() => navigation.navigate("ContactAddManually")}
+        >
+          <Text style={styles.txtBtnAjouter}>Ajouter Manuellement</Text>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 }
@@ -98,10 +97,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#0031b8",
   },
 
-  txtBtnAjouter:{
-color: "white",
-fontSize: 18,
-textAlign: "center"
+  txtBtnAjouter: {
+    color: "white",
+    fontSize: 18,
+    textAlign: "center",
   },
 
   contactContainer: {
@@ -138,7 +137,7 @@ textAlign: "center"
     width: 150,
     height: 80,
     marginLeft: 200,
-    backgroundColor: "blue"
+    backgroundColor: "blue",
   },
 
   btnAddContact: {
@@ -149,6 +148,6 @@ textAlign: "center"
 
   footer: {
     height: 40,
-    marginTop: 20
+    marginTop: 20,
   },
 });
