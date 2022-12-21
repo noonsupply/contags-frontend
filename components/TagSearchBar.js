@@ -81,11 +81,12 @@ function TagSearchBar() {
   return (
     <View style={styles.container}>
       {/* Affichage des tags choisi */}
-      { tagsSearching.length>1 && (<View  style={styles.tagsContainer}>
+      <View  style={styles.tagsContainer}>
           {tagsSelected}
-      </View>)}
+      </View>
       {/* TextInput */}
-      <View style={styles.containerInput}>{tagsSearching.length===1 && (<View>{tagsSelected}</View>)}<TextInput
+      <View style={styles.containerInput}>
+        <TextInput
         value={searchQuery}
         onChangeText={handleSearchInput}
         placeholder="Press enter to add tag"
@@ -112,17 +113,19 @@ function TagSearchBar() {
 const styles = StyleSheet.create({
     container: {
       // flexWrap: "wrap",
-      height: "60%",
+      height: 60,
       width: "80%",
       backgroundColor: 'red',
       alignItems : "flex-start",
       justifyContent : "flex-start",
+      marginTop : 10,
     },
 
     tagsContainer :{
       flexDirection : "row",
       backgroundColor : "green",
       width:"100%",
+      height:30,
     },
 
     containerInput:{
@@ -141,10 +144,11 @@ const styles = StyleSheet.create({
       backgroundColor: 'yellow',
         borderRadius: 5,
         flexWrap: "wrap",
-        zIndex :1,
-        top: 32,
-      left: 32,
+        zIndex :10,
+        top: 31,
+        left: 0,
         position: "absolute",
+        width : "90%",
     },
 
     
