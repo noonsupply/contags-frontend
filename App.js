@@ -27,7 +27,7 @@ export default function App() {
   return (
     <Provider store={store}>
       <SafeAreaProvider>
-        <TagCreation />
+        <MainNavigator />
       </SafeAreaProvider>
     </Provider>
   );
