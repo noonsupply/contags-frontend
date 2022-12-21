@@ -8,7 +8,7 @@ import PasswordScreen from "../screens/PasswordScreen";
 import ProfileCreation from "../screens/ProfileCreation";
 import TagCreation from "../screens/TagCreation";
 import HomeScreen from "../screens/HomeScreen";
-import ContactScreen from "../screens/ContactScreen";
+import ContactsScreen from "../screens/ContactsScreen";
 import HomeLoadContact from "../screens/HomeLoadContact";
 import SignInPonctuelScreen from "../screens/SignInPonctuelScreen";
 import HomeRechercheScreen from "../screens/HomeRechercheScreen";
@@ -60,9 +60,9 @@ const MainNavigator = () => {
           component={HomeScreen}
         />
         <Stack.Screen
-          name="ContactScreen"
+          name="ContactsScreen"
           options={{ animationEnabled: true, header: () => null }}
-          component={ContactScreen}
+          component={ContactsScreen}
         />
 
         {/* <Stack.Screen
