@@ -39,6 +39,7 @@ export default function ProfileCreation({ navigation }) {
   const [dob, setDob] = useState(null);
   const [phoneNumber, setPhoneNumber] = useState(null);
   const [onClick, setOnClick] = useState(false);
+  const [phoneNumberAlert, setPhoneNumberAlert] = useState(false);
 
   // Alertes de renseignement des champs
 
@@ -97,6 +98,7 @@ export default function ProfileCreation({ navigation }) {
       );
     }
   }
+
 
   // RegEx de vérification du format du numéro de téléphone (très long, mais vraiment international)
 
@@ -160,6 +162,10 @@ export default function ProfileCreation({ navigation }) {
   const handleSubmit = () => {
     setOnClick(true);
 
+    if(!phoneNumber){
+      return
+    }
+
     const formattedPhoneNumber = phoneNumber.split(" ").join("");
     setPhoneNumber(formattedPhoneNumber);
 
@@ -217,83 +223,79 @@ export default function ProfileCreation({ navigation }) {
     <SafeAreaView style={styles.sav}>
       <StatusBar backgroundColor={"#FFFFFF"} barStyle={"dark-content"} />
 
-      <ScrollView style={styles.scrollView}>
-        <KeyboardAvoidingView style={styles.kav}>
-          <View style={styles.globalContainer}>
-            <View style={styles.logoContainer}>
-              <Image
-                style={styles.logo}
-                source={require("../assets/contags_logo_white.png")}
+      <KeyboardAvoidingView style={styles.kav}>
+        <View style={styles.logoContainer}>
+          <Image
+            style={styles.logo}
+            source={require("../assets/contags_logo_white.png")}
+          />
+        </View>
+
+        <View style={styles.mainContainer}>
+          <View style={styles.welcomeTextContainer}>
+            <Text style={styles.welcomeText}>
+              Bienvenue, faisons connaissance !
+            </Text>
+          </View>
+
+          <View style={styles.inputTextContainer}>
+            <Text style={styles.text}>Prénom</Text>
+            <TextInput
+              style={styles.input}
+              placeholder={"Votre prénom"}
+              onChangeText={(e) => setFirstName(e)}
+              value={firstName}
+            ></TextInput>
+            <FirstNameAlert onceClicked={onClick} />
+
+            <Text style={styles.text}>Nom</Text>
+            <TextInput
+              style={styles.input}
+              placeholder={"Votre nom"}
+              onChangeText={(e) => setLastName(e)}
+              value={lastName}
+            ></TextInput>
+            <LastNameAlert onceClicked={onClick} />
+
+            <Text style={styles.text}>Date de naissance</Text>
+            <View style={styles.datePickerContainer}>
+              <Button
+                title="Sélectionnez votre date de naissance"
+                onPress={showDatePicker}
+              />
+              <DateTimePickerModal
+                isVisible={isDatePickerVisible}
+                mode="date"
+                onConfirm={handleConfirm}
+                onCancel={hideDatePicker}
+                maximumDate={today}
               />
             </View>
+            <DisplaySelectedDate />
+            <DobAlert onceClicked={onClick} />
 
-            <View style={styles.mainContainer}>
-              <View style={styles.welcomeTextContainer}>
-                <Text style={styles.welcomeText}>
-                  Bienvenue, faisons connaissance !
-                </Text>
-              </View>
-
-              <View style={styles.inputTextContainer}>
-                <Text style={styles.text}>Prénom</Text>
-                <TextInput
-                  style={styles.input}
-                  placeholder={"Votre prénom"}
-                  onChangeText={(e) => setFirstName(e)}
-                  value={firstName}
-                ></TextInput>
-                <FirstNameAlert onceClicked={onClick} />
-
-                <Text style={styles.text}>Nom</Text>
-                <TextInput
-                  style={styles.input}
-                  placeholder={"Votre nom"}
-                  onChangeText={(e) => setLastName(e)}
-                  value={lastName}
-                ></TextInput>
-                <LastNameAlert onceClicked={onClick} />
-
-                <Text style={styles.text}>Date de naissance</Text>
-                <View style={styles.datePickerContainer}>
-                  <Button
-                    title="Sélectionnez votre date de naissance"
-                    onPress={showDatePicker}
-                  />
-                  <DateTimePickerModal
-                    isVisible={isDatePickerVisible}
-                    mode="date"
-                    onConfirm={handleConfirm}
-                    onCancel={hideDatePicker}
-                    maximumDate={today}
-                  />
-                </View>
-                <DisplaySelectedDate />
-                <DobAlert onceClicked={onClick} />
-
-                <Text style={styles.text}>Numéro de téléphone portable</Text>
-                <TextInput
-                  style={styles.input}
-                  placeholder={"Votre numéro de téléphone"}
-                  onChangeText={(e) => setPhoneNumber(e)}
-                  value={phoneNumber}
-                  keyboardType={"phone-pad"}
-                ></TextInput>
-                <PhoneNumberEmptyFieldAlert onceClicked={onClick} />
-                <PhoneNumberWrongFormatAlert onceClicked={onClick} />
-              </View>
-            </View>
-
-            <View style={styles.navigationContainer}>
-              <TouchableOpacity
-                style={styles.btnForward}
-                onPress={() => handleSubmit()}
-              >
-                <FontAwesome color="#FFFFFF" name="chevron-right" />
-              </TouchableOpacity>
-            </View>
+            <Text style={styles.text}>Numéro de téléphone portable</Text>
+            <TextInput
+              style={styles.input}
+              placeholder={"Votre numéro de téléphone"}
+              onChangeText={(e) => setPhoneNumber(e)}
+              value={phoneNumber}
+              keyboardType={"phone-pad"}
+            ></TextInput>
+            <PhoneNumberEmptyFieldAlert onceClicked={onClick} />
+            <PhoneNumberWrongFormatAlert onceClicked={onClick} />
           </View>
-        </KeyboardAvoidingView>
-      </ScrollView>
+        </View>
+
+        <View style={styles.navigationContainer}>
+          <TouchableOpacity
+            style={styles.btnForward}
+            onPress={() => handleSubmit()}
+          >
+            <FontAwesome color="#FFFFFF" name="chevron-right" />
+          </TouchableOpacity>
+        </View>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }
@@ -305,24 +307,19 @@ const styles = StyleSheet.create({
     flex: 1,
     height: "100%",
     width: "100%",
-    // backgroundColor: "#FFFFFF",
-    backgroundColor: "red",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#FFFFFF",
   },
 
   scrollView: {
     flex: 1,
-    height: "100%",
   },
 
   kav: {
-    flex:1,
-    height: "100%",
-  },
-
-  globalContainer: {
     flex: 1,
-    backgroundColor: "blue",
     height: "100%",
+    width: "100%",
   },
 
   // Logo
