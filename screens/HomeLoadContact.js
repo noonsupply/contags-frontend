@@ -30,9 +30,8 @@ export default function HomeLoadContact({ navigation }) {
 
   const BACKEND_ADDRESS = setAdress();
 
-  console.log(setAdress)
+  console.log(setAdress);
   useEffect(() => {
-    
     (async () => {
       const { status } = await Contacts.requestPermissionsAsync();
 

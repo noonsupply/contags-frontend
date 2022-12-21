@@ -35,7 +35,7 @@ export default function ExempleSearchBar() {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       {/* <AutocompleteDropdown
         // onChangeText={(value) => searchTags(value)}
         onSelectItem={(item) => item && setTagsSelected([...tagsSelected, item])}
@@ -47,27 +47,33 @@ export default function ExempleSearchBar() {
         closeOnSubmit
       /> */}
       <TagSearchBar />
-      <Text style={styles.tt}>ceci est un essai 1</Text>
+      
+      <View style={styles.v}><Text style={styles.tt}>ceci est un essai 1</Text>
       <Text style={styles.tt}>ceci est un essai 2</Text>
       <Text style={styles.tt}>ceci est un essai 3</Text>
-      <Text style={styles.tt}>ceci est un essai 4</Text>
-    </View>
+      <Text style={styles.tt}>ceci est un essai 4</Text></View>
+      
+      </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    height: "100%",
+    height: "90%",
     width: "100%",
     backgroundColor: "blue",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "flex-start",
+    paddingTop : 20,
+  },
+  v :{
+    zIndex : 0,
   },
 
+
   tt: {
-    fontSize: 20,
-    // zIndex : 0,
-    // position: "absolute",
+    
+    fontSize: 20
   },
 });
