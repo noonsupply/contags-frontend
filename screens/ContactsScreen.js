@@ -89,6 +89,7 @@ import {
   
   // fonction gérant la validation des changements (on considère qu'on a changé de page si le contact n'a pas été trouvé )
   const handleSubmit = () => {
+    // vérification du format des données
     // récupération des informations dans les TextInput 
     const phonesInput = [];
     if(phonenr1){
@@ -166,9 +167,8 @@ import {
   
   // fonction pour gérer l'ajout des tags dans la modale (on considère que le contact existe sinon on est revenu à la page précédente)
   const addTags =(tagsFromModal) =>{
-    console.log('addTags', tagsFromModal)
-    console.log('update', updateArrayTags(theContactUpdating.tags,tagsFromModal))
-    setTheTags(updateArrayTags(theContactUpdating.tags,tagsFromModal))
+    // setTheTags(updateArrayTags(theContactUpdating.tags,tagsFromModal))
+    setTheTags(updateArrayTags(theTags,tagsFromModal))
   }
   
   // fonction permettant de supprimer un tag de theTags (donc de l'affichage) en props dans le component TagDelete

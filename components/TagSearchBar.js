@@ -80,10 +80,6 @@ function TagSearchBar() {
 
   return (
     <View style={styles.container}>
-      {/* Affichage des tags choisi */}
-      <View  style={styles.tagsContainer}>
-          {tagsSelected}
-      </View>
       {/* TextInput */}
       <View style={styles.containerInput}>
         <TextInput
@@ -93,6 +89,10 @@ function TagSearchBar() {
         style={styles.input}
         onSubmitEditing={event =>{handleAddTag(event.nativeEvent.text)}}
       /></View>
+      {/* Affichage des tags choisi */}
+      <View  style={styles.tagsContainer}>
+          {tagsSelected}
+      </View>
       {/* Affichage de la liste de proposition */}
       {showOptions && (
         <FlatList
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
       backgroundColor: 'red',
       alignItems : "flex-start",
       justifyContent : "flex-start",
-      marginTop : 10,
+      marginTop : 5,
     },
 
     tagsContainer :{
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         flexWrap: "wrap",
         zIndex :10,
-        top: 31,
+        top: 60,
         left: 0,
         position: "absolute",
         width : "90%",
