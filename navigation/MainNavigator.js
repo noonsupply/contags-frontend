@@ -9,7 +9,6 @@ import ProfileCreation from "../screens/ProfileCreation";
 import TagCreation from "../screens/TagCreation";
 import HomeScreen from "../screens/HomeScreen";
 import ContactScreen from "../screens/ContactScreen";
-import ModalSetting from "../screens/ModalSetting";
 import ContactAddManually from "../screens/ContactAddManually";
 import HomeLoadContact from "../screens/HomeLoadContact";
 import SignInPonctuelScreen from "../screens/SignInPonctuelScreen";
@@ -26,11 +25,11 @@ const MainNavigator = () => {
           options={{ animationEnabled: false, header: () => null }}
           component={SplashScreen}
         />
-         {/* <Stack.Screen
+         <Stack.Screen
           name="SignInPonctuelScreen"
           options={{ animationEnabled: true, header: () => null }}
           component={SignInPonctuelScreen}
-        />  */}
+        />  
         <Stack.Screen
           name="MailScreen"
           options={{ animationEnabled: true, header: () => null }}
