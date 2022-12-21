@@ -13,6 +13,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Tag from "../components/Tag";
 import { setAdress } from "../module/adressIP";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const BACKEND_ADDRESS = setAdress();
 

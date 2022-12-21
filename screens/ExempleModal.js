@@ -57,14 +57,11 @@ export default function ExempleModal() {
           Alert.alert("Modal has been closed.");
           setModalVisible(!modalVisible);
         }}
-      >
-        <View style={styles.modalContainer}>
-          <TagsDefinition
-            handleCloseModal={handleCloseModal}
-            contact={contacts[1]}
-            user={null}
-          />
-        </View>
+      ><View style={styles.modalContainer}>
+        <TagsDefinition handleCloseModal={handleCloseModal} 
+                        // contact={contacts[1]}
+                        // user={null}
+      /></View>
       </Modal>
       <Pressable
         style={[styles.button, styles.buttonOpen]}

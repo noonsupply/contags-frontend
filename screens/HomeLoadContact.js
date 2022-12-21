@@ -30,7 +30,7 @@ export default function HomeLoadContact({ navigation }) {
 
   const BACKEND_ADDRESS = setAdress();
 
-
+  console.log(setAdress);
   useEffect(() => {
     (async () => {
       const { status } = await Contacts.requestPermissionsAsync();
@@ -61,18 +61,16 @@ export default function HomeLoadContact({ navigation }) {
             }
 
             const tableauPhone = element.phoneNumbers;
-            //console.log('tableauPhone', tableauPhone)
             let phoneTableau = [];
-            if (tableauPhone) {
-              tableauPhone.forEach((phoneElement) =>
-                phoneTableau.push({
-                  phoneType: phoneElement.label,
-                  number: phoneElement.number,
-                  country: "",
-                  areaCode: "",
-                })
-              );
-            }
+            tableauPhone.forEach((phoneElement) =>
+              phoneTableau.push({
+                phoneType: phoneElement.label,
+                number: phoneElement.number,
+                country: phoneElement.countryCode,
+                areaCode: phoneElement.countryCode,
+              })
+            );
+
             return {
               lastName: element.lastName,
               firstName: element.firstName,
@@ -80,7 +78,6 @@ export default function HomeLoadContact({ navigation }) {
               phones: phoneTableau,
             };
           });
-          // console.log("contactPush",contactPush)
           setMyContacts(contactPush);
         } else {
           setError("No contacts found");
@@ -103,9 +100,9 @@ export default function HomeLoadContact({ navigation }) {
       .then((data) => {
         if (data.result) {
           dispatch(setContact(myContacts));
-          alert("Import des contacts réalisé avec succès");
-          navigation.navigate("HomeScreen");
         }
+        alert("Import des contacts réalisé avec succès");
+        navigation.navigate("HomeScreen");
       });
   };
 
@@ -218,9 +215,13 @@ export default function HomeLoadContact({ navigation }) {
         <Text>Ajouter manuellement</Text>
         <TouchableOpacity
           style={styles.btnAddContact}
-          onPress={() => alert("Bonjour")}
+          onPress={() => navigation.navigate("ContactAddManually")}
         >
-          <FontAwesome color="#ffffff" name="plus" />
+          <FontAwesome
+            color="#ffffff"
+            name="plus"
+            style={styles.txtBtnAjouter}
+          ></FontAwesome>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
