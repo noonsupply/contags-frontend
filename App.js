@@ -16,6 +16,7 @@ import SplashScreen from "./screens/SplashScreen";
 import MailScreen from "./screens/MailScreen";
 import ProfileCreation from "./screens/ProfileCreation";
 import TagCreation from "./screens/TagCreation";
+import ContactAddManually from "./screens/ContactAddManually";
 
 const store = configureStore({
   reducer: { users, contacts },

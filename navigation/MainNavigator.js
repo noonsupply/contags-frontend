@@ -11,6 +11,7 @@ import HomeScreen from "../screens/HomeScreen";
 import HomeLoadContact from "../screens/HomeLoadContact";
 import ContactScreen from "../screens/ContactScreen";
 import ModalSetting from "../screens/ModalSetting";
+import ContactAddManually from "../screens/ContactAddManually";
 
 const Stack = createStackNavigator();
 
@@ -66,6 +67,13 @@ const MainNavigator = () => {
           options={{ animationEnabled: true, header: () => null }}
           component={ContactScreen}
         />
+
+        <Stack.Screen
+          name="ContactAddManually"
+          options={{ animationEnabled: true, header: () => null }}
+          component={ContactAddManually}
+        />
+
 
         {/* <Stack.Screen
           name="ModalSetting"

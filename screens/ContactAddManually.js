@@ -1,3 +1,5 @@
+import React from "react";
+import * as ImagePicker from "expo-image-picker";
 import {
   StyleSheet,
   Text,
@@ -9,186 +11,120 @@ import {
   KeyboardAvoidingView,
   Button,
   Dimensions,
+  Platform,
 } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { Entypo } from "@expo/vector-icons";
-import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
-import { setContact, updateContact } from "../reducers/contacts";
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { useSelector, useDispatch } from "react-redux";
+import { addContact, setContact } from "../reducers/contacts";
 
+export default function ContactAddManually({ navigation }) {
 
- //creation de la sidebar
+    const BACKEND_ADDRESS = "http://192.168.1.43:3000";
 
-
-
-
-export default function ContactScreen({ route, navigation }) {
   const dispatch = useDispatch();
   const contacts = useSelector((state) => state.contacts.value);
+ 
 
-  const personne = route.params;
-
-  //sauvegarde de l'ancienne data du contact
-  const oldContacts = {
-    //lastName: contacts[personne.key].lastName,
-    //firstName: contacts[personne.key].firstName,
-    lastName: "Thorreau",
-    firstName: "Florian"
-  };
-
-  //initialisation des états
-  useEffect(() => {
-
-    const indexContact = contacts.findIndex(
-      (elt) =>
-        elt.lastName === contacts[personne.key].lastName &&
-        elt.firstName === contacts[personne.key].firstName
-    );
-
-    if (indexContact !== -1) {
-      // on parcourt les keys à changer
-      const dataContactTemp = contacts[indexContact];
-      setDob(dataContactTemp.dob);
-      if (dataContactTemp.emails.length > 0) {
-        setEmail1(dataContactTemp.emails[0].email);
-      }
-      if (dataContactTemp.emails.length > 1) {
-        setEmail2(dataContactTemp.emails[1].email);
-      }
-
-      if (dataContactTemp.phones.length > 0) {
-        setPhoneNr1(dataContactTemp.phones[0].number);
-      }
-      if (dataContactTemp.phones.length > 1) {
-        setPhoneNr2(dataContactTemp.phones[1].number);
-      }
-    } else {
-      console.log("error in updateContact : contact not find");
-    }
-  }, []);
-
-  //fin initialisation des états
-
-  const [lastName, setLastName] = useState(contacts[personne.key].lastName);
-  const [firstName, setFirstName] = useState(contacts[personne.key].firstName);
+  const [lastName, setLastName] = useState("");
+  const [firstName, setFirstName] = useState("");
   const [dob, setDob] = useState("");
   const [phonenr1, setPhoneNr1] = useState("");
   const [phonenr2, setPhoneNr2] = useState("");
   const [email1, setEmail1] = useState("");
   const [email2, setEmail2] = useState("");
-
-  const [dataContact, setDataContact] = useState({});
-
-  const handleSubmit = () => {
-    const phoneTableau = [];
-    const emailTableau = [];
-    const indexContact = contacts.findIndex(
-      (elt) =>
-        elt.lastName === contacts[personne.key].lastName &&
-        elt.firstName === contacts[personne.key].firstName
-    );
-    if (indexContact !== -1) {
-      const dataContact = contacts[indexContact];
-
-      if (dataContact.phones.length > 0) {
-        phoneTableau.push({
-          phoneType: dataContact.phones[0].phoneType,
-          number: phonenr1,
-          areaCode: dataContact.phones[0].areaCode,
-          country: dataContact.phones[0].country,
-        });
-      }
-
-      if (dataContact.phones.length > 1) {
-        phoneTableau.push({
-          phoneType: dataContact.phones[1].phoneType,
-          number: phonenr2,
-          areaCode: dataContact.phones[1].areaCode,
-          country: dataContact.phones[1].country,
-        });
-      }
-
-      if (dataContact.phones.length === 0 && phonenr1 != "") {
-        phoneTableau.push({
-          phoneType: "Home",
-          number: phonenr1,
-          areaCode: "",
-          country: "",
-        });
-      }
+  const [contactPush, SetContactPush] = useState([]);
 
 
-      if (dataContact.emails.length > 0) {
-        emailTableau.push({
-          emailType: dataContact.emails[0].emailType,
-          email: email1,
-        });
-      }
 
-      if (dataContact.emails.length > 1) {
-        emailTableau.push({
-          emailType: dataContact.emails[1].emailType,
-          email: email2,
-        });
-      }
+  const [image, setImage] = useState(null);
 
-      if (dataContact.emails.length === 0 && email1 != "") {
-        emailTableau.push({
-          emailType: "Personal",
-          email: email1,
-        });
-      }
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
 
-/* console.log({
-  lastName: lastName,
-  firstName: firstName,
-  dob: dob,
-  phones: phoneTableau,
-  emails: emailTableau,
-},) */
-
-dispatch(
-        updateContact({
-          contact: oldContacts,
-          newDatas: {
-            lastName: lastName,
-            firstName: firstName,
-            dob: dob,
-            phones: phoneTableau,
-            emails: emailTableau,
-          },
-        })
-      );
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
     }
   };
 
+  const handleSubmit = () => {   
 
+SetContactPush({lastName: lastName,
+        firstName: firstName,
+        dob: dob,
+        phones: {phoneType: "Home", number: phonenr1, areaCode: "", country: ""},
+        emails: [{emailType: "Home", email: email1}]})
+
+        console.log("je suis dans ContactaddManually",contactPush)
+
+dispatch(
+    addContact({
+          contacts: {
+            lastName: lastName,
+            firstName: firstName,
+            dob: dob,
+            phones: {phoneType: "Home", number: phonenr1, areaCode: "", country: ""},
+            emails: [{emailType: "Home", email: email1}],
+          },
+        })
+      );
+
+     
+
+fetch(`${BACKEND_ADDRESS}/users/createContact`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          token: "pw0aeY_jubIXlYijDXI-47ICxhbwup5f",
+          contacts: contactPush
+        }),
+      })
+        .then((res) => res.json())
+          //alert("Contact enregistré avec succés"); 
+          //navigation.navigate("HomeScreen"); 
+        ;
+    }
+  
 
   return (
-    <SafeAreaProvider>
     <KeyboardAvoidingView behavior="position" style={styles.container}>
       <View style={styles.caseHeader}>
         <View style={styles.header}>
-        <Pressable>
-            <FontAwesome name="chevron-left" size={20} color="#0031B8" onPress={() => navigation.goBack()}/>
-        </Pressable>
+          <Pressable>
+            <FontAwesome
+              name="chevron-left"
+              size={20}
+              color="#0031B8"
+              onPress={() => navigation.navigate("HomeScreen")}
+            />
+          </Pressable>
         </View>
       </View>
       <View style={styles.icon}>
-        <FontAwesome name="user-circle" size={100} color="#0031B8" />
-      </View>
-      <View style={styles.fastAction}>
-        <FontAwesome name="phone" size={30} color="#0031B8" />
-        <Entypo name="message" size={30} color="#0031B8" />
-        <FontAwesome name="envelope" size={30} color="#0031B8" />
-        <FontAwesome name="paper-plane" size={30} color="#0031B8" />
+        <Button
+          title="Appuyez ici pour sélectionner une image"
+          onPress={pickImage}
+        />
+        {image && (
+          <Image
+            source={{ uri: image }}
+            style={{ width: 100, height: 100, borderRadius: 2000 }}
+          />
+        )}
       </View>
       <View style={styles.caseBody}>
         <View style={styles.nameandfirst}>
           <View style={styles.casePrenom}>
             <TextInput
               style={styles.inputPrenom}
+              placeholder="Prénom"
+              placeholderTextColor="#DCDCDC"
               onChangeText={(value) => setLastName(value)}
               value={lastName}
             />
@@ -197,6 +133,8 @@ dispatch(
           <View style={styles.casePrenom}>
             <TextInput
               style={styles.inputPrenom}
+              placeholder="Nom"
+              placeholderTextColor="#DCDCDC"
               onChangeText={(value) => setFirstName(value)}
             >
               {firstName}
@@ -208,6 +146,8 @@ dispatch(
           <View style={styles.casePrenom}>
             <TextInput
               style={styles.inputPrenom}
+              placeholder="Date de naissance"
+              placeholderTextColor="#DCDCDC"
               onChangeText={(value) => setDob(value)}
             >
               {dob}
@@ -219,6 +159,8 @@ dispatch(
           <View style={styles.casePrenom}>
             <TextInput
               style={styles.inputPrenom}
+              placeholder="N° de téléphone n°1"
+              placeholderTextColor="#DCDCDC"
               onChangeText={(value) => setPhoneNr1(value)}
             >
               {phonenr1}
@@ -228,6 +170,8 @@ dispatch(
           <View style={styles.casePrenom}>
             <TextInput
               style={styles.inputPrenom}
+              placeholder="N° de téléphone n°2"
+              placeholderTextColor="#DCDCDC"
               onChangeText={(value) => setPhoneNr2(value)}
             >
               {phonenr2}
@@ -238,6 +182,8 @@ dispatch(
         <View style={styles.casePrenom}>
           <TextInput
             style={styles.inputPrenom}
+            placeholder="Email n°1"
+              placeholderTextColor="#DCDCDC"
             onChangeText={(value) => setEmail1(value)}
           >
             {email1}
@@ -247,6 +193,8 @@ dispatch(
         <View style={styles.casePrenom}>
           <TextInput
             style={styles.inputPrenom}
+            placeholder="Email n°2"
+              placeholderTextColor="#DCDCDC"
             onChangeText={(value) => setEmail2(value)}
           >
             {email2}
@@ -255,18 +203,20 @@ dispatch(
         {/*Debut Tags*/}
         <View style={styles.nameandfirst}>
           <View style={styles.casePrenom}>
-            <TextInput placeholder="Tags" style={styles.inputTags}></TextInput>
+            <TextInput placeholder="Tags" 
+            style={styles.inputTags}
+            
+             ></TextInput>
           </View>
         </View>
         <TouchableOpacity
           style={styles.btnUpdateContact}
           onPress={() => handleSubmit()}
         >
-          <Text>Mettre à jour</Text>
+          <Text style={styles.txtBtnAjouter}>Ajouter</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
-    </SafeAreaProvider>
   );
 }
 
@@ -285,12 +235,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#ffffff",
-    
   },
   caseHeader: {
     alignItems: "center",
     marginTop: 40,
-    
   },
   header: {
     flexDirection: "row",
@@ -322,6 +270,7 @@ const styles = StyleSheet.create({
     height: 35,
     width: 350,
     paddingHorizontal: 15,
+    
   },
   inputTags: {
     borderRadius: 5,
@@ -333,5 +282,9 @@ const styles = StyleSheet.create({
   },
   nameandfirst: {
     margin: "3%",
+  },
+
+  txtBtnAjouter: {
+    color: "white",
   },
 });
