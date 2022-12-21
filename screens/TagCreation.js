@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import {
   Text,
-  SafeAreaView,
   ScrollView,
   StatusBar,
   StyleSheet,
@@ -13,6 +12,7 @@ import {
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Tag from "../components/Tag";
 import { setAdress } from "../module/adressIP";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const BACKEND_ADDRESS = setAdress();
 

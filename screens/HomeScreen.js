@@ -14,7 +14,6 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { Entypo } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
 import { useSelector } from "react-redux";
-import ContactScreen from "./ContactScreen";
 
 export default function HomeScreen({ navigation }) {
   const addContact = useSelector((state) => state.contacts.value);
@@ -34,7 +33,7 @@ export default function HomeScreen({ navigation }) {
         <TouchableOpacity
           style={styles.case}
           onPress={() =>
-            navigation.navigate("ContactScreen", {
+            navigation.navigate("ContactsScreen", {
               lastName: data.lastName,
               firstName: data.firstName,
               /* dob: data.dob, phonenr: tableauPhone, email : email, */ key: key,
