@@ -25,14 +25,13 @@ import TagDelete from "../components/TagDelete";
 import { updateArrayContacts, updateArrayTags } from "../module/toolsReducers";
 
 export default function ContactAddManually({ navigation }) {
-
-    const BACKEND_ADDRESS = setAdress();
+  const BACKEND_ADDRESS = setAdress();
 
   const dispatch = useDispatch();
   const contacts = useSelector((state) => state.contacts.value);
   const user = useSelector((state) => state.users.value);
- 
-// états permettant de gérer les inputs
+
+  // états permettant de gérer les inputs
   const [lastName, setLastName] = useState("");
   const [firstName, setFirstName] = useState("");
   const [dob, setDob] = useState("");
@@ -43,13 +42,11 @@ export default function ContactAddManually({ navigation }) {
   const [image, setImage] = useState(null);
 
   // tableau avec les tags
-const [theTags, setTheTags] = useState([]);
+  const [theTags, setTheTags] = useState([]);
 
-const [contactPush, setContactPush] = useState([]);
+  const [contactPush, setContactPush] = useState([]);
 
-
-
-  // gestion de l'affichage de la modal 
+  // gestion de l'affichage de la modal
   const [modalVisible, setModalVisible] = useState(false);
 
   const pickImage = async () => {
@@ -66,88 +63,108 @@ const [contactPush, setContactPush] = useState([]);
   };
 
   // fonction pour gérer la validation du contact
-  const handleSubmit = () => {   
+  const handleSubmit = () => {
+    // vérification des informations
 
-     // vérification des informations
-      
-     //création du contact : vérification 
+    //création du contact : vérification
 
-      const newContact ={
-        lastName: lastName,
-        firstName: firstName,
-        dob: dob,
-        phones: [{phoneType: "Home", number: phonenr1, areaCode: "", country: ""}, {phoneType: "Other", number: phonenr2, areaCode: "", country: ""} ],
-        emails: [{emailType: "Personnal", email: email1}, {emailType: "Other", email: email2}],
-        tags : theTags,
-        contactedTimesCounter : {"phoneCounter": 0,"smsCounter":0,"emailCounter":0}}
+    const newContact = {
+      lastName: lastName,
+      firstName: firstName,
+      dob: dob,
+      phones: [
+        { phoneType: "Home", number: phonenr1, areaCode: "", country: "" },
+        { phoneType: "Other", number: phonenr2, areaCode: "", country: "" },
+      ],
+      emails: [
+        { emailType: "Personnal", email: email1 },
+        { emailType: "Other", email: email2 },
+      ],
+      tags: theTags,
+      contactedTimesCounter: {
+        phoneCounter: 0,
+        smsCounter: 0,
+        emailCounter: 0,
+      },
+    };
 
     fetch(`${BACKEND_ADDRESS}/users/createContact`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          token: "cYQKAKkl-7L05bFTvzEUdU1ZyQN1NbY5", // users.token,
-          contacts: newContact
-        }),
-      })
-        .then((res) => res.json())
-        .then((data) =>{
-            if(data.result){
-              dispatch(addContact(newContact));
-              alert("Contact enregistré avec succés"); 
-              navigation.navigate("HomeScreen"); 
-            }
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        token: "P_611x2sqvoYJTzd0yIYSEZN_7CgXHqD", // users.token,
+        contacts: newContact,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.result) {
+          dispatch(addContact(newContact));
+          alert("Contact enregistré avec succés");
+          navigation.navigate("HomeScreen");
+        }
+      });
+  }; // fin de handleSubmit
 
-        })
-        ;
-} // fin de handleSubmit
+  // fonction pour gérer la fermeture de la modal des tags
+  const handleCloseModal = () => {
+    setModalVisible(false);
+  };
 
-// fonction pour gérer la fermeture de la modal des tags
-const handleCloseModal =() =>{
-  setModalVisible(false);
-}
+  // fonction se déclenchant au clich sur le bouton +Tags
+  const handleAddTags = () => {
+    setModalVisible(true);
+  };
 
-// fonction se déclenchant au clich sur le bouton +Tags
-const handleAddTags = () =>{
-  setModalVisible(true);
-}
+  // fonction pour gérer l'ajout des tags dans la modale (on considère que le contact existe sinon on est revenu à la page précédente)
+  const addTags = (tagsFromModal) => {
+    setTheTags(updateArrayTags(theTags, tagsFromModal));
+  };
 
-// fonction pour gérer l'ajout des tags dans la modale (on considère que le contact existe sinon on est revenu à la page précédente)
-const addTags =(tagsFromModal) =>{
-  setTheTags(updateArrayTags(theTags,tagsFromModal))
-}
+  // fonction permettant de supprimer un tag de theTags (donc de l'affichage) en props dans le component TagDelete
+  const handleDeleteTag = (oneTag) => {
+    const newTagsList = theTags.filter(
+      (eltTag) => eltTag.title !== oneTag.title
+    );
+    setTheTags(newTagsList);
+  };
 
-// fonction permettant de supprimer un tag de theTags (donc de l'affichage) en props dans le component TagDelete
-const handleDeleteTag =(oneTag) => {
-  const newTagsList = theTags.filter(eltTag => eltTag.title !== oneTag.title);
-  setTheTags(newTagsList);
-};
-
-// affichage des tags
-let displayTags = <View><Text style={{color : "#0031B8"}} key={0}>Pas de tag crée pour l'instant</Text></View>
-  if(theTags.length>0){
-      displayTags = theTags.map((eltTag, index)=> {
-          return (<TagDelete tag= {eltTag} key={index} handleDeleteTag={handleDeleteTag}/>)
-      })
-  } 
-  
+  // affichage des tags
+  let displayTags = (
+    <View>
+      <Text style={{ color: "#0031B8" }} key={0}>
+        Pas de tag crée pour l'instant
+      </Text>
+    </View>
+  );
+  if (theTags.length > 0) {
+    displayTags = theTags.map((eltTag, index) => {
+      return (
+        <TagDelete tag={eltTag} key={index} handleDeleteTag={handleDeleteTag} />
+      );
+    });
+  }
 
   return (
     <KeyboardAvoidingView behavior="position" style={styles.container}>
-       {/* Modal à afficher */}
-       <Modal
+      {/* Modal à afficher */}
+      <Modal
         animationType="slide"
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
-        setModalVisible(!modalVisible);
-        }}>
+          setModalVisible(!modalVisible);
+        }}
+      >
         <View style={styles.modalContainer}>
-        <TagsDefinition handleCloseModal={handleCloseModal} 
-                      // contact={contacts[1]}
-                      // user={null}
-                      addTags = {addTags} />
-          </View>
-      </Modal> 
+          <TagsDefinition
+            handleCloseModal={handleCloseModal}
+            // contact={contacts[1]}
+            // user={null}
+            addTags={addTags}
+          />
+        </View>
+      </Modal>
       <View style={styles.caseHeader}>
         <View style={styles.header}>
           <Pressable>
@@ -160,7 +177,7 @@ let displayTags = <View><Text style={{color : "#0031B8"}} key={0}>Pas de tag cr�
           </Pressable>
         </View>
       </View>
-      {/* <View style={styles.icon}>
+      <View style={styles.icon}>
         <Button
           title="Appuyez ici pour sélectionner une image"
           onPress={pickImage}
@@ -171,99 +188,137 @@ let displayTags = <View><Text style={{color : "#0031B8"}} key={0}>Pas de tag cr�
             style={{ width: 100, height: 100, borderRadius: 2000 }}
           />
         )}
-      </View> */}
+      </View>
       {/* INPUTS */}
       <View style={styles.caseBody}>
         {/* PRENOM */}
-          <TextInput
-              style={styles.inputPrenom}
-              placeholder="Prénom"
-              placeholderTextColor="#DCDCDC"
-              onChangeText={(value) => setLastName(value)}
-              value={lastName}
-          />
-          {/* NOM */}
-          <TextInput
+
+        <View style={styles.nameandfirst}>
+          {/*Debut date de Nom*/}
+          <Text style={styles.colorText}>Nom</Text>
+          <View style={styles.casePrenom}>
+            <TextInput
               style={styles.inputPrenom}
               placeholder="Nom"
-              placeholderTextColor="#DCDCDC"
-              onChangeText={(value) => setFirstName(value)}
-              value = {{firstName}}
-          />
-          {/* DOB */}
-          <TextInput
-              style={styles.inputPrenom}
-              placeholder="Date de naissance"
-              placeholderTextColor="#DCDCDC"
-              onChangeText={(value) => setDob(value)}
-            value = {dob}
-          />  
-          {/* PHONE PERSO*/}
-          <TextInput
-              style={styles.inputPrenom}
-              placeholder="N° de téléphone n°1"
-              placeholderTextColor="#DCDCDC"
-              onChangeText={(value) => setPhoneNr1(value)}
-              value = {phonenr1}
-          />  
-            {/* PHONE 2 */}
-            <TextInput
-              style={styles.inputPrenom}
-              placeholder="N° de téléphone n°2"
-              placeholderTextColor="#DCDCDC"
-              onChangeText={(value) => setPhoneNr2(value)}
-              value = {phonenr2}
-            /> 
-            {/* MAIL N°1 */}
-            <TextInput
-              style={styles.inputPrenom}
-              placeholder="Email n°1"
-              placeholderTextColor="#DCDCDC"
-              onChangeText={(value) => setEmail1(value)}
-              value = {email1}
+              onChangeText={(value) => setLastName(value)}
+              value={lastName}
             />
-            {/* MAIL N°2 */}
+          </View>
+          {/*Debut date de Prénom*/}
+          <Text style={styles.colorText}>Prénom</Text>
+          <View style={styles.casePrenom}>
             <TextInput
               style={styles.inputPrenom}
-              placeholder="Email n°2"
-              placeholderTextColor="#DCDCDC"
+              placeholder="Prénom"
+              onChangeText={(value) => setFirstName(value)}
+              value={firstName}
+            ></TextInput>
+          </View>
+        </View>
+
+        <View style={styles.nameandfirst}>
+          {/*Debut date de naissance*/}
+          <Text style={styles.colorText}>Date de Naissance</Text>
+          <View style={styles.casePrenom}>
+            <TextInput
+              style={styles.inputPrenom}
+              placeholder="Date de Naissance"
+              onChangeText={(value) => setDob(value)}
+              value={dob}
+            ></TextInput>
+          </View>
+        </View>
+        <View style={styles.nameandfirst}>
+          {/*Debut num perso*/}
+          <Text style={styles.colorText}>Numéro Perso</Text>
+          <View style={styles.casePrenom}>
+            <TextInput
+              style={styles.inputPrenom}
+              placeholder="Numero Perso"
+              onChangeText={(value) => setPhoneNr1(value)}
+              value={phonenr1}
+            ></TextInput>
+          </View>
+
+          {/*Debut num pro*/}
+          <Text style={styles.colorText}>Numéro Pro</Text>
+          <View style={styles.casePrenom}>
+            <TextInput
+              style={styles.inputPrenom}
+              placeholder="Numéro Pro"
+              onChangeText={(value) => setPhoneNr2(value)}
+              value={phonenr2}
+            ></TextInput>
+          </View>
+        </View>
+        <View style={styles.nameandfirst}>
+          {/*Debut Mail perso*/}
+          <Text style={styles.colorText}>Mail Perso</Text>
+          <View style={styles.casePrenom}>
+            <TextInput
+              style={styles.inputPrenom}
+              onChangeText={(value) => setEmail1(value)}
+              placeholder={"Email Perso"}
+              autoCapitalize="none"
+              keyboardType="email-address"
+              textContentType="emailAddress"
+              autoComplete="email"
+              value={email1}
+            ></TextInput>
+          </View>
+          {/*Debut Mail pro*/}
+          <Text style={styles.colorText}>Mail Pro</Text>
+          <View style={styles.casePrenom}>
+            <TextInput
+              style={styles.inputPrenom}
               onChangeText={(value) => setEmail2(value)}
-              value = {email2}
-            />  
-      </View>  
-        {/*Debut Tags*/}
-        <View style={styles.validateTagContainer}>
-          {displayTags}
-        </View> 
-        {/* BOUTONS */}
-        <View style={styles.bottomContainer}>
+              placeholder={"Email Pro"}
+              autoCapitalize="none"
+              keyboardType="email-address"
+              textContentType="emailAddress"
+              autoComplete="email"
+              value={email2}
+            ></TextInput>
+          </View>
+        </View>
+      </View>
+      {/*Debut Tags*/}
+      <View style={styles.validateTagContainer}>{displayTags}</View>
+      {/* BOUTONS */}
+      <View style={styles.bottomContainer}>
         <TouchableOpacity
-        style={styles.btnAddTag}
-        onPress={() => handleAddTags()}
-      >
-        <Text>+TAGS</Text>
-      </TouchableOpacity>
+          style={styles.btnAddTag}
+          onPress={() => handleAddTags()}
+        >
+          <Text style={styles.mettreajour}>Ajouter des Tags</Text>
+        </TouchableOpacity>
         <TouchableOpacity
           style={styles.btnUpdateContact}
           onPress={() => handleSubmit()}
         >
-          <Text style={styles.txtBtnAjouter}>Ajouter</Text>
+          <Text style={styles.mettreajour}>Mettre à jour</Text>
         </TouchableOpacity>
-        </View>
+      </View>
     </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
+  mettreajour: {
+    color: "#0031B8",
+
+    fontWeight: "600",
+  },
   btnUpdateContact: {
     width: 100,
-    backgroundColor: "#0031b8",
-    height: 50,
-    width: 150,
+    backgroundColor: "#ffffff",
+    paddingVertical: 20,
+    borderColor: "#0031B8",
+    borderWidth: 2,
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 5,
-    marginLeft: 230,
+    marginLeft: 130,
   },
 
   container: {
@@ -272,7 +327,6 @@ const styles = StyleSheet.create({
   },
   caseHeader: {
     alignItems: "center",
-    marginTop: 40,
   },
   header: {
     flexDirection: "row",
@@ -292,7 +346,7 @@ const styles = StyleSheet.create({
     marginBottom: "8%",
   },
   casePrenom: {
-    flexDirection: "row",
+    flexDirection: "column",
     marginTop: "2%",
     justifyContent: "space-evenly",
     alignItems: "center",
@@ -304,7 +358,6 @@ const styles = StyleSheet.create({
     height: 35,
     width: 350,
     paddingHorizontal: 15,
-    
   },
   inputTags: {
     borderRadius: 5,
@@ -317,29 +370,37 @@ const styles = StyleSheet.create({
   nameandfirst: {
     margin: "3%",
   },
-
-  txtBtnAjouter: {
-    color: "white",
+  btnAddTag: {
+    backgroundColor: "#ffffff",
+    padding: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 5,
+    borderColor: "#0031B8",
+    borderWidth: 2,
+    marginTop: 25,
   },
 
-  bottomContainer :{
-    flexDirection : "row",
-    justifyContent : "space-between",
-    alignItems : "center",
-    paddingLeft : 20,
-    marginRight:100,
-    paddingRight:100
-},
+  bottomContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
 
-validateTagContainer: {
-  flexDirection : "row",
-  width : "100%",
-  flexWrap: "wrap",
-},
+  scroll: {
+    height: 200,
+    flex: 1,
+    marginTop: 5,
+    backgroundColor: "yellow",
+  },
 
-btnAddTag : {
-  backgroundColor : "red",
-  width : 50,
-  height : 50,
-},
+  validateTagContainer: {
+    flexDirection: "row",
+    width: "100%",
+    flexWrap: "wrap",
+  },
+  colorText: {
+    color: "#0031B8",
+    fontWeight: "600",
+    marginLeft: "3%",
+  },
 });

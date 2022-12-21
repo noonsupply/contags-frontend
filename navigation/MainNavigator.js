@@ -25,11 +25,11 @@ const MainNavigator = () => {
           options={{ animationEnabled: false, header: () => null }}
           component={SplashScreen}
         />
-        <Stack.Screen
+         <Stack.Screen
           name="SignInPonctuelScreen"
           options={{ animationEnabled: true, header: () => null }}
           component={SignInPonctuelScreen}
-        />
+        />  
         <Stack.Screen
           name="MailScreen"
           options={{ animationEnabled: true, header: () => null }}
@@ -60,11 +60,11 @@ const MainNavigator = () => {
           options={{ animationEnabled: true, header: () => null }}
           component={HomeScreen}
         />
-        <Stack.Screen
+         <Stack.Screen
           name="ContactsScreen"
           options={{ animationEnabled: true, header: () => null }}
           component={ContactsScreen}
-        />
+        /> 
 
         <Stack.Screen
           name="ContactAddManually"
