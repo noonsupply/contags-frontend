@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  Image,
   Text,
-  SafeAreaView,
   ScrollView,
   StatusBar,
   StyleSheet,
@@ -11,6 +9,7 @@ import {
   View,
   KeyboardAvoidingView,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Tag from "../components/Tag";
 import { setAdress } from "../module/adressIP";
@@ -35,7 +34,7 @@ export default function TagCreation({ navigation }) {
     const userFirstName = useSelector((state) => state.users.value.firstName);
     return (
       <View style={styles.tagFullDarkBlue}>
-        <Text style={styles.tagTextWhite}>{userFirstName}</Text>
+        <Text style={styles.tagTextWhite}>{userFirstName}Firstname</Text>
       </View>
     );
   }
@@ -44,7 +43,7 @@ export default function TagCreation({ navigation }) {
     const userLastName = useSelector((state) => state.users.value.lastName);
     return (
       <View style={styles.tagFullDarkBlue}>
-        <Text style={styles.tagTextWhite}>{userLastName}</Text>
+        <Text style={styles.tagTextWhite}>{userLastName}Lastname</Text>
       </View>
     );
   }
@@ -56,7 +55,7 @@ export default function TagCreation({ navigation }) {
     });
     return (
       <View style={styles.tagFullDarkBlue}>
-        <Text style={styles.tagTextWhite}>{userPhoneNumber}</Text>
+        <Text style={styles.tagTextWhite}>{userPhoneNumber}+33643338361</Text>
       </View>
     );
   }
@@ -65,7 +64,9 @@ export default function TagCreation({ navigation }) {
     const userMainEmail = useSelector((state) => state.users.value.emailMain);
     return (
       <View style={styles.tagFullDarkBlue}>
-        <Text style={styles.tagTextWhite}>{userMainEmail}</Text>
+        <Text style={styles.tagTextWhite}>
+          {userMainEmail}name.name@domain.com
+        </Text>
       </View>
     );
   }
@@ -80,68 +81,93 @@ export default function TagCreation({ navigation }) {
 
   const ProposedTags = tagArr.map((element, index) => {
     return (
-      <View key={index}>
+      <TouchableOpacity key={index}>
         <Tag tag={element} key={index} />
-      </View>
+      </TouchableOpacity>
     );
   });
 
   return (
-    <SafeAreaView style={styles.safeAreaView}>
+    <SafeAreaView style={styles.sav}>
       <StatusBar backgroundColor={"#FFFFFF"} barStyle={"dark-content"} />
 
-      <KeyboardAvoidingView>
-        <View style={styles.globalContainer}>
-          <View style={styles.mainContainer}>
-            <View style={styles.textContainer}>
-              <Text style={styles.text}>
-                Vos données essentielles ont été transformées en tags :
-              </Text>
-            </View>
+      <View style={styles.globalContainer}>
 
-            <View style={styles.tagContainer}>
-              <UserFirstName />
-              <UserLastName />
-              <UserPhoneNumber />
-              <UserMainEmail />
-            </View>
 
-            <View style={styles.textContainer}>
-              <Text style={styles.text}>
-                Sélectionnez des tags qui vous correspondent parmi les
-                propositions ou ajoutez directement des tags personnalisés :
-              </Text>
-            </View>
-
-            <View style={styles.templateTagContainer}>
-              <ScrollView>{ProposedTags}</ScrollView>
-            </View>
+        <View style={styles.mainContainer}>
+          <View style={styles.textContainer}>
+            <Text style={styles.text}>
+              Vos données essentielles ont été transformées en tags :
+            </Text>
           </View>
 
-          <View style={styles.navigationContainer}>
-            <TouchableOpacity
-              style={styles.btnBack}
-              onPress={() => handleReturn()}
-            >
-              <FontAwesome color="#FFFFFF" name="chevron-left" />
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={styles.btnSkip}
-              onPress={() => handleSubmit()}
-            >
-              <Text style={styles.btnText}>Passer cette étape</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={styles.btnForward}
-              onPress={() => handleSubmit()}
-            >
-              <FontAwesome color="#FFFFFF" name="chevron-right" />
-            </TouchableOpacity>
+          <View style={styles.userTagsContainer}>
+            <UserFirstName />
+            <UserLastName />
+            <UserPhoneNumber />
+            <UserMainEmail />
           </View>
+
+          <View style={styles.textContainer}>
+            <Text style={styles.text}>
+              Sélectionnez les tags qui vous correspondent parmi les
+              propositions ci-dessous ou ajoutez directement vos tags
+              personnalisés :
+            </Text>
+          </View>
+
+
+            <ScrollView
+              style={styles.proposedTagsScrollView}
+              contentContainerStyle={styles.contentContainer}
+              fadingEdgeLength={200}
+              persistentScrollbar={true}
+            >
+              {ProposedTags}
+            </ScrollView>
+
+          <View style={styles.textContainer}>
+            <Text style={styles.text}>
+              Vos tags sélectionnés :
+            </Text>
+          </View>
+
+          <ScrollView
+            style={styles.selectedTagsScrollView}
+            contentContainerStyle={styles.contentContainer}
+            fadingEdgeLength={200}
+            persistentScrollbar={true}
+
+          >
+            {ProposedTags}
+          </ScrollView>
+
         </View>
-      </KeyboardAvoidingView>
+
+        <View style={styles.navigationContainer}>
+          <TouchableOpacity
+            style={styles.btnBack}
+            onPress={() => handleReturn()}
+          >
+            <FontAwesome color="#FFFFFF" name="chevron-left" />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.btnSkip}
+            onPress={() => handleSubmit()}
+          >
+            <Text style={styles.btnText}>Passer cette étape</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.btnForward}
+            onPress={() => handleSubmit()}
+          >
+            <FontAwesome color="#FFFFFF" name="chevron-right" />
+          </TouchableOpacity>
+        </View>
+
+      </View>
     </SafeAreaView>
   );
 }
@@ -149,30 +175,72 @@ export default function TagCreation({ navigation }) {
 const styles = StyleSheet.create({
   //  Views & Global container
 
-  safeAreaView: {
+  sav: {
     flex: 1,
     height: "100%",
     width: "100%",
-    backgroundColor: "#FFFFFF",
+    alignItems: "center",
+    justifyContent: "center",
   },
 
+
   globalContainer: {
+    flex: 1,
     height: "100%",
     width: "100%",
+    backgroundColor: "white",
+    paddingTop: 15,
   },
 
   // Main
 
   mainContainer: {
-    // backgroundColor: "green",
-    paddingVertical: 25,
+    height: "90%",
+  },
+
+  userTagsContainer: {
+    marginVertical: 5,
+    marginHorizontal: 25,
+    flexWrap: "wrap",
+    flexDirection: "row",
+    marginVertical: 10,
+    // backgroundColor: "red",
+  },
+
+  proposedTagsScrollView: {
+    // flexWrap: "wrap",
+    // flexDirection: "row",
+    // borderWidth: 1,
+    // borderColor: "#0031B8",
+    // borderRadius: 10,
+    paddingHorizontal: 3,
+    marginVertical: 15,
+    marginHorizontal: 25,
+  },
+
+    selectedTagsScrollView: {
+    // flexWrap: "wrap",
+    // flexDirection: "row",
+    // borderWidth: 1,
+    // borderColor: "#0031B8",
+    // borderRadius: 10,
+    paddingHorizontal: 3,
+    marginVertical: 15,
+    marginHorizontal: 25,
+  },
+
+  contentContainer: {
+    flexWrap: "wrap",
+    flexDirection: "row",
+    // alignItems: "center",
+    // justifyContent: "center",
   },
 
   // Text
 
   textContainer: {
     marginHorizontal: 25,
-    // backgroundColor: "maroon",
+    // backgroundColor: "yellow",
   },
 
   text: {
@@ -200,12 +268,9 @@ const styles = StyleSheet.create({
   navigationContainer: {
     // backgroundColor: "orange",
     height: "10%",
-    // paddingVertical: 10,
-    flexWrap: "wrap",
     flexDirection: "row",
     justifyContent: "space-between",
-    // alignItems: "center",
-    alignContent: "center",
+    alignItems: "center",
     paddingHorizontal: 25,
   },
 
@@ -244,41 +309,41 @@ const styles = StyleSheet.create({
 
   // Tags
 
-  templateTagContainer: {
-    alignItems: "flex-start",
-    flexDirection: "row",
-    flexWrap: "wrap",
-    // justifyContent: "center",
-    marginBottom: 15,
-    marginTop: 15,
-    paddingLeft: 25,
-    paddingRight: 25,
-    height: 250,
-  },
+  // templateTagContainer: {
+  //   alignItems: "flex-start",
+  //   flexDirection: "row",
+  //   flexWrap: "wrap",
+  //   // justifyContent: "center",
+  //   marginBottom: 15,
+  //   marginTop: 15,
+  //   paddingLeft: 25,
+  //   paddingRight: 25,
+  //   height: 250,
+  // },
 
   tagTextBlue: {
     color: "#0031B8",
     fontSize: 14,
     fontWeight: "bold",
-    marginBottom: 10,
   },
 
   tagTextWhite: {
     color: "#FFFFFF",
     fontSize: 14,
     fontWeight: "bold",
-    marginBottom: 10,
   },
 
   tagFullDarkBlue: {
-    alignItems: "center",
     backgroundColor: "#0031B8",
+    alignItems: "center",
     borderRadius: 20,
     flexShrink: 1,
     height: 30,
     justifyContent: "center",
-    marginHorizontal: 10,
-    marginVertical: 7,
+    marginLeft: 0,
+    marginRight: 10,
+    marginVertical: 3,
+    paddingHorizontal: 10,
   },
 
   tagFullGray: {

@@ -29,8 +29,9 @@ const styles = StyleSheet.create({
         flexShrink: 1,
         height: 30,
         justifyContent: "center",
-        marginHorizontal: 10,
-        marginVertical: 7,
+        marginHorizontal: 5,
+        marginVertical: 5,
+        paddingHorizontal: 10,
       },
 
       tagText: {

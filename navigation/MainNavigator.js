@@ -17,7 +17,7 @@ const Stack = createStackNavigator();
 const MainNavigator = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="HomeLoadContact">
+      <Stack.Navigator initialRouteName="SplashScreen">
        <Stack.Screen
           name="Splash"
           options={{ animationEnabled: false, header: () => null }}
