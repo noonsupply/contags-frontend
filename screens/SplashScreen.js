@@ -10,18 +10,16 @@ const SplashScreen = (props) => {
   useEffect(() => {
     setTimeout(() => {
       setAuthLoaded(true);
-    }, 5000);
+    }, 2000);
   }, []);
-
-  if (user.token) {
-    props.navigation.replace("HomeScreen");
-  } else {
-    props.navigation.replace("MailScreen");
-  }
 
   useEffect(() => {
     if (authLoaded) {
-      props.navigation.replace("MailScreen");
+      if (user.token) {
+        props.navigation.replace("HomeScreen");
+      } else {
+        props.navigation.replace("MailScreen");
+      }
     }
   }, [authLoaded, props.navigation]);
 
