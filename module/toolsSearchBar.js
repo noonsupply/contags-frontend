@@ -53,7 +53,7 @@ function getTagsCombination(listContacts) {
   // fonction permettant de récupérer les contacts ayant les tags cherchés
   // tagsSearch est un tableau d'objet tags et allContacts le tableau 
   function getContactsWithTags(tagsSearch, allContacts){
-      const contactsWithOneTag = [];
+      const contactsWithAtLeastOneTag = [];
       const contactsWithAllTags = [];
       
       // vérification qu'on a des données
@@ -74,6 +74,7 @@ function getTagsCombination(listContacts) {
                       // on vérifie si ce contact possède tous les tags
                       if(searchAllTagsInArray(tagsSearch,itemContact.tags)){
                         contactsWithAllTags.push(itemContact)
+                        contactsWithAtLeastOneTag.push({itemContact})
                       }else{
                         contactsWithOneTag.push(itemContact);
                       }

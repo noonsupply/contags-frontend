@@ -36,12 +36,15 @@ export default function MailScreen({ navigation }) {
       fetch(`${BACKEND_ADDRESS}/users/`)
   .then(response => response.json())
   .then(data => {
-    const found = data.users.find(item => item.emailMain === email);
-    if (found) {
-      navigation.navigate("SignInPonctuelScreen")
-    } else {
-      navigation.navigate("PasswordScreen")
-    } 
+    if(data.result){
+      const found = data.users.find(item => item.emailMain === email);
+      if (found) {
+        navigation.navigate("SignInPonctuelScreen")
+      } else {
+        navigation.navigate("PasswordScreen")
+      } 
+    }
+    
   });
 
   //fin fetch
