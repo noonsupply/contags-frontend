@@ -20,17 +20,17 @@ const MainNavigator = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Splash">
-        <Stack.Screen
+        {/* <Stack.Screen
           name="Splash"
           options={{ animationEnabled: false, header: () => null }}
           component={SplashScreen}
-        />
+        /> */}
         {/* <Stack.Screen
           name="SignInPonctuelScreen"
           options={{ animationEnabled: true, header: () => null }}
           component={SignInPonctuelScreen}
         /> */}
-         <Stack.Screen
+         {/* <Stack.Screen
           name="SignInPonctuelScreen"
           options={{ animationEnabled: true, header: () => null }}
           component={SignInPonctuelScreen}
@@ -59,7 +59,7 @@ const MainNavigator = () => {
           name="HomeLoadContact"
           options={{ animationEnabled: true, header: () => null }}
           component={HomeLoadContact}
-        /> 
+        />  */}
         <Stack.Screen
           name="HomeScreen"
           options={{ animationEnabled: true, header: () => null }}

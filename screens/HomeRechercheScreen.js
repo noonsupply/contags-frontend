@@ -11,46 +11,27 @@ import {
 import { TabView, SceneMap } from "react-native-tab-view";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Entypo } from "@expo/vector-icons";
+import { useState, useEffect } from "react";
 
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
-export default function TabViewExample() {
-  const TablA = [
-    { lastName: "Wayne", firstName: "Rania" },
-    { lastName: "Papin", firstName: "Yasmine" },
-    { lastName: "François", firstName: "Paul" },
-    { lastName: "Gump", firstName: "Lucas" },
-    { lastName: "Al-Khwarizmi", firstName: "Nicolas" },
-    { lastName: "Giroud", firstName: "Josettte" },
-    { lastName: "Al-Khwarizmi", firstName: "Hélène" },
-    { lastName: "Camus", firstName: "Pierre" },
-    { lastName: "Wayne", firstName: "Julien" },
-    { lastName: "Camus", firstName: "Léa" },
-    { lastName: "Green", firstName: "Noémie" },
-    { lastName: "Turing", firstName: "Patrice" },
-    { lastName: "Curry", firstName: "Léa" },
-    { lastName: "Wilde", firstName: "Gwenael" },
-    { lastName: "Dick", firstName: "Mohamed" },
-  ];
-  const TablB = [
-    { lastName: "Patulacci", fisrtName: "Lucette" },
-    { lastName: "Cooper", fisrtName: "Yvon" },
-    { lastName: "Gump", fisrtName: "Ryan" },
-    { lastName: "Pitt", fisrtName: "Paul" },
-    { lastName: "Brown", fisrtName: "Nicolas" },
-    { lastName: "Pitt", fisrtName: "Olivier" },
-    { lastName: "Kenobi", fisrtName: "Sharon" },
-    { lastName: "Poirot", fisrtName: "Pierre" },
-    { lastName: "Al-Khwarizmi", fisrtName: "Odile" },
-    { lastName: "Papin", fisrtName: "Ryan" },
-    { lastName: "Mbappé", fisrtName: "Yasmine" },
-    { lastName: "Söze", fisrtName: "Alexandre" },
-    { lastName: "Durden", fisrtName: "Jean-Pierre" },
-    { lastName: "Patulacci", fisrtName: "Julien" },
-    { lastName: "Turing", fisrtName: "Ryan" },
-  ];
+import TagSearchBar from "../components/TagSearchBar";
 
-  const DisplayTabA = TablA.map((Element, index) => {
+export default function HomeRechercheScreen({ route, navigation }) {
+  
+  const [contactsMatchAllTags, setContactsMatchAllTags] = useState(route.params.contactsMatchAllTags);
+  const [contactsAnyTags, setContactsAnyTags] = useState(route.params.contactsAnyTags);
+  const [searchingTags, setSearchingTags] = useState(route.params.searching);
+
+console.log(route.params);
+// récupération des données de la page précédente
+// useEffect(() => {
+
+
+// }, []);
+ 
+  // affichage dans le 1er container
+  const DisplayTabA = contactsMatchAllTags.map((Element, index) => {
     return (
       <View style={styles.container} key={index}>
         <TouchableOpacity
@@ -77,15 +58,16 @@ export default function TabViewExample() {
     );
   });
 
-  const DisplayTabB = TablB.map((Element, index) => {
+  // affichage dans le 2e container
+  const DisplayTabB = route.params.contactsAnyTags.map((Element, index) => {
     return (
       <View style={styles.container} key={index}>
         <TouchableOpacity
           style={styles.case}
           onPress={() =>
             navigation.navigate("ContactScreen", {
-              lastName: data.lastName,
-              firstName: data.firstName,
+              lastName: Element.contact.lastName,
+              firstName: Element.contact.firstName,
               /* dob: data.dob, phonenr: tableauPhone, email : email, */ key: key,
             })
           }
@@ -94,7 +76,7 @@ export default function TabViewExample() {
             <FontAwesome name="user-circle" size={35} color="#0031B8" />
           </View>
           <Text style={styles.name}>
-            {Element.lastName} {Element.firstName}
+            {Element.contact.lastName} {Element.contact.firstName}
           </Text>
           <TouchableOpacity style={styles.param}>
             <Entypo name="dots-three-vertical" size={24} color="black" />
@@ -108,18 +90,16 @@ export default function TabViewExample() {
   const FirstRoute = () => (
     <ScrollView>
       <View style={styles.container}>{DisplayTabA}</View>
-      <View style={styles.contactContainer}></View>
-
-      <View style={styles.btnContainer}></View>
+      {/* <View style={styles.contactContainer}>{DisplayTabA}</View> */}
+      {/* <View style={styles.btnContainer}></View> */}
     </ScrollView>
   );
 
   const SecondRoute = () => (
     <ScrollView>
       <View style={styles.container}>{DisplayTabB}</View>
-      <View style={styles.contactContainer}></View>
-
-      <View style={styles.btnContainer}></View>
+      {/* <View style={styles.contactContainer}>{DisplayTabB}</View> */}
+      {/* <View style={styles.btnContainer}></View> */}
     </ScrollView>
   );
   const renderScene = SceneMap({
@@ -129,16 +109,15 @@ export default function TabViewExample() {
 
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    { key: "first", title: "First" },
-    { key: "second", title: "Second" },
+    { key: "first", title: "Tous les tags" },
+    { key: "second", title: "Au moins un tag" },
   ]);
-
+   
   return (
     <SafeAreaProvider style={styles.SAV}>
-      <View>
-        <TextInput placeholder="🔎 Search Bar                                                                             ✖️" />
-      </View>
+      <View style={[styles.header,{zIndex:1}]}><TagSearchBar  tagsSearching={searchingTags} /></View>
       <TabView
+      // style={[{zIndex:0}]}
         navigationState={{ index, routes }}
         renderScene={renderScene}
         onIndexChange={setIndex}
@@ -158,6 +137,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginTop: 20,
+  },
+
+  header:{
+    marginTop : 25,
   },
 
   case: {

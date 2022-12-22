@@ -18,16 +18,34 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
 import { logout } from "../reducers/users";
 
+import TagSearchBar from "../components/TagSearchBar";
+
+
 export default function HomeScreen({ navigation }) {
   const addContact = useSelector((state) => state.contacts.value);
   const dispatch = useDispatch();
+
+  // gestion de la déconnexion
   const handleLogout = () => {
     dispatch(logout());
     navigation.navigate("MailScreen")
   };
 
+// événement quand on presse le bouton recherche
+const handleBtnSearch = (datasFromSearchBar) =>{
+   console.log("HomeScreen", datasFromSearchBar)
+    // on navigue vers la page des onglets
+    navigation.navigate("HomeRechercheScreen", {
+      searching : datasFromSearchBar.searching,
+       contactsMatchAllTags: datasFromSearchBar.results.contactsMatchAllTags,
+       contactsAnyTags: datasFromSearchBar.results.contactsAnyTags,
+      // /* dob: data.dob, phonenr: tableauPhone, email : email, */ key: key,
+     })
+}
+
+ // gestion de l'affichage des contacts
   const contacts = addContact.map((data, i) => {
-    const tableauPhone = data.phones[0].number;
+    
     const tableauEmail = data.emails;
     const key = i;
 
@@ -67,12 +85,14 @@ return (
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View style={styles.header}>
+      <View style={[styles.header,{zIndex:1}]}>
         <TouchableOpacity onPress={() => handleLogout()}>
           <Text style={styles.deco}>
             <Feather name="log-out" size={24} color="black" />
           </Text>
         </TouchableOpacity>
+        {/* BARRE DE RECHERCHE */}
+        <TagSearchBar btnSearch={handleBtnSearch} tagsSearching ={[]} />
       </View>
       <ScrollView>
         <View style={styles.contactContainer}>
@@ -166,6 +186,9 @@ const styles = StyleSheet.create({
   header: {
     backgroundColor: "#ffffff",
     marginBottom: 0,
+    flexDirection : "row",
+    // alignItems : "flex-end",
+    justifyContent :"center",
   },
 });
 

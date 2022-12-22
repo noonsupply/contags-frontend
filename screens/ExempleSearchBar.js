@@ -14,13 +14,15 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import FontAwesomeIcon from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 //import 'font-awesome/css/font-awesome.min.css'
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
 import TagsDefinition from "../components/TagsDefinition";
 import TagSearchBar from "../components/TagSearchBar";
 
-import { searchTagInArray,  searchAllTagsInArray } from "../module/toolsSearchBar";
+import { setContact} from "../reducers/contacts";
+
+import { searchTagInArray,  searchAllTagsInArray, getContactsWithTagsSearching, theContacts} from "../module/toolsSearchBar";
 
 export default function ExempleSearchBar() {
   const [tagsSelected, setTagsSelected] = useState([]);
@@ -29,6 +31,14 @@ export default function ExempleSearchBar() {
   //   { title: "voyages", color: "blue", border: "none" },
   // ]);
 
+  const dispatch = useDispatch();
+  useEffect(() => {
+    
+    dispatch(setContact(theContacts()));
+  }, []);
+
+  const contacts = useSelector((state) => state.contacts.value);
+
   const searchTags = (query) => {
     // Prevent search with an empty query
     if (query === "") {
@@ -36,7 +46,13 @@ export default function ExempleSearchBar() {
     }
   };
 
- console.log("essai", searchAllTagsInArray([{title : "Nico"}, {title : "gdf"}], [{title : 'test'}, {title : "yes"}, {title : "Nico"}] ))
+  // console.log("les contacts", contacts)
+// const repAll =  getContactsWithTagsSearching([{title : "famille"}, {title : "concert"}], contacts).contactsMatchAllTags;
+// const rep =  getContactsWithTagsSearching([{title : "famille"}, {title : "concert"}], contacts).contactsAnyTags;
+// for(let item of rep){
+//   console.log("contact" , item.contact.tags);
+//   console.log("tags", item.tags)
+// }
 
   return (
     <SafeAreaView style={styles.container}>

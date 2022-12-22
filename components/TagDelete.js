@@ -11,38 +11,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 
 // la props contient un objet tag et une fonction handleDeleteTag qui sert à supprimer le tag
 function TagDelete(props) {
+
+  // fonction se déclenchant quand on presse l'icône x
   const handleDelete = () => {
     props.handleDeleteTag(props.tag);
   };
 
   // gestion de la taille du tag le *10 vient de la police et de la fontsize
-  let theWidth=102;
-  if(props.tag.title){
-    theWidth = props.tag.title.length*10;
-  }
-    return (
-          <View style = {[styles.container,
-                          {width: theWidth}]}>
-            <View style={[
-                    {backgroundColor: props.tag.color},
-                    props.tag.border !== "none"? {borderWidth : 2} : {borderWidth : 0},
-                    props.tag.border !== "none"? {borderColor : props.tag.border} : {borderColor : "#FFFFFF"},
-                    styles.form]}>
-                <Text style={[
-                        styles.tagText,
-                        props.tag.color !== "white" && props.tag.color !== "#FFFFFF"?{color : "#FFFFFF"} : {color : props.tag.border}]}>
-                        {props.tag.title || "Nom du tag"}
-                </Text>
-                
-          </View>
-          <View style={styles.iconDeleteContainer}>
-          <TouchableOpacity activeOpacity={0.8} onPress={() => handleDelete()} style={styles.iconDelete}>
-              {/* <Entypo name="cross" size={15} color= "#0031B8" /> */}
-              <Entypo name="circle-with-cross" size={15} color="blue"  />
-          </TouchableOpacity>
-          </View>         
-    </View>
-    );
   // let theWidth = 102;
   // if (props.tag.title) {
   //   theWidth = props.tag.title.length * 10;
@@ -175,3 +150,5 @@ const styles = StyleSheet.create({
 });
 
 export default TagDelete;
+
+
