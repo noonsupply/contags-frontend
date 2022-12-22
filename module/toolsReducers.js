@@ -8,7 +8,7 @@ function updateArrayTags(initialArray, newDatas) {
       if (searchTag !== -1) {
         newArray[searchTag] = oneTag;
       } else {
-        newArray.push(oneTag);
+        newArray.unshift(oneTag);
       }
     }
 

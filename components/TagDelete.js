@@ -7,7 +7,7 @@ import {
 } from "react-native";
 
 import { Entypo } from "@expo/vector-icons";
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 
 // la props contient un objet tag et une fonction handleDeleteTag qui sert à supprimer le tag
 function TagDelete(props) {
@@ -66,50 +66,20 @@ function TagDelete(props) {
 
 const styles = StyleSheet.create({
   container: {
-    // marginTop: 5,
-    // marginBottom: 5,
-    // marginLeft: 10,
-    // marginRight: 10,
     marginHorizontal: 5,
     marginVertical: 5,
     flexDirection: "row",
-    // justifyContent: "flex-end",
-    // alignItems: "flex-start",
-    // height: 30,
-
   },
 
   form: {
     zIndex: 0,
-    // position: "absolute",
     alignItems: "center",
     borderRadius: 20,
     flexShrink: 1,
     height: 30,
     justifyContent: "center",
-    // marginBottom: 8,
-    // marginLeft: 0,
-    // marginRight: 0,
-    // marginTop: 0,
-    // marginBottom : 0,
-    // paddingLeft: 12,
-    // paddingRight: 12,
-    // width:"100%",
-    //backgroundColor : "#D90000", //props.tag.color ,
-    // alignItems: "center",
-    // borderRadius: 20,
-    // flexShrink: 1,
-    // height: 30,
-    // justifyContent: "center",
-    // marginHorizontal: 5,
-    // marginVertical: 5,
     paddingHorizontal: 10,
   },
-
-  // iconDeleteContainer: {
-  //   alignItems: "center",
-  //   justifyContent: "center",
-  // },
 
   iconDelete: {
     alignItems: "center",
@@ -117,22 +87,15 @@ const styles = StyleSheet.create({
     zIndex: 1,
     marginLeft: -10,
     marginTop: -5,
-    // marginRight: 0,
-    // marginTop: 0,
-    // marginBottom: 0,
     backgroundColor: "white",
-    // borderRadius: 50,
-    // paddingLeft: 0,
-    // paddingBottom: 0,
-    // paddingRight: 0,
-    // paddingTop: 0,
-    height: 15,
-    width: 15,
-    borderRadius: 15,
+    height: 17,
+    width: 17,
+    borderRadius: 17,
+    borderWidth: 1,
+    borderColor: "rgba(0,0,0,0)",
   },
 
   tagText: {
-    //color: "#FFFFFF",
     fontSize: 14,
     fontWeight: "bold",
   },
