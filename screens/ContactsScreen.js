@@ -19,6 +19,7 @@ import { setAdress } from "../module/adressIP";
 import TagsDefinition from "../components/TagsDefinition";
 import TagDelete from "../components/TagDelete";
 import { SafeAreaView } from "react-native-safe-area-context";
+// import { styles } from "../assets/Style";
 
 const BACKEND_ADDRESS = setAdress();
 
@@ -48,6 +49,9 @@ export default function ContactsScreen({ route, navigation }) {
 
   // gestion de l'affichage de la modal
   const [modalVisible, setModalVisible] = useState(false);
+
+  const EMAIL_REGEX =
+    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
   //sauvegarde des données du contact choisi (car posibilité de changement)
   const chosenContact = {
@@ -94,8 +98,28 @@ export default function ContactsScreen({ route, navigation }) {
     navigation.navigate("HomeScreen");
   };
 
+  // Function to validate e-mail address
+
+  const [onClick, setOnClick] = useState(false);
+
+  function EmailAddressAlert() {
+    if (email1 && !EMAIL_REGEX.test(email1) && props.onceClicked) {
+      return (
+        <View>
+          <Text color={"red"}>Veuillez saisir une adresse email valide.</Text>
+        </View>
+      );
+    }
+  }
+
   // fonction gérant la validation des changements (on considère qu'on a changé de page si le contact n'a pas été trouvé )
   const handleSubmit = () => {
+    setOnClick(true);
+
+    if (email1 && !EMAIL_REGEX.test(email1)) {
+      return;
+    }
+
     // récupération des informations dans les TextInput
     const phonesInput = [];
     if (phonenr1) {
@@ -164,7 +188,7 @@ export default function ContactsScreen({ route, navigation }) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        token: "cYQKAKkl-7L05bFTvzEUdU1ZyQN1NbY5", // user.token,
+        token: user.token,
         contacts: newArrayContacts,
       }),
     })
@@ -183,6 +207,7 @@ export default function ContactsScreen({ route, navigation }) {
               newDatas: newDatasContact,
             })
           );
+          navigation.navigate("HomeScreen");
         }
       });
   }; // end fonction handleSubmit
@@ -199,7 +224,7 @@ export default function ContactsScreen({ route, navigation }) {
 
   // fonction pour gérer l'ajout des tags dans la modale (on considère que le contact existe sinon on est revenu à la page précédente)
   const addTags = (tagsFromModal) => {
-    setTheTags(updateArrayTags(theTags.tags, tagsFromModal));
+    setTheTags(updateArrayTags(theTags, tagsFromModal));
   };
 
   // fonction permettant de supprimer un tag de theTags (donc de l'affichage) en props dans le component TagDelete
@@ -338,7 +363,9 @@ export default function ContactsScreen({ route, navigation }) {
                   autoComplete="email"
                   value={email1}
                 ></TextInput>
+                <EmailAddressAlert onceClicked={onClick} />
               </View>
+
               {/*Debut Mail pro*/}
               <Text style={styles.colorText}>Mail Pro</Text>
               <View style={styles.casePrenom}>
@@ -406,27 +433,23 @@ const styles = StyleSheet.create({
     marginTop: "5%",
     justifyContent: "space-between",
     width: "90%",
-    
   },
   icon: {
     marginTop: "5%",
     alignItems: "center",
     justifyContent: "center",
-    
   },
   fastAction: {
     flexDirection: "row",
     justifyContent: "space-around",
     marginTop: "12%",
     marginBottom: "8%",
-    
   },
   casePrenom: {
     flexDirection: "column",
     marginTop: "2%",
     justifyContent: "space-evenly",
     alignItems: "center",
-    
   },
   inputPrenom: {
     borderRadius: 5,
@@ -435,8 +458,6 @@ const styles = StyleSheet.create({
     height: 35,
     width: 350,
     paddingHorizontal: 5,
-
-    
   },
   inputTags: {
     borderRadius: 5,
@@ -445,11 +466,9 @@ const styles = StyleSheet.create({
     height: 130,
     width: "90%",
     paddingHorizontal: 15,
-    
   },
   nameandfirst: {
     margin: "3%",
-    
   },
   btnAddTag: {
     backgroundColor: "#ffffff",

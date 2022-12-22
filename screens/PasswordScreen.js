@@ -17,6 +17,7 @@ import { useTogglePasswordVisibility } from "../module/useTogglePasswordVisibili
 import { useTogglePasswordVisibility2 } from "../module/useTogglePasswordVisibility2";
 import { updateToken } from "../reducers/users";
 import { setAdress } from "../module/adressIP";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const BACKEND_ADDRESS = setAdress();
 
@@ -102,72 +103,77 @@ export default function PasswordScreen({ navigation }) {
         //  behavior="position"
         style={styles.kav}
       >
-      <View style={styles.divImage}>
-        <Image
-          style={styles.logo}
-          source={require("../assets/logo.png")}
-        ></Image>
-      </View>
-      <View>
-        <Text style={styles.text}>
-          Pour finaliser votre inscription, veuillez saisir un mot de passe
-        </Text>
-      </View>
-      <View style={styles.pass}>
-        <Text style={styles.text}>Saisissez votre mot de passe</Text>
-        <View style={styles.passwordContainer}>
-          <TextInput
-            placeholder="Password"
-            style={styles.input}
-            autoCapitalize="none"
-            autoCorrect={false}
-            textContentType="newPassword"
-            secureTextEntry={passwordVisibility}
-            value={Password1}
-            onChangeText={(text) => {
-              setPassword1(text);
-            }}
-          />
-          <Pressable
-            style={styles.iconDivEye}
-            onPress={handlePasswordVisibility}
-          >
-            <FontAwesome name={rightIcon} size={22} color="#0031b8" />
-          </Pressable>
+        <View style={styles.divImage}>
+          <Image
+            style={styles.logo}
+            source={require("../assets/logo.png")}
+          ></Image>
         </View>
-        <Text style={styles.text}>Saisir de nouveau</Text>
-        <View style={styles.passwordContainer}>
-          <TextInput
-            placeholder="Password"
-            style={styles.input}
-            autoCapitalize="none"
-            autoCorrect={false}
-            textContentType="newPassword"
-            secureTextEntry={passwordVisibility2}
-            value={Password2}
-            onChangeText={(text) => setPassword2(text)}
-          />
-          <Pressable
-            style={styles.iconDivEye}
-            onPress={handlePasswordVisibility2}
-          >
-            <FontAwesome name={rightIcon2} size={22} color="#0031b8" />
-          </Pressable>
+        <View>
+          <Text style={styles.text}>
+            Pour finaliser votre inscription, veuillez saisir un mot de passe
+          </Text>
         </View>
-        <PwdIdenticalAlert />
-        <PwdDifferentAlert onceClicked={onClick} />
-        <PwdFormatAlert onceClicked={onClick} />
-      </View>
-      <View style={styles.caseButton}>
-        <TouchableOpacity style={styles.button} onPress={() => handleReturn()}>
-          <FontAwesome color="#ffffff" name="chevron-left" />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button2} onPress={() => handleSubmit()}>
-          <FontAwesome color="#ffffff" name="chevron-right" />
-        </TouchableOpacity>
-      </View>
-
-    </KeyboardAvoidingView>
+        <View style={styles.pass}>
+          <Text style={styles.text}>Saisissez votre mot de passe</Text>
+          <View style={styles.passwordContainer}>
+            <TextInput
+              placeholder="Password"
+              style={styles.input}
+              autoCapitalize="none"
+              autoCorrect={false}
+              textContentType="newPassword"
+              secureTextEntry={passwordVisibility}
+              value={Password1}
+              onChangeText={(text) => {
+                setPassword1(text);
+              }}
+            />
+            <Pressable
+              style={styles.iconDivEye}
+              onPress={handlePasswordVisibility}
+            >
+              <FontAwesome name={rightIcon} size={22} color="#0031b8" />
+            </Pressable>
+          </View>
+          <Text style={styles.text}>Saisir de nouveau</Text>
+          <View style={styles.passwordContainer}>
+            <TextInput
+              placeholder="Password"
+              style={styles.input}
+              autoCapitalize="none"
+              autoCorrect={false}
+              textContentType="newPassword"
+              secureTextEntry={passwordVisibility2}
+              value={Password2}
+              onChangeText={(text) => setPassword2(text)}
+            />
+            <Pressable
+              style={styles.iconDivEye}
+              onPress={handlePasswordVisibility2}
+            >
+              <FontAwesome name={rightIcon2} size={22} color="#0031b8" />
+            </Pressable>
+          </View>
+          <PwdIdenticalAlert />
+          <PwdDifferentAlert onceClicked={onClick} />
+          <PwdFormatAlert onceClicked={onClick} />
+        </View>
+        <View style={styles.caseButton}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => handleReturn()}
+          >
+            <FontAwesome color="#ffffff" name="chevron-left" />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button2}
+            onPress={() => handleSubmit()}
+          >
+            <FontAwesome color="#ffffff" name="chevron-right" />
+          </TouchableOpacity>
+        </View>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }

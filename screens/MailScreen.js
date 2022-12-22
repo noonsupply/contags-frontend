@@ -109,7 +109,6 @@ export default function MailScreen({ navigation }) {
             <FontAwesome color="#ffffff" name="chevron-right" />
           </TouchableOpacity>
         </View>
-
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
