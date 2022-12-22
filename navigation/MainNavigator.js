@@ -20,7 +20,7 @@ const MainNavigator = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Splash">
-        {/* <Stack.Screen
+        <Stack.Screen
           name="Splash"
           options={{ animationEnabled: false, header: () => null }}
           component={SplashScreen}
@@ -54,17 +54,17 @@ const MainNavigator = () => {
           name="HomeLoadContact"
           options={{ animationEnabled: true, header: () => null }}
           component={HomeLoadContact}
-        /> */}
+        />
         <Stack.Screen
           name="HomeScreen"
           options={{ animationEnabled: true, header: () => null }}
           component={HomeScreen}
         />
-        {/* <Stack.Screen
+        <Stack.Screen
           name="ContactsScreen"
           options={{ animationEnabled: true, header: () => null }}
           component={ContactsScreen}
-        /> */}
+        />
 
         <Stack.Screen
           name="ContactAddManually"
@@ -72,11 +72,11 @@ const MainNavigator = () => {
           component={ContactAddManually}
         />
 
-        {/* <Stack.Screen
+        <Stack.Screen
           name="HomeRechercheScreen"
           options={{ animationEnabled: true, header: () => null }}
           component={HomeRechercheScreen}
-        /> */}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
