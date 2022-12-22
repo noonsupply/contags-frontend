@@ -2,26 +2,24 @@ import React, { useRef, useState, useEffect } from "react";
 import { View, StyleSheet, Text, Image } from "react-native";
 import { useSelector } from "react-redux";
 
-const SplashScreen = props => {
-
+const SplashScreen = (props) => {
   const [authLoaded, setAuthLoaded] = useState(false);
 
   const user = useSelector((state) => state.users.value);
 
-if(user.token){
-  props.navigation.replace("HomeScreen")
-} else
-{
-  props.navigation.replace("MailScreen");
-}  
-
   useEffect(() => {
     setTimeout(() => {
       setAuthLoaded(true);
-    }, 2000);
+    }, 5000);
   }, []);
 
-useEffect(() => {
+  if (user.token) {
+    props.navigation.replace("HomeScreen");
+  } else {
+    props.navigation.replace("MailScreen");
+  }
+
+  useEffect(() => {
     if (authLoaded) {
       props.navigation.replace("MailScreen");
     }
