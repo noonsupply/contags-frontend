@@ -8,24 +8,24 @@ const SplashScreen = props => {
 
   const user = useSelector((state) => state.users.value);
 
-if(user.token){
-  props.navigation.replace("HomeScreen")
-} else
-{
-  props.navigation.replace("MailScreen");
-}  
-
-  useEffect(() => {
+useEffect(() => {
     setTimeout(() => {
       setAuthLoaded(true);
+      
     }, 2000);
   }, []);
 
 useEffect(() => {
     if (authLoaded) {
-      props.navigation.replace("MailScreen");
+      if(user.token){
+        props.navigation.replace("HomeScreen")
+      } else
+      {
+        props.navigation.replace("MailScreen");
+      }
     }
   }, [authLoaded, props.navigation]);
+
 
   return (
     <View style={styles.container}>

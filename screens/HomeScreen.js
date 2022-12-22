@@ -27,7 +27,7 @@ export default function HomeScreen({ navigation }) {
   };
 
   const contacts = addContact.map((data, i) => {
-    const tableauPhone = data.phones[0].number;
+    //const tableauPhone = data.phones[0].number;
     const tableauEmail = data.emails;
     const key = i;
 
