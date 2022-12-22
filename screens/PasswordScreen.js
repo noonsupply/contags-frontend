@@ -88,9 +88,10 @@ export default function PasswordScreen({ navigation }) {
         .then((data) => {
           if (data.result) {
             dispatch(updateToken(data.token));
+            // console.log("fin");
+            navigation.navigate("ProfileCreation");
           }
         });
-      navigation.navigate("ProfileCreation");
     }
   };
 

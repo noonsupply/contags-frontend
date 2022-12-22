@@ -104,6 +104,7 @@ function TagsDefinition(props) {
 
     return (
         <KeyboardAvoidingView style={styles.container}>
+            <View style={styles.globalContainer}>
             <View style={styles.closeContainer}>
             <Text style={styles.titles}>C'est parti pour rajouter des tags au contact :</Text><View style={styles.closeIcon} >
             <TouchableOpacity activeOpacity={0.8} onPress={() => handleClose()}>
@@ -147,6 +148,7 @@ function TagsDefinition(props) {
                 <Text style={{color : writeColor }}>Valider</Text>
                 </TouchableOpacity> 
             </View>
+            </View>
         </KeyboardAvoidingView >
         
     );
@@ -157,10 +159,22 @@ const styles = StyleSheet.create({
     container: {
       //flex: 1,
         height: "100%",
-        width: "90%",
-        alignItems: 'flex-start',
-        backgroundColor: 'white',
+        width: "100%",
+        alignItems: "center",
+        justifyContent: "center",
         padding : 5,
+    },
+
+    globalContainer: {
+        height: "90%",
+        width: "90%",
+        backgroundColor: "#FFFFFF",
+        paddingVertical: 25,
+        paddingHorizontal: 20,
+        borderColor: "red",
+        borderWidth: 1,
+        borderRadius: 10,
+
     },
 
     titles: {

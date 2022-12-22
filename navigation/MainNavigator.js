@@ -54,7 +54,7 @@ const MainNavigator = () => {
           name="HomeLoadContact"
           options={{ animationEnabled: true, header: () => null }}
           component={HomeLoadContact}
-        /> 
+        />
         <Stack.Screen
           name="HomeScreen"
           options={{ animationEnabled: true, header: () => null }}
