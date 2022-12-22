@@ -20,7 +20,7 @@ const MainNavigator = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Splash">
-         <Stack.Screen
+        <Stack.Screen
           name="Splash"
           options={{ animationEnabled: false, header: () => null }}
           component={SplashScreen}
@@ -30,6 +30,11 @@ const MainNavigator = () => {
           options={{ animationEnabled: true, header: () => null }}
           component={SignInPonctuelScreen}
         /> */}
+         <Stack.Screen
+          name="SignInPonctuelScreen"
+          options={{ animationEnabled: true, header: () => null }}
+          component={SignInPonctuelScreen}
+        />  
         <Stack.Screen
           name="MailScreen"
           options={{ animationEnabled: true, header: () => null }}
@@ -60,23 +65,23 @@ const MainNavigator = () => {
           options={{ animationEnabled: true, header: () => null }}
           component={HomeScreen}
         />
-        <Stack.Screen
+         <Stack.Screen
           name="ContactsScreen"
           options={{ animationEnabled: true, header: () => null }}
           component={ContactsScreen}
-        />
+        /> 
 
-        {/* <Stack.Screen
+        <Stack.Screen
           name="ContactAddManually"
           options={{ animationEnabled: true, header: () => null }}
           component={ContactAddManually}
-        /> */}
+        />
 
-        {/* <Stack.Screen
+        <Stack.Screen
           name="HomeRechercheScreen"
           options={{ animationEnabled: true, header: () => null }}
           component={HomeRechercheScreen}
-        /> */}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

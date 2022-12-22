@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import {
   Text,
   ScrollView,
@@ -8,19 +8,48 @@ import {
   TouchableOpacity,
   View,
   KeyboardAvoidingView,
+  Modal,
+  Touchable,
 } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Tag from "../components/Tag";
 import { setAdress } from "../module/adressIP";
 import { SafeAreaView } from "react-native-safe-area-context";
+import TagDelete from "../components/TagDelete";
+import { updateArrayTags } from "../module/toolsReducers";
+import TagsDefinition from "../components/TagsDefinition";
+import { updateTagsPerso } from "../reducers/users";
 
 const BACKEND_ADDRESS = setAdress();
 
 export default function TagCreation({ navigation }) {
   const [tagArr, setTagArr] = useState([]);
+  const [selectedTags, setSelectedTags] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.users.value);
 
   // Fonctions de navigation
   const handleSubmit = () => {
+    fetch(`${BACKEND_ADDRESS}/users/saveTagsPerso`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        token: user.token,
+        tagsPerso: selectedTags,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.result) {
+          dispatch(updateTagsPerso(selectedTags));
+          navigation.navigate("HomeLoadContact");
+        }
+      });
+  };
+
+  const handleSkip = () => {
     navigation.navigate("HomeLoadContact");
   };
 
@@ -31,26 +60,23 @@ export default function TagCreation({ navigation }) {
   // Fonctions d'affichage conditionnel (données saisies dans ProfileCreation)
 
   function UserFirstName() {
-    const userFirstName = useSelector((state) => state.users.value.firstName);
     return (
       <View style={styles.tagFullDarkBlue}>
-        <Text style={styles.tagTextWhite}>{userFirstName}</Text>
+        <Text style={styles.tagTextWhite}>{user.firstName}</Text>
       </View>
     );
   }
 
   function UserLastName() {
-    const userLastName = useSelector((state) => state.users.value.lastName);
     return (
       <View style={styles.tagFullDarkBlue}>
-        <Text style={styles.tagTextWhite}>{userLastName}</Text>
+        <Text style={styles.tagTextWhite}>{user.lastName}</Text>
       </View>
     );
   }
 
   function UserPhoneNumber() {
-    const phoneNumberArr = useSelector((state) => state.users.value.phones);
-    const userPhoneNumber = phoneNumberArr.map((mainPhoneNumber) => {
+    const userPhoneNumber = user.phones.map((mainPhoneNumber) => {
       return mainPhoneNumber.number;
     });
     return (
@@ -61,10 +87,9 @@ export default function TagCreation({ navigation }) {
   }
 
   function UserMainEmail() {
-    const userMainEmail = useSelector((state) => state.users.value.emailMain);
     return (
       <View style={styles.tagFullDarkBlue}>
-        <Text style={styles.tagTextWhite}>{userMainEmail}</Text>
+        <Text style={styles.tagTextWhite}>{user.emailMain}</Text>
       </View>
     );
   }
@@ -77,70 +102,150 @@ export default function TagCreation({ navigation }) {
       });
   }, []);
 
+  // Gestion des tags
+
+  function addSelectedTag(newTag) {
+    setSelectedTags(updateArrayTags(selectedTags, [newTag]));
+    console.log(newTag);
+  }
+
   const ProposedTags = tagArr.map((element, index) => {
     return (
-      <View key={index}>
+      <TouchableOpacity key={index} onPress={() => addSelectedTag(element)}>
         <Tag tag={element} key={index} />
-      </View>
+      </TouchableOpacity>
     );
   });
 
+  const handleDeleteTag = (selectedTag) => {
+    const newTagList = selectedTags.filter(
+      (tagElement) => tagElement.title !== selectedTag.title
+    );
+    setSelectedTags(newTagList);
+  };
+
+  const DisplaySelectedTags = selectedTags.map((element, index) => {
+    return (
+      <TagDelete tag={element} key={index} handleDeleteTag={handleDeleteTag} />
+    );
+  });
+
+  // fonction pour gérer la fermeture de la modal des tags
+  const handleCloseModal = () => {
+    setModalVisible(false);
+  };
+
+  // fonction se déclenchant au clich sur le bouton +Tags
+  const handleOpenModal = () => {
+    setModalVisible(true);
+  };
+
+  // fonction pour gérer l'ajout des tags dans la modale (on considère que le contact existe sinon on est revenu à la page précédente)
+  const addTags = (tagsFromModal) => {
+    setSelectedTags(updateArrayTags(selectedTags, tagsFromModal));
+  };
+
   return (
-    <SafeAreaView style={styles.safeAreaView}>
+    <SafeAreaView style={styles.sav}>
       <StatusBar backgroundColor={"#FFFFFF"} barStyle={"dark-content"} />
 
-      <KeyboardAvoidingView>
-        <View style={styles.globalContainer}>
-          <View style={styles.mainContainer}>
-            <View style={styles.textContainer}>
-              <Text style={styles.text}>
-                Vos données essentielles ont été transformées en tags :
-              </Text>
-            </View>
-
-            <View style={styles.tagContainer}>
-              <UserFirstName />
-              <UserLastName />
-              <UserPhoneNumber />
-              <UserMainEmail />
-            </View>
-
-            <View style={styles.textContainer}>
-              <Text style={styles.text}>
-                Sélectionnez des tags qui vous correspondent parmi les
-                propositions ou ajoutez directement des tags personnalisés :
-              </Text>
-            </View>
-
-            <View style={styles.templateTagContainer}>
-              <ScrollView>{ProposedTags}</ScrollView>
-            </View>
-          </View>
-
-          <View style={styles.navigationContainer}>
-            <TouchableOpacity
-              style={styles.btnBack}
-              onPress={() => handleReturn()}
-            >
-              <FontAwesome color="#FFFFFF" name="chevron-left" />
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={styles.btnSkip}
-              onPress={() => handleSubmit()}
-            >
-              <Text style={styles.btnText}>Passer cette étape</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={styles.btnForward}
-              onPress={() => handleSubmit()}
-            >
-              <FontAwesome color="#FFFFFF" name="chevron-right" />
-            </TouchableOpacity>
-          </View>
+      <Modal
+        transparent={true}
+        visible={modalVisible}
+        animationType={"fade"}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <View>
+          <TagsDefinition
+            handleCloseModal={handleCloseModal}
+            addTags={addTags}
+          />
         </View>
-      </KeyboardAvoidingView>
+      </Modal>
+
+      <View style={styles.globalContainer}>
+        <View style={styles.mainContainer}>
+          <View style={styles.textContainer}>
+            <Text style={styles.text}>
+              Vos données essentielles ont été transformées en tags :
+            </Text>
+          </View>
+
+          <View style={styles.userTagsContainer}>
+            <UserFirstName />
+            <UserLastName />
+            <UserPhoneNumber />
+            <UserMainEmail />
+          </View>
+
+          <View style={styles.textContainer}>
+            <Text style={styles.text}>
+              Ajoutez des tags à votre profil, ils seront automatiquement partagés avec vos contacts. Pour cela, sélectionnez des tags qui vous correspondent parmi la lsite suivante : :
+            </Text>
+          </View>
+
+          <View style={styles.scrollViewContainer}>
+            <ScrollView
+              style={styles.proposedTagsScrollView}
+              contentContainerStyle={styles.contentContainer}
+              fadingEdgeLength={200}
+              persistentScrollbar={true}
+            >
+              {ProposedTags}
+            </ScrollView>
+          </View>
+
+          <View style={styles.textContainer}>
+            <Text style={styles.text}>
+              Et même créer vos tags personnalisés :
+            </Text>
+          </View>
+
+          <View style={styles.btnAddTagContainer}>
+          <TouchableOpacity
+            style={styles.btnAddTag}
+            onPress={() => handleOpenModal()}
+          >
+            <Text style={styles.btnWhiteText}>+</Text>
+          </TouchableOpacity>
+          </View>
+
+          <View style={styles.textContainer}>
+            <Text style={styles.text}>Vos tags :</Text>
+          </View>
+
+          <ScrollView
+            style={styles.selectedTagsScrollView}
+            contentContainerStyle={styles.contentContainer}
+            fadingEdgeLength={200}
+            persistentScrollbar={true}
+          >
+            {DisplaySelectedTags}
+          </ScrollView>
+        </View>
+
+        <View style={styles.navigationContainer}>
+          <TouchableOpacity
+            style={styles.btnBack}
+            onPress={() => handleReturn()}
+          >
+            <FontAwesome color="#FFFFFF" name="chevron-left" />
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.btnSkip} onPress={() => handleSkip()}>
+            <Text style={styles.btnText}>Passer cette étape</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.btnForward}
+            onPress={() => handleSubmit()}
+          >
+            <FontAwesome color="#FFFFFF" name="chevron-right" />
+          </TouchableOpacity>
+        </View>
+      </View>
     </SafeAreaView>
   );
 }
@@ -148,30 +253,81 @@ export default function TagCreation({ navigation }) {
 const styles = StyleSheet.create({
   //  Views & Global container
 
-  safeAreaView: {
+  sav: {
     flex: 1,
     height: "100%",
     width: "100%",
-    backgroundColor: "#FFFFFF",
+    alignItems: "center",
+    justifyContent: "center",
   },
 
   globalContainer: {
+    flex: 1,
     height: "100%",
     width: "100%",
+    backgroundColor: "white",
+    paddingTop: 15,
   },
 
   // Main
 
   mainContainer: {
-    // backgroundColor: "green",
-    paddingVertical: 25,
+    height: "90%",
+  },
+
+  userTagsContainer: {
+    marginVertical: 5,
+    marginHorizontal: 25,
+    flexWrap: "wrap",
+    flexDirection: "row",
+    marginVertical: 10,
+    // backgroundColor: "red",
+  },
+
+  scrollViewContainer: {
+    height: "25%",
+  },
+
+  btnAddTagContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    marginVertical: 15,
+  },
+
+  proposedTagsScrollView: {
+    // flexWrap: "wrap",
+    // flexDirection: "row",
+    // borderWidth: 1,
+    // borderColor: "#0031B8",
+    // borderRadius: 10,
+    paddingHorizontal: 3,
+    marginVertical: 15,
+    marginHorizontal: 25,
+  },
+
+  selectedTagsScrollView: {
+    // flexWrap: "wrap",
+    // flexDirection: "row",
+    // borderWidth: 1,
+    // borderColor: "#0031B8",
+    // borderRadius: 10,
+    paddingHorizontal: 3,
+    marginVertical: 15,
+    marginHorizontal: 25,
+  },
+
+  contentContainer: {
+    flexWrap: "wrap",
+    flexDirection: "row",
+    // alignItems: "center",
+    // justifyContent: "center",
   },
 
   // Text
 
   textContainer: {
     marginHorizontal: 25,
-    // backgroundColor: "maroon",
+    // backgroundColor: "yellow",
   },
 
   text: {
@@ -199,12 +355,9 @@ const styles = StyleSheet.create({
   navigationContainer: {
     // backgroundColor: "orange",
     height: "10%",
-    // paddingVertical: 10,
-    flexWrap: "wrap",
     flexDirection: "row",
     justifyContent: "space-between",
-    // alignItems: "center",
-    alignContent: "center",
+    alignItems: "center",
     paddingHorizontal: 25,
   },
 
@@ -235,49 +388,64 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
 
+  btnAddTag :{
+    alignItems: "center",
+    backgroundColor: "#0031B8",
+    borderRadius: 50,
+    height: 50,
+    justifyContent: "center",
+    width: 50,
+  },
+
   btnText: {
     color: "#0031B8",
     fontSize: 14,
     fontWeight: "bold",
   },
 
+  btnWhiteText: {
+    color: "#FFFFFF",
+    fontSize: 14,
+    fontWeight: "bold",
+  },
+
   // Tags
 
-  templateTagContainer: {
-    alignItems: "flex-start",
-    flexDirection: "row",
-    flexWrap: "wrap",
-    // justifyContent: "center",
-    marginBottom: 15,
-    marginTop: 15,
-    paddingLeft: 25,
-    paddingRight: 25,
-    height: 250,
-  },
+  // templateTagContainer: {
+  //   alignItems: "flex-start",
+  //   flexDirection: "row",
+  //   flexWrap: "wrap",
+  //   // justifyContent: "center",
+  //   marginBottom: 15,
+  //   marginTop: 15,
+  //   paddingLeft: 25,
+  //   paddingRight: 25,
+  //   height: 250,
+  // },
 
   tagTextBlue: {
     color: "#0031B8",
     fontSize: 14,
     fontWeight: "bold",
-    marginBottom: 10,
   },
 
   tagTextWhite: {
     color: "#FFFFFF",
     fontSize: 14,
     fontWeight: "bold",
-    marginBottom: 10,
   },
 
   tagFullDarkBlue: {
-    alignItems: "center",
     backgroundColor: "#0031B8",
+    alignItems: "center",
     borderRadius: 20,
     flexShrink: 1,
     height: 30,
     justifyContent: "center",
-    marginHorizontal: 10,
-    marginVertical: 7,
+    marginLeft: 0,
+    marginRight: 10,
+    marginVertical: 3,
+    paddingHorizontal: 10,
   },
 
   tagFullGray: {

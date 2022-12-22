@@ -62,6 +62,7 @@ export default function HomeLoadContact({ navigation }) {
 
             const tableauPhone = element.phoneNumbers;
             let phoneTableau = [];
+            if(tableauPhone){
             tableauPhone.forEach((phoneElement) =>
               phoneTableau.push({
                 phoneType: phoneElement.label,
@@ -69,7 +70,7 @@ export default function HomeLoadContact({ navigation }) {
                 country: phoneElement.countryCode,
                 areaCode: phoneElement.countryCode,
               })
-            );
+            )};
 
             return {
               lastName: element.lastName,

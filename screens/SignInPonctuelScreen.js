@@ -61,7 +61,7 @@ export default function SignInPonctuleScreen({ navigation }) {
         .then((data) => {
           if (data.result) {
             dispatch(updateToken(data.token));
-            navigation.navigate("Home");
+            navigation.navigate("HomeScreen");
           }
         });
     }
