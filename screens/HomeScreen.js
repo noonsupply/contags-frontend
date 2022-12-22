@@ -13,56 +13,62 @@ import {
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { Entypo } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
+import { logout } from "../reducers/users";
 
 export default function HomeScreen({ navigation }) {
   const addContact = useSelector((state) => state.contacts.value);
+  const dispatch = useDispatch();
+  const handleLogout = () => {
+    dispatch(logout());
+    navigation.navigate("MailScreen")
+  };
 
   const contacts = addContact.map((data, i) => {
     const tableauPhone = data.phones[0].number;
     const tableauEmail = data.emails;
     const key = i;
 
-    let email;
+let email;
 
-    if (tableauEmail !== undefined) {
-      email = Object.values(tableauEmail);
-    }
+if (tableauEmail !== undefined) {
+  email = Object.values(tableauEmail);
+}
 
-    //   email = Object.values(tableauEmail)
-    // }
-    return (
-      <View style={styles.container} key={i}>
-        <TouchableOpacity
-          style={styles.case}
-          onPress={() =>
-            navigation.navigate("ContactsScreen", {
-              lastName: data.lastName,
-              firstName: data.firstName,
-              /* dob: data.dob, phonenr: tableauPhone, email : email, */ key: key,
-            })
-          }
-        >
-          <View style={styles.caseIcon}>
-            <FontAwesome name="user-circle" size={35} color="#0031B8" />
-          </View>
-          <Text style={styles.name}>
-            {data.lastName} {data.firstName}
-          </Text>
-          <TouchableOpacity style={styles.param}>
-            <Entypo name="dots-three-vertical" size={24} color="black" />
-          </TouchableOpacity>
-        </TouchableOpacity>
+//   email = Object.values(tableauEmail)
+// }
+return (
+  <View style={styles.container} key={i}>
+    <TouchableOpacity
+      style={styles.case}
+      onPress={() =>
+        navigation.navigate("ContactsScreen", {
+          lastName: data.lastName,
+          firstName: data.firstName,
+          /* dob: data.dob, phonenr: tableauPhone, email : email, */ key: key,
+        })
+      }
+    >
+      <View style={styles.caseIcon}>
+        <FontAwesome name="user-circle" size={35} color="#0031B8" />
       </View>
-    );
+      <Text style={styles.name}>
+        {data.lastName} {data.firstName}
+      </Text>
+      <TouchableOpacity style={styles.param}>
+        <Entypo name="dots-three-vertical" size={24} color="black" />
+      </TouchableOpacity>
+    </TouchableOpacity>
+  </View>
+);
   });
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.navigate()}>
+        <TouchableOpacity onPress={() => handleLogout()}>
           <Text style={styles.deco}>
             <Feather name="log-out" size={24} color="black" />
           </Text>
@@ -162,3 +168,4 @@ const styles = StyleSheet.create({
     marginBottom: 0,
   },
 });
+

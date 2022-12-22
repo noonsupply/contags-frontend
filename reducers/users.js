@@ -55,6 +55,11 @@ export const usersSlice = createSlice({
       console.log("user", state.value);
     },
 
+    logout: (state) => {
+      state.value.token = null
+      state.value.emailMain = null
+    },
+
     //updateTags permet de fusionner le tableau de tags du user avec un nouveau tableau de tag
     //action.payload doit être de la forme {tagsPerso: tableau_tags}
     // updateTagsPerso: (state, action) => {
@@ -86,5 +91,6 @@ export const {
   updateDateOfBirth,
   updateLastConnection,
   updateTagsPerso,
+  logout
 } = usersSlice.actions;
 export default usersSlice.reducer;
