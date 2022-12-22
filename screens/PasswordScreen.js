@@ -96,7 +96,12 @@ export default function PasswordScreen({ navigation }) {
   };
 
   return (
-    <KeyboardAvoidingView behavior="position" style={styles.container}>
+    <SafeAreaView style={styles.sav}>
+      <StatusBar backgroundColor={"#FFFFFF"} barStyle={"dark-content"} />
+      <KeyboardAvoidingView
+        //  behavior="position"
+        style={styles.kav}
+      >
       <View style={styles.divImage}>
         <Image
           style={styles.logo}
@@ -161,8 +166,9 @@ export default function PasswordScreen({ navigation }) {
           <FontAwesome color="#ffffff" name="chevron-right" />
         </TouchableOpacity>
       </View>
-      <StatusBar style="auto" />
+
     </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 }
 
