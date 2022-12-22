@@ -381,19 +381,17 @@ export default function ContactsScreen({ route, navigation }) {
 const styles = StyleSheet.create({
   mettreajour: {
     color: "#0031B8",
-
     fontWeight: "600",
   },
   btnUpdateContact: {
     width: 100,
     backgroundColor: "#ffffff",
-    paddingVertical: 20,
     borderColor: "#0031B8",
     borderWidth: 2,
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 5,
-    marginLeft: 130,
+    height: 50,
   },
 
   container: {
@@ -408,23 +406,27 @@ const styles = StyleSheet.create({
     marginTop: "5%",
     justifyContent: "space-between",
     width: "90%",
+    
   },
   icon: {
     marginTop: "5%",
     alignItems: "center",
     justifyContent: "center",
+    
   },
   fastAction: {
     flexDirection: "row",
     justifyContent: "space-around",
     marginTop: "12%",
     marginBottom: "8%",
+    
   },
   casePrenom: {
     flexDirection: "column",
     marginTop: "2%",
     justifyContent: "space-evenly",
     alignItems: "center",
+    
   },
   inputPrenom: {
     borderRadius: 5,
@@ -432,7 +434,9 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     height: 35,
     width: 350,
-    paddingHorizontal: 15,
+    paddingHorizontal: 5,
+
+    
   },
   inputTags: {
     borderRadius: 5,
@@ -441,24 +445,28 @@ const styles = StyleSheet.create({
     height: 130,
     width: "90%",
     paddingHorizontal: 15,
+    
   },
   nameandfirst: {
     margin: "3%",
+    
   },
   btnAddTag: {
     backgroundColor: "#ffffff",
-    padding: 10,
+    height: 50,
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 5,
     borderColor: "#0031B8",
     borderWidth: 2,
-    marginTop: 25,
   },
 
   bottomContainer: {
     flexDirection: "row",
     alignItems: "center",
+    alignItems: "center",
+    justifyContent: "space-evenly",
+    marginTop: 50,
   },
 
   scroll: {

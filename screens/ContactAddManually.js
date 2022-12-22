@@ -23,6 +23,7 @@ import { setAdress } from "../module/adressIP";
 import TagsDefinition from "../components/TagsDefinition";
 import TagDelete from "../components/TagDelete";
 import { updateArrayContacts, updateArrayTags } from "../module/toolsReducers";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function ContactAddManually({ navigation }) {
   const BACKEND_ADDRESS = setAdress();
@@ -66,6 +67,7 @@ export default function ContactAddManually({ navigation }) {
   const handleSubmit = () => {
     // vérification des informations
 
+    
     //création du contact : vérification
 
     const newContact = {
@@ -88,11 +90,17 @@ export default function ContactAddManually({ navigation }) {
       },
     };
 
+      // Vérification si les champs sont renseignés
+  if (lastName == "" && firstName == "") {
+    alert("Veuillez renseigner votre nom ou votre prénom avant de continuer.");
+    return false;
+  }
+
     fetch(`${BACKEND_ADDRESS}/users/createContact`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        token: "P_611x2sqvoYJTzd0yIYSEZN_7CgXHqD", // users.token,
+        token: user.token, // users.token,
         contacts: newContact,
       }),
     })
@@ -101,9 +109,10 @@ export default function ContactAddManually({ navigation }) {
         if (data.result) {
           dispatch(addContact(newContact));
           alert("Contact enregistré avec succés");
-          navigation.navigate("HomeScreen");
+          navigation.navigate("HomeScreen");}
         }
-      });
+      );
+    
   }; // fin de handleSubmit
 
   // fonction pour gérer la fermeture de la modal des tags
@@ -148,6 +157,7 @@ export default function ContactAddManually({ navigation }) {
   return (
     <KeyboardAvoidingView behavior="position" style={styles.container}>
       {/* Modal à afficher */}
+      <SafeAreaView>
       <Modal
         animationType="slide"
         transparent={true}
@@ -294,11 +304,13 @@ export default function ContactAddManually({ navigation }) {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.btnUpdateContact}
-          onPress={() => handleSubmit()}
+          onPress={() => handleSubmit()
+          }
         >
-          <Text style={styles.mettreajour}>Mettre à jour</Text>
+          <Text style={styles.mettreajour}>Valider</Text>
         </TouchableOpacity>
       </View>
+      </SafeAreaView>
     </KeyboardAvoidingView>
   );
 }
@@ -306,19 +318,17 @@ export default function ContactAddManually({ navigation }) {
 const styles = StyleSheet.create({
   mettreajour: {
     color: "#0031B8",
-
     fontWeight: "600",
   },
   btnUpdateContact: {
     width: 100,
     backgroundColor: "#ffffff",
-    paddingVertical: 20,
     borderColor: "#0031B8",
     borderWidth: 2,
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 5,
-    marginLeft: 130,
+    height: 50,
   },
 
   container: {
@@ -333,23 +343,27 @@ const styles = StyleSheet.create({
     marginTop: "5%",
     justifyContent: "space-between",
     width: "90%",
+    
   },
   icon: {
     marginTop: "5%",
     alignItems: "center",
     justifyContent: "center",
+    
   },
   fastAction: {
     flexDirection: "row",
     justifyContent: "space-around",
     marginTop: "12%",
     marginBottom: "8%",
+    
   },
   casePrenom: {
     flexDirection: "column",
     marginTop: "2%",
     justifyContent: "space-evenly",
     alignItems: "center",
+    
   },
   inputPrenom: {
     borderRadius: 5,
@@ -357,7 +371,9 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     height: 35,
     width: 350,
-    paddingHorizontal: 15,
+    paddingHorizontal: 5,
+
+    
   },
   inputTags: {
     borderRadius: 5,
@@ -366,24 +382,28 @@ const styles = StyleSheet.create({
     height: 130,
     width: "90%",
     paddingHorizontal: 15,
+    
   },
   nameandfirst: {
     margin: "3%",
+    
   },
   btnAddTag: {
     backgroundColor: "#ffffff",
-    padding: 10,
+    height: 50,
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 5,
     borderColor: "#0031B8",
     borderWidth: 2,
-    marginTop: 25,
   },
 
   bottomContainer: {
     flexDirection: "row",
     alignItems: "center",
+    alignItems: "center",
+    justifyContent: "space-evenly",
+    marginTop: 50,
   },
 
   scroll: {
