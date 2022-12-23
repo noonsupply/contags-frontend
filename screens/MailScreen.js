@@ -36,7 +36,6 @@ export default function MailScreen({ navigation }) {
       dispatch(updateEmailMain(email));
       //début fetch pour vérification de l'adresse mail
       fetch(`${BACKEND_ADDRESS}/users/`)
-<<<<<<< HEAD
   .then(response => response.json())
   .then(data => {
     if(data.result){
@@ -49,17 +48,6 @@ export default function MailScreen({ navigation }) {
     }
     
   });
-=======
-        .then((response) => response.json())
-        .then((data) => {
-          const found = data.users.find((item) => item.emailMain === email);
-          if (found) {
-            navigation.navigate("SignInPonctuelScreen");
-          } else {
-            navigation.navigate("PasswordScreen");
-          }
-        });
->>>>>>> 84a49179e51102adb300ee29ced5025207f41d02
 
       //fin fetch
     }
