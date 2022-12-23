@@ -36,18 +36,17 @@ export default function MailScreen({ navigation }) {
       dispatch(updateEmailMain(email));
       //début fetch pour vérification de l'adresse mail
       fetch(`${BACKEND_ADDRESS}/users/`)
-  .then(response => response.json())
-  .then(data => {
-    if(data.result){
-      const found = data.users.find(item => item.emailMain === email);
-      if (found) {
-        navigation.navigate("SignInPonctuelScreen")
-      } else {
-        navigation.navigate("PasswordScreen")
-      } 
-    }
-    
-  });
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.result) {
+            const found = data.users.find((item) => item.emailMain === email);
+            if (found) {
+              navigation.navigate("SignInPonctuelScreen");
+            } else {
+              navigation.navigate("PasswordScreen");
+            }
+          }
+        });
 
       //fin fetch
     }
@@ -118,7 +117,6 @@ export default function MailScreen({ navigation }) {
 }
 
 // const styles = StyleSheet.create({
-
 //   sav: {
 //     flex: 1,
 //     height: "100%",

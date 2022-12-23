@@ -19,7 +19,7 @@ import { Feather } from "@expo/vector-icons";
 import { logout } from "../reducers/users";
 
 import TagSearchBar from "../components/TagSearchBar";
-
+import { useEffect } from "react";
 
 export default function HomeScreen({ navigation }) {
   const addContact = useSelector((state) => state.contacts.value);
@@ -31,21 +31,20 @@ export default function HomeScreen({ navigation }) {
     navigation.navigate("MailScreen");
   };
 
-// événement quand on presse le bouton recherche
-const handleBtnSearch = (datasFromSearchBar) =>{
-   console.log("HomeScreen", datasFromSearchBar)
+  // événement quand on presse le bouton recherche
+  const handleBtnSearch = (datasFromSearchBar) => {
+    console.log("HomeScreen", datasFromSearchBar);
     // on navigue vers la page des onglets
     navigation.navigate("HomeRechercheScreen", {
-      searching : datasFromSearchBar.searching,
-       contactsMatchAllTags: datasFromSearchBar.results.contactsMatchAllTags,
-       contactsAnyTags: datasFromSearchBar.results.contactsAnyTags,
+      searching: datasFromSearchBar.searching,
+      contactsMatchAllTags: datasFromSearchBar.results.contactsMatchAllTags,
+      contactsAnyTags: datasFromSearchBar.results.contactsAnyTags,
       // /* dob: data.dob, phonenr: tableauPhone, email : email, */ key: key,
-     })
-}
+    });
+  };
 
- // gestion de l'affichage des contacts
+  // gestion de l'affichage des contacts
   const contacts = addContact.map((data, i) => {
-    
     //const tableauPhone = data.phones[0].number;
     const tableauEmail = data.emails;
     const key = i;
@@ -84,14 +83,14 @@ const handleBtnSearch = (datasFromSearchBar) =>{
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View style={[styles.header,{zIndex:1}]}>
+      <View style={[styles.header, { zIndex: 1 }]}>
         <TouchableOpacity onPress={() => handleLogout()}>
           <Text style={styles.deco}>
             <Feather name="log-out" size={24} color="black" />
           </Text>
         </TouchableOpacity>
         {/* BARRE DE RECHERCHE */}
-        <TagSearchBar btnSearch={handleBtnSearch} tagsSearching ={[]} />
+        <TagSearchBar btnSearch={handleBtnSearch} tagsSearching={[]} />
       </View>
       <ScrollView>
         <View style={styles.contactContainer}>
@@ -119,8 +118,9 @@ const styles = StyleSheet.create({
     paddingTop: 20,
   },
   deco: {
-    marginLeft: 30,
-    marginTop: 30,
+    position: "absolute",
+    marginLeft: 5,
+    marginTop: 5,
     marginBottom: 0,
   },
   addManually: {
@@ -185,8 +185,8 @@ const styles = StyleSheet.create({
   header: {
     backgroundColor: "#ffffff",
     marginBottom: 0,
-    flexDirection : "row",
+    flexDirection: "row",
     // alignItems : "flex-end",
-    justifyContent :"center",
+    justifyContent: "center",
   },
 });

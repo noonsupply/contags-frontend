@@ -25,7 +25,6 @@ const styles = StyleSheet.create({
   // CONTAINERS
 
   // Logo Container
-
   logoContainer: {
     height: "20%",
     alignItems: "center",
@@ -77,7 +76,7 @@ const styles = StyleSheet.create({
 
   logo: {
     width: "100%",
-    height: "100%",
+    height: "55%",
   },
 
   // TEXTINPUTS & TEXTS OVER INPUTS
@@ -90,7 +89,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     color: "#5A5A5F",
     height: 45,
-    width:300,
+    width: 300,
     marginVertical: 5,
     marginHorizontal: 5,
     paddingHorizontal: 15,
@@ -135,12 +134,11 @@ const styles = StyleSheet.create({
 
   // Alert Message
 
-  alertMsg:{
+  alertMsg: {
     color: "#D90000",
     fontSize: 14,
     fontWeight: "500",
   },
-
 });
 
 export { styles };

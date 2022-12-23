@@ -228,7 +228,6 @@ const styles = StyleSheet.create({
   },
   iconDivEye: {
     borderColor: "#0031B8",
-    borderColor: "#0031B8",
     borderWidth: 1.5,
     padding: 5,
     borderTopRightRadius: 5,
