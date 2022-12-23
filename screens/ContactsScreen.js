@@ -19,6 +19,7 @@ import { setAdress } from "../module/adressIP";
 import TagsDefinition from "../components/TagsDefinition";
 import TagDelete from "../components/TagDelete";
 import { SafeAreaView } from "react-native-safe-area-context";
+// import { styles } from "../assets/Style";
 
 const BACKEND_ADDRESS = setAdress();
 
@@ -48,6 +49,9 @@ export default function ContactsScreen({ route, navigation }) {
 
   // gestion de l'affichage de la modal
   const [modalVisible, setModalVisible] = useState(false);
+
+  const EMAIL_REGEX =
+    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
   //sauvegarde des données du contact choisi (car posibilité de changement)
   const chosenContact = {
@@ -94,8 +98,28 @@ export default function ContactsScreen({ route, navigation }) {
     navigation.navigate("HomeScreen");
   };
 
+  // Function to validate e-mail address
+
+  const [onClick, setOnClick] = useState(false);
+
+  function EmailAddressAlert() {
+    if (email1 && !EMAIL_REGEX.test(email1) && props.onceClicked) {
+      return (
+        <View>
+          <Text color={"red"}>Veuillez saisir une adresse email valide.</Text>
+        </View>
+      );
+    }
+  }
+
   // fonction gérant la validation des changements (on considère qu'on a changé de page si le contact n'a pas été trouvé )
   const handleSubmit = () => {
+    setOnClick(true);
+
+    if (email1 && !EMAIL_REGEX.test(email1)) {
+      return;
+    }
+
     // récupération des informations dans les TextInput
     const phonesInput = [];
     if (phonenr1) {
@@ -164,7 +188,7 @@ export default function ContactsScreen({ route, navigation }) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        token: "cYQKAKkl-7L05bFTvzEUdU1ZyQN1NbY5", // user.token,
+        token: user.token,
         contacts: newArrayContacts,
       }),
     })
@@ -183,6 +207,7 @@ export default function ContactsScreen({ route, navigation }) {
               newDatas: newDatasContact,
             })
           );
+          navigation.navigate("HomeScreen");
         }
       });
   }; // end fonction handleSubmit
@@ -338,7 +363,9 @@ export default function ContactsScreen({ route, navigation }) {
                   autoComplete="email"
                   value={email1}
                 ></TextInput>
+                <EmailAddressAlert onceClicked={onClick} />
               </View>
+
               {/*Debut Mail pro*/}
               <Text style={styles.colorText}>Mail Pro</Text>
               <View style={styles.casePrenom}>
@@ -381,19 +408,17 @@ export default function ContactsScreen({ route, navigation }) {
 const styles = StyleSheet.create({
   mettreajour: {
     color: "#0031B8",
-
     fontWeight: "600",
   },
   btnUpdateContact: {
     width: 100,
     backgroundColor: "#ffffff",
-    paddingVertical: 20,
     borderColor: "#0031B8",
     borderWidth: 2,
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 5,
-    marginLeft: 130,
+    height: 50,
   },
 
   container: {
@@ -432,7 +457,7 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     height: 35,
     width: 350,
-    paddingHorizontal: 15,
+    paddingHorizontal: 5,
   },
   inputTags: {
     borderRadius: 5,
@@ -447,18 +472,20 @@ const styles = StyleSheet.create({
   },
   btnAddTag: {
     backgroundColor: "#ffffff",
-    padding: 10,
+    height: 50,
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 5,
     borderColor: "#0031B8",
     borderWidth: 2,
-    marginTop: 25,
   },
 
   bottomContainer: {
     flexDirection: "row",
     alignItems: "center",
+    alignItems: "center",
+    justifyContent: "space-evenly",
+    marginTop: 50,
   },
 
   scroll: {
