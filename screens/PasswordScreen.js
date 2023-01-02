@@ -76,7 +76,6 @@ export default function PasswordScreen({ navigation }) {
     setOnClick(true);
 
     if (Password1 === Password2 && regexMdp.test(Password1)) {
-      console.log("route", user);
       fetch(`${BACKEND_ADDRESS}/users/create`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -89,7 +88,6 @@ export default function PasswordScreen({ navigation }) {
         .then((data) => {
           if (data.result) {
             dispatch(updateToken(data.token));
-            // console.log("fin");
             navigation.navigate("ProfileCreation");
           }
         });

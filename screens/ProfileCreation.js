@@ -24,7 +24,7 @@ import {
 } from "../reducers/users";
 import { setAdress } from "../module/adressIP";
 
-const BACKEND_ADDRESS = setAdress(); //"http://192.168.1.92:3000";
+const BACKEND_ADDRESS = setAdress(); 
 
 export default function ProfileCreation({ navigation }) {
   // useSelector & useDispatch

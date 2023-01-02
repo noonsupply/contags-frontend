@@ -20,7 +20,7 @@ const MainNavigator = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Splash">
-        <Stack.Screen
+        <Stack.Screen 
           name="Splash"
           options={{ animationEnabled: false, header: () => null }}
           component={SplashScreen}
@@ -76,7 +76,7 @@ const MainNavigator = () => {
           name="HomeRechercheScreen"
           options={{ animationEnabled: true, header: () => null }}
           component={HomeRechercheScreen}
-        />
+        /> 
       </Stack.Navigator>
     </NavigationContainer>
   );

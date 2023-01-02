@@ -106,7 +106,6 @@ export default function TagCreation({ navigation }) {
 
   function addSelectedTag(newTag) {
     setSelectedTags(updateArrayTags(selectedTags, [newTag]));
-    console.log(newTag);
   }
 
   const ProposedTags = tagArr.map((element, index) => {
@@ -135,7 +134,7 @@ export default function TagCreation({ navigation }) {
     setModalVisible(false);
   };
 
-  // fonction se déclenchant au clich sur le bouton +Tags
+  // fonction se déclenchant au click sur le bouton +Tags
   const handleOpenModal = () => {
     setModalVisible(true);
   };

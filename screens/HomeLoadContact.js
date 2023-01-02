@@ -6,7 +6,6 @@ import {
   SafeAreaView,
   ScrollView,
   TouchableOpacity,
-  Button,
   Pressable,
   TextInput,
 } from "react-native";
@@ -30,7 +29,7 @@ export default function HomeLoadContact({ navigation }) {
 
   const BACKEND_ADDRESS = setAdress();
 
-  console.log(setAdress);
+ 
   useEffect(() => {
     (async () => {
       const { status } = await Contacts.requestPermissionsAsync();
@@ -45,7 +44,6 @@ export default function HomeLoadContact({ navigation }) {
             Contacts.Fields.PhoneNumbers,
           ],
         });
-        // console.log("data", data)
 
         if (data.length > 0) {
           const contactPush = data.map((element) => {
@@ -101,9 +99,10 @@ export default function HomeLoadContact({ navigation }) {
       .then((data) => {
         if (data.result) {
           dispatch(setContact(myContacts));
+          alert("Import des contacts réalisé avec succès");
+          navigation.navigate("HomeScreen");
         }
-        alert("Import des contacts réalisé avec succès");
-        navigation.navigate("HomeScreen");
+        
       });
   };
 

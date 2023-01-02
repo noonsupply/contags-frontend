@@ -13,13 +13,13 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { Entypo } from "@expo/vector-icons";
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
-import { setContact, updateContact } from "../reducers/contacts";
+import {updateContact } from "../reducers/contacts";
 import { updateArrayContacts, updateArrayTags } from "../module/toolsReducers";
 import { setAdress } from "../module/adressIP";
 import TagsDefinition from "../components/TagsDefinition";
 import TagDelete from "../components/TagDelete";
 import { SafeAreaView } from "react-native-safe-area-context";
-// import { styles } from "../assets/Style";
+import {handleInputPhone, handleInputMails} from "../module/toolsCheckFormat";
 
 const BACKEND_ADDRESS = setAdress();
 
@@ -30,11 +30,10 @@ export default function ContactsScreen({ route, navigation }) {
   const contacts = useSelector((state) => state.contacts.value);
   const user = useSelector((state) => state.users.value);
 
-  const personne = route.params;
 
   // définition des états associés aux TextInput
-  const [lastName, setLastName] = useState(contacts[personne.key].lastName);
-  const [firstName, setFirstName] = useState(contacts[personne.key].firstName);
+  const [lastName, setLastName] = useState(route.params.lastName);
+  const [firstName, setFirstName] = useState(route.params.firstName);
   const [dob, setDob] = useState("");
   const [phonenr1, setPhoneNr1] = useState("");
   const [phonenr2, setPhoneNr2] = useState("");
@@ -53,41 +52,29 @@ export default function ContactsScreen({ route, navigation }) {
   const EMAIL_REGEX =
     /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-  //sauvegarde des données du contact choisi (car posibilité de changement)
-  const chosenContact = {
-    lastName: contacts[personne.key].lastName,
-    firstName: contacts[personne.key].firstName,
-  };
+
   //initialisation des états
   useEffect(() => {
     // recherche du contact
     const indexContact = contacts.findIndex(
       (elt) =>
-        elt.lastName === contacts[personne.key].lastName &&
-        elt.firstName === contacts[personne.key].firstName
+        elt.lastName === route.params.lastName &&
+        elt.firstName === route.params.firstName
     );
     // si le contact existe on initialise les TextInput et les tags avec ses données
     if (indexContact !== -1) {
       const dataContact = contacts[indexContact];
       setTheContactUpdating(dataContact);
       setDob(dataContact.dob);
-      dataContact.emails.length > 0
-        ? setEmail1(dataContact.emails[0].email)
-        : setEmail1("");
-      dataContact.emails.length > 1
-        ? setEmail2(dataContact.emails[1].email)
-        : setEmail2("");
-      dataContact.phones.length > 0
-        ? setPhoneNr1(dataContact.phones[0].number)
-        : setPhoneNr1("");
-      dataContact.phones.length > 1
-        ? setPhoneNr1(dataContact.phones[1].number)
-        : setPhoneNr2("");
+      dataContact.emails.length > 0 ? setEmail1(dataContact.emails[0].email) : setEmail1("");
+      dataContact.emails.length > 1 ? setEmail2(dataContact.emails[1].email): setEmail2("");
+      dataContact.phones.length > 0 ? setPhoneNr1(dataContact.phones[0].number): setPhoneNr1("");
+      dataContact.phones.length > 1 ? setPhoneNr1(dataContact.phones[1].number): setPhoneNr2("");
       setTheTags(dataContact.tags);
     }
-    // initialisation des états pour les TextInput
+    // le contact n'est pas trouvé dans le rédcuer on retourne à la page HomeScreen
     if (indexContact === -1) {
-      console.log("A faire : message alerte contact non trouvé");
+      alert("Contact non trouvé");
       navigation.navigate("HomeScreen");
     }
   }, []);
@@ -99,11 +86,9 @@ export default function ContactsScreen({ route, navigation }) {
   };
 
   // Function to validate e-mail address
-
   const [onClick, setOnClick] = useState(false);
-
   function EmailAddressAlert() {
-    if (email1 && !EMAIL_REGEX.test(email1) && props.onceClicked) {
+    if (email1 && !EMAIL_REGEX.test(email1) && onClick) {
       return (
         <View>
           <Text color={"red"}>Veuillez saisir une adresse email valide.</Text>
@@ -114,56 +99,15 @@ export default function ContactsScreen({ route, navigation }) {
 
   // fonction gérant la validation des changements (on considère qu'on a changé de page si le contact n'a pas été trouvé )
   const handleSubmit = () => {
+    // vérification du mail1
     setOnClick(true);
-
     if (email1 && !EMAIL_REGEX.test(email1)) {
       return;
     }
 
-    // récupération des informations dans les TextInput
-    const phonesInput = [];
-    if (phonenr1) {
-      let typePhone1 = "";
-      theContactUpdating.phones.length > 0
-        ? (typePhone1 = theContactUpdating.phones[0].typePhone)
-        : (typePhone1 = "home");
-      phonesInput.push({
-        phoneType: typePhone1,
-        number: phonenr1,
-        areaCode: "",
-        country: "",
-      });
-    }
-
-    if (phonenr2) {
-      let typePhone2 = "";
-      theContactUpdating.phones.length > 1
-        ? (typePhone2 = theContactUpdating.phones[1].typePhone)
-        : (typePhone2 = "home");
-      phonesInput.push({
-        phoneType: typePhone2,
-        number: phonenr2,
-        areaCode: "",
-        country: "",
-      });
-    }
-
-    const emailsInput = [];
-    if (email1) {
-      let typeEmail1 = "";
-      theContactUpdating.emails.length > 0
-        ? (typeEmail1 = theContactUpdating.emails[0].emailType)
-        : (typeEmail1 = "personnal");
-      emailsInput.push({ emailType: typeEmail1, email: email1 });
-    }
-
-    if (email2) {
-      let typeEmail2 = "";
-      theContactUpdating.emails.length > 1
-        ? (typeEmail2 = theContactUpdating.emails[1].emailType)
-        : (typeEmail2 = "personnal");
-      emailsInput.push({ emailType: typeEmail2, email: email2 });
-    }
+    // récupération des informations dans les TextInput pour les téléphones et les mails
+    const phonesInput = handleInputPhone(phonenr1, phonenr2, theContactUpdating);
+    const emailsInput = handleInputMails(email1, email2, theContactUpdating);
 
     // création du contact avec les nouvelles données
     const newDatasContact = {
@@ -179,7 +123,7 @@ export default function ContactsScreen({ route, navigation }) {
     // mise à jour du tableau avec tous les contacts
     const newArrayContacts = updateArrayContacts(
       contacts,
-      chosenContact,
+      {lastName: route.params.lastName ,firstName: route.params.firstName},
       newDatasContact
     );
 
@@ -198,8 +142,8 @@ export default function ContactsScreen({ route, navigation }) {
           // mise à jour du contact dans le réducer (recherche du contact dans le tableau de contact (avec le nom et prénon de départ) pour index)
           const indexContact = contacts.findIndex(
             (elt) =>
-              elt.lastName === contacts[personne.key].lastName &&
-              elt.firstName === contacts[personne.key].firstName
+              elt.lastName === route.params.lastName &&
+              elt.firstName === route.params.firstName
           );
           dispatch(
             updateContact({
@@ -217,7 +161,7 @@ export default function ContactsScreen({ route, navigation }) {
     setModalVisible(false);
   };
 
-  // fonction se déclenchant au clich sur le bouton +Tags
+  // fonction se déclenchant au click sur le bouton +Tags
   const handleAddTags = () => {
     setModalVisible(true);
   };
@@ -268,12 +212,11 @@ export default function ContactsScreen({ route, navigation }) {
             <View style={styles.modalContainer}>
               <TagsDefinition
                 handleCloseModal={handleCloseModal}
-                // contact={contacts[1]}
-                // user={null}
                 addTags={addTags}
               />
             </View>
           </Modal>
+          {/* Contenu de la page à afficher */}
           <View style={styles.caseHeader}>
             <View style={styles.header}>
               <FontAwesome
@@ -295,7 +238,7 @@ export default function ContactsScreen({ route, navigation }) {
           </View>
           <View style={styles.caseBody}>
             <View style={styles.nameandfirst}>
-              {/*Debut date de Nom*/}
+              {/*Debut input de Nom*/}
               <Text style={styles.colorText}>Nom</Text>
               <View style={styles.casePrenom}>
                 <TextInput
@@ -305,7 +248,7 @@ export default function ContactsScreen({ route, navigation }) {
                   value={lastName}
                 />
               </View>
-              {/*Debut date de Prénom*/}
+              {/*Debut input de Prénom*/}
               <Text style={styles.colorText}>Prénom</Text>
               <View style={styles.casePrenom}>
                 <TextInput

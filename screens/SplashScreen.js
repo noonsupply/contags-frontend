@@ -1,9 +1,6 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { View, StyleSheet, Text, Image } from "react-native";
 import { useSelector } from "react-redux";
-import { setContact } from "../reducers/contacts";
-import { theContacts } from "../module/toolsSearchBar";
-import { useDispatch } from "react-redux";
 import { LogBox } from "react-native";
 LogBox.ignoreAllLogs();
 
@@ -12,10 +9,9 @@ const SplashScreen = (props) => {
 
   const user = useSelector((state) => state.users.value);
 
-  const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(setContact(theContacts()));
+
+  useEffect(() => {  
     setTimeout(() => {
       setAuthLoaded(true);
     }, 2000);
