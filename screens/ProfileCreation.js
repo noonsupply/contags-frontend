@@ -25,7 +25,11 @@ import {
 import { setAdress } from "../module/adressIP";
 import { styles } from "../assets/Style";
 
+<<<<<<< HEAD
 const BACKEND_ADDRESS = setAdress();
+=======
+const BACKEND_ADDRESS = setAdress(); 
+>>>>>>> 875a421f8538c91070416af420f8e72e114605de
 
 export default function ProfileCreation({ navigation }) {
   // useSelector & useDispatch

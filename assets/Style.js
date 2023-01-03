@@ -25,7 +25,6 @@ const styles = StyleSheet.create({
   // CONTAINERS
 
   // Logo Container
-
   logoContainer: {
     // flex: 1,
     height: "20%",
@@ -98,8 +97,13 @@ borderColor: "blue",
   // Logo
 
   logo: {
+<<<<<<< HEAD
     // width: 300,
     // height: 200,
+=======
+    width: "100%",
+    height: "55%",
+>>>>>>> 875a421f8538c91070416af420f8e72e114605de
   },
 
   // TEXTINPUTS & TEXTS OVER INPUTS
@@ -194,6 +198,7 @@ borderColor: "blue",
     fontSize: 14,
     fontWeight: "500",
   },
+<<<<<<< HEAD
 
   // Validation Message
 
@@ -418,6 +423,8 @@ borderColor: "blue",
     marginBottom: 5,
     fontWeight: "400",
   }
+=======
+>>>>>>> 875a421f8538c91070416af420f8e72e114605de
 });
 
 export { styles };

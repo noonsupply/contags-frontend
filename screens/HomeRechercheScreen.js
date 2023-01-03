@@ -11,115 +11,58 @@ import {
 import { TabView, SceneMap } from "react-native-tab-view";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Entypo } from "@expo/vector-icons";
+import { useState, useEffect } from "react";
 
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
-export default function TabViewExample() {
-  const TablA = [
-    { lastName: "Wayne", firstName: "Rania" },
-    { lastName: "Papin", firstName: "Yasmine" },
-    { lastName: "François", firstName: "Paul" },
-    { lastName: "Gump", firstName: "Lucas" },
-    { lastName: "Al-Khwarizmi", firstName: "Nicolas" },
-    { lastName: "Giroud", firstName: "Josettte" },
-    { lastName: "Al-Khwarizmi", firstName: "Hélène" },
-    { lastName: "Camus", firstName: "Pierre" },
-    { lastName: "Wayne", firstName: "Julien" },
-    { lastName: "Camus", firstName: "Léa" },
-    { lastName: "Green", firstName: "Noémie" },
-    { lastName: "Turing", firstName: "Patrice" },
-    { lastName: "Curry", firstName: "Léa" },
-    { lastName: "Wilde", firstName: "Gwenael" },
-    { lastName: "Dick", firstName: "Mohamed" },
-  ];
-  const TablB = [
-    { lastName: "Patulacci", fisrtName: "Lucette" },
-    { lastName: "Cooper", fisrtName: "Yvon" },
-    { lastName: "Gump", fisrtName: "Ryan" },
-    { lastName: "Pitt", fisrtName: "Paul" },
-    { lastName: "Brown", fisrtName: "Nicolas" },
-    { lastName: "Pitt", fisrtName: "Olivier" },
-    { lastName: "Kenobi", fisrtName: "Sharon" },
-    { lastName: "Poirot", fisrtName: "Pierre" },
-    { lastName: "Al-Khwarizmi", fisrtName: "Odile" },
-    { lastName: "Papin", fisrtName: "Ryan" },
-    { lastName: "Mbappé", fisrtName: "Yasmine" },
-    { lastName: "Söze", fisrtName: "Alexandre" },
-    { lastName: "Durden", fisrtName: "Jean-Pierre" },
-    { lastName: "Patulacci", fisrtName: "Julien" },
-    { lastName: "Turing", fisrtName: "Ryan" },
-  ];
+import TagSearchBar from "../components/TagSearchBar";
+import ContactCard from "../components/ContactCard";
 
-  const DisplayTabA = TablA.map((Element, index) => {
-    return (
-      <View style={styles.container} key={index}>
-        <TouchableOpacity
-          style={styles.case}
-          onPress={() =>
-            navigation.navigate("ContactScreen", {
-              lastName: data.lastName,
-              firstName: data.firstName,
-              /* dob: data.dob, phonenr: tableauPhone, email : email, */ key: key,
-            })
-          }
-        >
-          <View style={styles.caseIcon}>
-            <FontAwesome name="user-circle" size={35} color="#0031B8" />
-          </View>
-          <Text style={styles.name}>
-            {Element.lastName} {Element.firstName}
-          </Text>
-          <TouchableOpacity style={styles.param}>
-            <Entypo name="dots-three-vertical" size={24} color="black" />
-          </TouchableOpacity>
-        </TouchableOpacity>
-      </View>
-    );
-  });
+export default function HomeRechercheScreen({ route, navigation }) {
+  
+  const [contactsMatchAllTags, setContactsMatchAllTags] = useState(route.params.contactsMatchAllTags);
+  const [contactsAnyTags, setContactsAnyTags] = useState(route.params.contactsAnyTags);
+  const [searchingTags, setSearchingTags] = useState(route.params.searching);
 
-  const DisplayTabB = TablB.map((Element, index) => {
-    return (
-      <View style={styles.container} key={index}>
-        <TouchableOpacity
-          style={styles.case}
-          onPress={() =>
-            navigation.navigate("ContactScreen", {
-              lastName: data.lastName,
-              firstName: data.firstName,
-              /* dob: data.dob, phonenr: tableauPhone, email : email, */ key: key,
-            })
-          }
-        >
-          <View style={styles.caseIcon}>
-            <FontAwesome name="user-circle" size={35} color="#0031B8" />
-          </View>
-          <Text style={styles.name}>
-            {Element.lastName} {Element.firstName}
-          </Text>
-          <TouchableOpacity style={styles.param}>
-            <Entypo name="dots-three-vertical" size={24} color="black" />
-          </TouchableOpacity>
-        </TouchableOpacity>
-      </View>
-    );
-  });
+
+// fonction gérant la navigation lorsqu'on presse sur un contact
+const handleNavigateContactScreen = (theLastName, theFirstName) => {
+  navigation.navigate("ContactsScreen", {
+            lastName: theLastName,
+            firstName: theFirstName,
+           })
+}
+ 
+  // affichage dans le 1er container
+  let DisplayTabA = <View><Text>Aucun contact ne correspond à votre recherche</Text></View>;
+  if(contactsMatchAllTags.length>0){
+    DisplayTabA = contactsMatchAllTags.map((Element, index) => {
+      return (<ContactCard lastName = {Element.lastName} firstName = {Element.firstName} goToContactScreen={handleNavigateContactScreen} key={index}/>
+      );
+    });
+  }
+
+
+  // affichage dans le 2e container
+  let DisplayTabB = <View><Text>Aucun contact ne correspond à votre recherche</Text></View>;
+  if(contactsAnyTags.length>0){
+    DisplayTabB = contactsAnyTags.map((Element, index) => {
+      return ( <ContactCard lastName = {Element.contact.lastName} firstName = {Element.contact.firstName} goToContactScreen={handleNavigateContactScreen} key={index}/>
+      );
+    });
+  }
+
 
   const layout = useWindowDimensions();
   const FirstRoute = () => (
     <ScrollView>
       <View style={styles.container}>{DisplayTabA}</View>
-      <View style={styles.contactContainer}></View>
-
-      <View style={styles.btnContainer}></View>
     </ScrollView>
   );
 
   const SecondRoute = () => (
     <ScrollView>
       <View style={styles.container}>{DisplayTabB}</View>
-      <View style={styles.contactContainer}></View>
-
-      <View style={styles.btnContainer}></View>
     </ScrollView>
   );
   const renderScene = SceneMap({
@@ -129,15 +72,13 @@ export default function TabViewExample() {
 
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    { key: "first", title: "First" },
-    { key: "second", title: "Second" },
+    { key: "first", title: "Tous les tags" },
+    { key: "second", title: "Au moins un tag" },
   ]);
-
+   
   return (
     <SafeAreaProvider style={styles.SAV}>
-      <View>
-        <TextInput placeholder="🔎 Search Bar                                                                             ✖️" />
-      </View>
+      <View style={[styles.header,{zIndex:1}]}><TagSearchBar  tagsSearching={searchingTags} /></View>
       <TabView
         navigationState={{ index, routes }}
         renderScene={renderScene}
@@ -158,6 +99,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginTop: 20,
+  },
+
+  header:{
+    marginTop : 25,
   },
 
   case: {

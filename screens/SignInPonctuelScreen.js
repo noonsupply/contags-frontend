@@ -16,10 +16,10 @@ import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useTogglePasswordVisibility } from "../module/useTogglePasswordVisibility";
 import { useTogglePasswordVisibility2 } from "../module/useTogglePasswordVisibility2";
-import { updateToken } from "../reducers/users";
-import HomeScreen from "./HomeScreen";
+import { setUser} from "../reducers/users";
 import { checkBody } from "../module/checkbody";
 import { setAdress } from "../module/adressIP";
+import { setContact } from "../reducers/contacts";
 
 const BACKEND_ADDRESS = setAdress();
 
@@ -31,16 +31,7 @@ export default function SignInPonctuleScreen({ navigation }) {
   const [Password1, setPassword1] = useState("");
   const [emailMain, setEmailMain] = useState();
 
-  // const handleSubmit = () => {
-  //   if (Password1 === PasswordBDD) {
-  //     dispatch();
-  //     navigation.navigate("Home");
-  //   } else {
-  //     Alert.alert("Erreur", "Mauvais mot de passe");
-  //   }
-  // };
 
-  /*Fonction de hackatweet */
   const handleSubmit = () => {
     // on verifie si les champs sont remplis
     if (
@@ -48,7 +39,7 @@ export default function SignInPonctuleScreen({ navigation }) {
         "password",
       ])
     ) {
-      // on utilise la route pour enregistrer l'utilisateur
+      // on utilise la route pour vérifier su l'utilisateur était enregistré l'utilisateur
       fetch(`${BACKEND_ADDRESS}/users/signin`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -60,7 +51,10 @@ export default function SignInPonctuleScreen({ navigation }) {
         .then((response) => response.json())
         .then((data) => {
           if (data.result) {
-            dispatch(updateToken(data.token));
+            // on complète les réducers
+            dispatch(setUser(data.user));
+            dispatch(setContact(data.user.contacts));
+            
             navigation.navigate("HomeScreen");
           }
         });

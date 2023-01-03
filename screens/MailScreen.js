@@ -33,40 +33,27 @@ export default function MailScreen({ navigation }) {
 
   const handleSubmit = () => {
     if (EMAIL_REGEX.test(email)) {
-      dispatch(updateEmailMain(email));
       //début fetch pour vérification de l'adresse mail
       fetch(`${BACKEND_ADDRESS}/users/`)
         .then((response) => response.json())
         .then((data) => {
-          const found = data.users.find((item) => item.emailMain === email);
-          if (found) {
-            navigation.navigate("SignInPonctuelScreen");
-          } else {
-            navigation.navigate("PasswordScreen");
+          if (data.result) {
+            dispatch(updateEmailMain(email));
+            const found = data.users.find((item) => item.emailMain === email);
+            if (found) {
+              navigation.navigate("SignInPonctuelScreen");
+            } else {
+              navigation.navigate("PasswordScreen");
+            }
           }
-        });
-
-      //fin fetch
+        });//fin fetch
+    }
+    // si l'email n'est pas valide on affiche un message d'erreur
+    if (!EMAIL_REGEX.test(email)) {
+      setEmailError(true);
     }
   };
 
-  /*   fetch(`${BACKEND_ADDRESS}/users/create`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      emailMain: user.emailMain,
-      password: Password1,
-    }),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      if (data.result) {
-        dispatch(updateToken(data.token));
-      }
-    });
-  navigation.navigate("ProfileCreation");
-}
-}; */
 
   return (
     <SafeAreaView style={styles.sav}>
@@ -108,14 +95,12 @@ export default function MailScreen({ navigation }) {
             <FontAwesome color="#ffffff" name="chevron-right" />
           </TouchableOpacity>
         </View>
-
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }
 
 // const styles = StyleSheet.create({
-
 //   sav: {
 //     flex: 1,
 //     height: "100%",

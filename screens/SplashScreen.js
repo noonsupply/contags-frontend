@@ -1,31 +1,31 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { View, StyleSheet, Text, Image } from "react-native";
 import { useSelector } from "react-redux";
+import { LogBox } from "react-native";
+LogBox.ignoreAllLogs();
 
-const SplashScreen = props => {
-
+const SplashScreen = (props) => {
   const [authLoaded, setAuthLoaded] = useState(false);
 
   const user = useSelector((state) => state.users.value);
 
-useEffect(() => {
+
+
+  useEffect(() => {  
     setTimeout(() => {
       setAuthLoaded(true);
-      
     }, 2000);
   }, []);
 
-useEffect(() => {
+  useEffect(() => {
     if (authLoaded) {
-      if(user.token){
-        props.navigation.replace("HomeScreen")
-      } else
-      {
+      if (user.token) {
+        props.navigation.replace("HomeScreen");
+      } else {
         props.navigation.replace("MailScreen");
       }
     }
   }, [authLoaded, props.navigation]);
-
 
   return (
     <View style={styles.container}>

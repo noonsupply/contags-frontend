@@ -1,84 +1,75 @@
 import {
   StyleSheet,
   Text,
-  TextInput,
   View,
-  Image,
   TouchableOpacity,
-  Pressable,
-  KeyboardAvoidingView,
   ScrollView,
-  Button,
 } from "react-native";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
-import { Entypo } from "@expo/vector-icons";
-import { EvilIcons } from "@expo/vector-icons";
-import { useSelector,useDispatch } from "react-redux";
+
+import { useSelector, useDispatch } from "react-redux";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
 import { logout } from "../reducers/users";
+import { logoutContact } from "../reducers/contacts";
+
+import TagSearchBar from "../components/TagSearchBar";
+import ContactCard from "../components/ContactCard";
 
 export default function HomeScreen({ navigation }) {
   const addContact = useSelector((state) => state.contacts.value);
   const dispatch = useDispatch();
+
+  // gestion de la déconnexion
   const handleLogout = () => {
     dispatch(logout());
-    navigation.navigate("MailScreen")
+    dispatch(logoutContact());
+    navigation.navigate("MailScreen");
   };
 
-  const contacts = addContact.map((data, i) => {
-    //const tableauPhone = data.phones[0].number;
-    const tableauEmail = data.emails;
-    const key = i;
+  // événement quand on presse le bouton recherche : on navigue vers la page des onglets en leur transmettant les données (en attente d'un reducer non persistant)
+  const handleBtnSearch = (datasFromSearchBar) => {
+    navigation.navigate("HomeRechercheScreen", {
+      searching: datasFromSearchBar.searching,
+      contactsMatchAllTags: datasFromSearchBar.results.contactsMatchAllTags,
+      contactsAnyTags: datasFromSearchBar.results.contactsAnyTags,
+    });
+  };
 
-let email;
+  // fonction gérant la navigation lorsqu'on presse sur un contact
+  const handleNavigateContactScreen = (theLastName, theFirstName) => {
+    navigation.navigate("ContactsScreen", {
+              lastName: theLastName,
+              firstName: theFirstName,
+            })
+  }
 
-if (tableauEmail !== undefined) {
-  email = Object.values(tableauEmail);
+  // gestion de l'affichage des contacts
+  let contacts = <View><Text>Aucun contact trouvé</Text></View>;
+  if(addContact){ 
+    contacts = addContact.map((data, i) => {
+      return ( <ContactCard lastName = {data.lastName} firstName = {data.firstName} goToContactScreen={handleNavigateContactScreen} key={i}/>
+              );
+    });
 }
-
-//   email = Object.values(tableauEmail)
-// }
-return (
-  <View style={styles.container} key={i}>
-    <TouchableOpacity
-      style={styles.case}
-      onPress={() =>
-        navigation.navigate("ContactsScreen", {
-          lastName: data.lastName,
-          firstName: data.firstName,
-          /* dob: data.dob, phonenr: tableauPhone, email : email, */ key: key,
-        })
-      }
-    >
-      <View style={styles.caseIcon}>
-        <FontAwesome name="user-circle" size={35} color="#0031B8" />
-      </View>
-      <Text style={styles.name}>
-        {data.lastName} {data.firstName}
-      </Text>
-      <TouchableOpacity style={styles.param}>
-        <Entypo name="dots-three-vertical" size={24} color="black" />
-      </TouchableOpacity>
-    </TouchableOpacity>
-  </View>
-);
-  });
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View style={styles.header}>
+      <View style={[styles.header, { zIndex: 1 }]}>
         <TouchableOpacity onPress={() => handleLogout()}>
           <Text style={styles.deco}>
             <Feather name="log-out" size={24} color="black" />
           </Text>
         </TouchableOpacity>
+        {/* BARRE DE RECHERCHE */}
+        <TagSearchBar btnSearch={handleBtnSearch} tagsSearching={[]} />
       </View>
+      {/* Liste des contacts */}
       <ScrollView>
         <View style={styles.contactContainer}>
           <View style={styles.container}>{contacts}</View>
         </View>
       </ScrollView>
+      {/* Bouton + (ajout d'un contact) */}
       <View style={styles.footer}>
         <TouchableOpacity
           style={styles.addManually}
@@ -100,8 +91,9 @@ const styles = StyleSheet.create({
     paddingTop: 20,
   },
   deco: {
-    marginLeft: 30,
-    marginTop: 30,
+    position: "absolute",
+    marginLeft: 5,
+    marginTop: 5,
     marginBottom: 0,
   },
   addManually: {
@@ -125,32 +117,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 
-  case: {
-    borderColor: "#222222",
-    borderWidth: 0.5,
-    borderRadius: 5,
-    height: 50,
-    width: 350,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    // shadowColor: "black",
-    // shadowOffset: { width: -2, height: 4 },
-    // shadowOpacity: 0.2,
-    // shadowRadius: 3,
-  },
-  caseIcon: {
-    borderRadius: 70,
-    marginLeft: 10,
-  },
-  icon: {
-    marginLeft: 5,
-  },
-  name: {
-    width: 200,
-    marginRight: 40,
-  },
-
   btnContainer: {
     width: 150,
     height: 80,
@@ -166,6 +132,7 @@ const styles = StyleSheet.create({
   header: {
     backgroundColor: "#ffffff",
     marginBottom: 0,
+    flexDirection: "row",
+    justifyContent: "center",
   },
 });
-

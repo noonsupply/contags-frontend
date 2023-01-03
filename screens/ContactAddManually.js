@@ -11,18 +11,16 @@ import {
   KeyboardAvoidingView,
   Modal,
   Button,
-  Dimensions,
-  Platform,
 } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { Entypo } from "@expo/vector-icons";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addContact, setContact } from "../reducers/contacts";
 import { setAdress } from "../module/adressIP";
 import TagsDefinition from "../components/TagsDefinition";
 import TagDelete from "../components/TagDelete";
-import { updateArrayContacts, updateArrayTags } from "../module/toolsReducers";
+import {updateArrayTags } from "../module/toolsReducers";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function ContactAddManually({ navigation }) {
@@ -45,8 +43,6 @@ export default function ContactAddManually({ navigation }) {
   // tableau avec les tags
   const [theTags, setTheTags] = useState([]);
 
-  const [contactPush, setContactPush] = useState([]);
-
   // gestion de l'affichage de la modal
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -65,11 +61,13 @@ export default function ContactAddManually({ navigation }) {
 
   // fonction pour gérer la validation du contact
   const handleSubmit = () => {
-    // vérification des informations
-
+    // Vérification si les champs sont renseignés
+    if (lastName == "" && firstName == "") {
+      alert("Veuillez renseigner le nom ou le prénom avant de continuer.");
+      return false;
+    }
     
-    //création du contact : vérification
-
+    //création du contact : pour le nom des champs pour les téléphones et mail sont imposés
     const newContact = {
       lastName: lastName,
       firstName: firstName,
@@ -90,17 +88,13 @@ export default function ContactAddManually({ navigation }) {
       },
     };
 
-      // Vérification si les champs sont renseignés
-  if (lastName == "" && firstName == "") {
-    alert("Veuillez renseigner votre nom ou votre prénom avant de continuer.");
-    return false;
-  }
-
+    
+    // enregistrement en DB
     fetch(`${BACKEND_ADDRESS}/users/createContact`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        token: user.token, // users.token,
+        token: user.token,
         contacts: newContact,
       }),
     })

@@ -52,32 +52,16 @@ export const usersSlice = createSlice({
 
     updateTagsPerso: (state, action) => {
       state.value.tagsPerso = action.payload;
-      console.log("user", state.value);
     },
 
     logout: (state) => {
-      state.value.token = null
-      state.value.emailMain = null
+      state.value = initialState.value;
     },
 
-    //updateTags permet de fusionner le tableau de tags du user avec un nouveau tableau de tag
-    //action.payload doit être de la forme {tagsPerso: tableau_tags}
-    // updateTagsPerso: (state, action) => {
-    // if(state.value.tagsPerso && state.value.tagsPerso.length>0){
-    //   // on parcourt le tableau de tags des contacts : si on trouve un tag avec le même titre on le remplace sinon on le rajoute
-    //   for(let oneTag of action.payload.tagsPerso){
-    //       const searchTag = state.value.tagsPerso.findIndex(elt => elt.title === oneTag.title);
-    //       if(searchTag !== -1){
-    //           state.value.tagsPerso[searchTag] = oneTag;
-    //       }else{
-    //           state.value.tagsPerso.push(oneTag)
-    //       }
-    //   }
-    //  }else{
-    //      // il n'y avait pas de tags, on ajoute directement tous les tags/
-    //      state.value.tagsPerso = action.payload.tagsPerso ;
-    //  }
-    //},
+    setUser:(state, action) => {
+      state.value = action.payload;
+    },
+
   },
 });
 
@@ -91,6 +75,7 @@ export const {
   updateDateOfBirth,
   updateLastConnection,
   updateTagsPerso,
-  logout
+  logout,
+  setUser,
 } = usersSlice.actions;
 export default usersSlice.reducer;

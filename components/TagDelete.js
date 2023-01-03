@@ -11,6 +11,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 
 // la props contient un objet tag et une fonction handleDeleteTag qui sert à supprimer le tag
 function TagDelete(props) {
+
+  // fonction se déclenchant quand on presse l'icône x
   const handleDelete = () => {
     props.handleDeleteTag(props.tag);
   };
@@ -111,3 +113,5 @@ const styles = StyleSheet.create({
 });
 
 export default TagDelete;
+
+
