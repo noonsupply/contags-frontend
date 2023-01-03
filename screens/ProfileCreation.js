@@ -23,8 +23,9 @@ import {
   addPhone,
 } from "../reducers/users";
 import { setAdress } from "../module/adressIP";
+import { styles } from "../assets/Style";
 
-const BACKEND_ADDRESS = setAdress(); //"http://192.168.1.92:3000";
+const BACKEND_ADDRESS = setAdress();
 
 export default function ProfileCreation({ navigation }) {
   // useSelector & useDispatch
@@ -32,7 +33,7 @@ export default function ProfileCreation({ navigation }) {
   const user = useSelector((state) => state.users.value);
   const dispatch = useDispatch();
 
-  // Variables de useState
+  // States & Setters
 
   const [firstName, setFirstName] = useState(null);
   const [lastName, setLastName] = useState(null);
@@ -99,8 +100,7 @@ export default function ProfileCreation({ navigation }) {
     }
   }
 
-
-  // RegEx de vérification du format du numéro de téléphone (très long, mais vraiment international)
+  // RegEx de vérification du format du numéro de téléphone (très long, mais vraiment international selon les commentaires)
 
   const regExPhoneNum =
     /(\+|00|0)(297|93|244|1264|358|355|376|971|54|374|1684|1268|61|43|994|257|32|229|226|880|359|973|1242|387|590|375|501|1441|591|55|1246|673|975|267|236|1|61|41|56|86|225|237|243|242|682|57|269|238|506|53|5999|61|1345|357|420|49|253|1767|45|1809|1829|1849|213|593|20|291|212|34|372|251|358|679|500|33|298|691|241|44|995|44|233|350|224|590|220|245|240|30|1473|299|502|594|1671|592|852|504|385|509|36|62|44|91|246|353|98|964|354|972|39|1876|44|962|81|76|77|254|996|855|686|1869|82|383|965|856|961|231|218|1758|423|94|266|370|352|371|853|590|212|377|373|261|960|52|692|389|223|356|95|382|976|1670|258|222|1664|596|230|265|60|262|264|687|227|672|234|505|683|31|47|977|674|64|968|92|507|64|51|63|680|675|48|1787|1939|850|351|595|970|689|974|262|40|7|250|966|249|221|65|500|4779|677|232|503|378|252|508|381|211|239|597|421|386|46|268|1721|248|963|1649|235|228|66|992|690|993|670|676|1868|216|90|688|886|255|256|380|598|1|998|3906698|379|1784|58|1284|1340|84|678|681|685|967|27|260|263)(9[976]\d|8[987530]\d|6[987]\d|5[90]\d|42\d|3[875]\d|2[98654321]\d|9[8543210]|8[6421]|6[6543210]|5[87654321]|4[987654310]|3[9643210]|2[70]|7|1)\d{4,20}$/;
@@ -148,8 +148,8 @@ export default function ProfileCreation({ navigation }) {
   function DisplaySelectedDate() {
     if (dob) {
       return (
-        <View>
-          <Text style={styles.displayDob}>
+        <View style={styles.msgToUserContainer}>
+          <Text style={styles.validationMsg}>
             Date de naissance sélectionnée : {dob}
           </Text>
         </View>
@@ -162,8 +162,8 @@ export default function ProfileCreation({ navigation }) {
   const handleSubmit = () => {
     setOnClick(true);
 
-    if(!phoneNumber){
-      return
+    if (!phoneNumber) {
+      return;
     }
 
     const formattedPhoneNumber = phoneNumber.split(" ").join("");
@@ -216,7 +216,7 @@ export default function ProfileCreation({ navigation }) {
           }
         });
     }
-    navigation.navigate("TagCreation");
+    navigation.navigate("ProfileAutomatedTagCreation");
   };
 
   return (
@@ -225,71 +225,71 @@ export default function ProfileCreation({ navigation }) {
 
       <KeyboardAvoidingView style={styles.kav}>
         <View style={styles.logoContainer}>
-          <Image
+          {/* <Image
             style={styles.logo}
             source={require("../assets/contags_logo_white.png")}
+          /> */}
+        </View>
+
+        <View style={styles.mainContainerWithLogo}>
+          <Text style={styles.simpleText}>
+            Et si vous nous parliez de vous ?
+          </Text>
+
+          <Text style={styles.textOverInput}>Prénom</Text>
+          <TextInput
+            style={styles.textInput}
+            placeholder={"Votre prénom"}
+            onChangeText={(e) => setFirstName(e)}
+            value={firstName}
+          ></TextInput>
+          <FirstNameAlert onceClicked={onClick} />
+
+          <Text style={styles.textOverInput}>Nom</Text>
+          <TextInput
+            style={styles.textInput}
+            placeholder={"Votre nom"}
+            onChangeText={(e) => setLastName(e)}
+            value={lastName}
+          ></TextInput>
+          <LastNameAlert onceClicked={onClick} />
+
+          <Text style={styles.textOverInput}>Date de naissance</Text>
+
+          <View style={styles.dateTimePickerBtnContainer}>
+            <Button
+              title="Sélectionnez votre date de naissance"
+              onPress={showDatePicker}
+              color={"#0031B8"}
+            />
+          </View>
+
+          <DateTimePickerModal
+            isVisible={isDatePickerVisible}
+            mode="date"
+            onConfirm={handleConfirm}
+            onCancel={hideDatePicker}
+            maximumDate={today}
           />
+
+          <DisplaySelectedDate />
+          <DobAlert onceClicked={onClick} />
+
+          <Text style={styles.textOverInput}>Numéro de téléphone portable</Text>
+          <TextInput
+            style={styles.textInput}
+            placeholder={"Votre numéro de téléphone"}
+            onChangeText={(e) => setPhoneNumber(e)}
+            value={phoneNumber}
+            keyboardType={"phone-pad"}
+          ></TextInput>
+          <PhoneNumberEmptyFieldAlert onceClicked={onClick} />
+          <PhoneNumberWrongFormatAlert onceClicked={onClick} />
         </View>
 
-        <View style={styles.mainContainer}>
-          <View style={styles.welcomeTextContainer}>
-            <Text style={styles.welcomeText}>
-              Bienvenue, faisons connaissance !
-            </Text>
-          </View>
-
-          <View style={styles.inputTextContainer}>
-            <Text style={styles.text}>Prénom</Text>
-            <TextInput
-              style={styles.input}
-              placeholder={"Votre prénom"}
-              onChangeText={(e) => setFirstName(e)}
-              value={firstName}
-            ></TextInput>
-            <FirstNameAlert onceClicked={onClick} />
-
-            <Text style={styles.text}>Nom</Text>
-            <TextInput
-              style={styles.input}
-              placeholder={"Votre nom"}
-              onChangeText={(e) => setLastName(e)}
-              value={lastName}
-            ></TextInput>
-            <LastNameAlert onceClicked={onClick} />
-
-            <Text style={styles.text}>Date de naissance</Text>
-            <View style={styles.datePickerContainer}>
-              <Button
-                title="Sélectionnez votre date de naissance"
-                onPress={showDatePicker}
-              />
-              <DateTimePickerModal
-                isVisible={isDatePickerVisible}
-                mode="date"
-                onConfirm={handleConfirm}
-                onCancel={hideDatePicker}
-                maximumDate={today}
-              />
-            </View>
-            <DisplaySelectedDate />
-            <DobAlert onceClicked={onClick} />
-
-            <Text style={styles.text}>Numéro de téléphone portable</Text>
-            <TextInput
-              style={styles.input}
-              placeholder={"Votre numéro de téléphone"}
-              onChangeText={(e) => setPhoneNumber(e)}
-              value={phoneNumber}
-              keyboardType={"phone-pad"}
-            ></TextInput>
-            <PhoneNumberEmptyFieldAlert onceClicked={onClick} />
-            <PhoneNumberWrongFormatAlert onceClicked={onClick} />
-          </View>
-        </View>
-
-        <View style={styles.navigationContainer}>
+        <View style={styles.navigationContainerSubmitOnly}>
           <TouchableOpacity
-            style={styles.btnForward}
+            style={styles.navigationBtn}
             onPress={() => handleSubmit()}
           >
             <FontAwesome color="#FFFFFF" name="chevron-right" />
@@ -300,120 +300,120 @@ export default function ProfileCreation({ navigation }) {
   );
 }
 
-const styles = StyleSheet.create({
-  //  Views & Global container
+// const styles = StyleSheet.create({
+//   //  Views & Global container
 
-  sav: {
-    flex: 1,
-    height: "100%",
-    width: "100%",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#FFFFFF",
-  },
+//   sav: {
+//     flex: 1,
+//     height: "100%",
+//     width: "100%",
+//     alignItems: "center",
+//     justifyContent: "center",
+//     backgroundColor: "#FFFFFF",
+//   },
 
-  scrollView: {
-    flex: 1,
-  },
+//   scrollView: {
+//     flex: 1,
+//   },
 
-  kav: {
-    flex: 1,
-    height: "100%",
-    width: "100%",
-  },
+//   kav: {
+//     flex: 1,
+//     height: "100%",
+//     width: "100%",
+//   },
 
-  // Logo
+//   // Logo
 
-  mainContainer: {
-    height: "70%",
-    paddingVertical: 25,
-  },
+//   mainContainer: {
+//     height: "70%",
+//     paddingVertical: 25,
+//   },
 
-  logoContainer: {
-    alignItems: "center",
-    justifyContent: "center",
-    height: "20%",
-  },
+//   logoContainer: {
+//     alignItems: "center",
+//     justifyContent: "center",
+//     height: "20%",
+//   },
 
-  logo: {
-    height: 120,
-    width: 335,
-  },
+//   logo: {
+//     height: 120,
+//     width: 335,
+//   },
 
-  // Main
+//   // Main
 
-  welcomeTextContainer: {
-    marginLeft: 25,
-    marginBottom: 25,
-  },
+//   welcomeTextContainer: {
+//     marginLeft: 25,
+//     marginBottom: 25,
+//   },
 
-  welcomeText: {
-    color: "#0031B8",
-    fontSize: 18,
-    fontWeight: "500",
-  },
+//   welcomeText: {
+//     color: "#0031B8",
+//     fontSize: 18,
+//     fontWeight: "500",
+//   },
 
-  inputTextContainer: {
-    marginLeft: 25,
-    marginRight: 25,
-  },
+//   inputTextContainer: {
+//     marginLeft: 25,
+//     marginRight: 25,
+//   },
 
-  input: {
-    borderRadius: 5,
-    borderColor: "#0031B8",
-    borderWidth: 1,
-    color: "#5A5A5F",
-    height: 45,
-    marginTop: 5,
-    paddingHorizontal: 15,
-  },
+//   input: {
+//     borderRadius: 5,
+//     borderColor: "#0031B8",
+//     borderWidth: 1,
+//     color: "#5A5A5F",
+//     height: 45,
+//     marginTop: 5,
+//     paddingHorizontal: 15,
+//   },
 
-  text: {
-    color: "#0031B8",
-    fontSize: 16,
-    fontWeight: "600",
-    marginTop: 10,
-  },
+//   text: {
+//     color: "#0031B8",
+//     fontSize: 16,
+//     fontWeight: "600",
+//     marginTop: 10,
+//   },
 
-  welcomeTextContainer: {
-    marginLeft: 25,
-    marginBottom: 25,
-  },
+//   welcomeTextContainer: {
+//     marginLeft: 25,
+//     marginBottom: 25,
+//   },
 
-  alertMsg: {
-    color: "#D90000",
-    fontSize: 14,
-    fontWeight: "500",
-  },
+//   alertMsg: {
+//     color: "#D90000",
+//     fontSize: 14,
+//     fontWeight: "500",
+//   },
 
-  displayDob: {
-    color: "#21AC14",
-    fontSize: 14,
-    fontWeight: "500",
-  },
+//   displayDob: {
+//     color: "#21AC14",
+//     fontSize: 14,
+//     fontWeight: "500",
+//   },
 
-  datePickerContainer: {
-    marginVertical: 10,
-  },
+//   datePickerContainer: {
+//     marginVertical: 10,
+//   },
 
-  // Navigation
+//   // Navigation
 
-  navigationContainer: {
-    height: "10%",
-    paddingVertical: 10,
-    flexWrap: "wrap",
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    paddingLeft: 25,
-    paddingRight: 25,
-  },
+//   navigationContainer: {
+//     height: "10%",
+//     paddingVertical: 10,
+//     flexWrap: "wrap",
+//     flexDirection: "row",
+//     justifyContent: "flex-end",
+//     paddingLeft: 25,
+//     paddingRight: 25,
+//   },
 
-  btnForward: {
-    alignItems: "center",
-    backgroundColor: "#0031B8",
-    borderRadius: 50,
-    height: 50,
-    justifyContent: "center",
-    width: 50,
-  },
-});
+//   btnForward: {
+//     alignItems: "center",
+//     backgroundColor: "#0031B8",
+//     borderRadius: 50,
+//     height: 50,
+//     justifyContent: "center",
+//     width: 50,
+//   },
+// });

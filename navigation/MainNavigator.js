@@ -13,6 +13,7 @@ import ContactAddManually from "../screens/ContactAddManually";
 import HomeLoadContact from "../screens/HomeLoadContact";
 import SignInPonctuelScreen from "../screens/SignInPonctuelScreen";
 import HomeRechercheScreen from "../screens/HomeRechercheScreen";
+import ProfileAutomatedTagCreation from "../screens/ProfileAutomatedTagCreation";
 
 const Stack = createStackNavigator();
 
@@ -25,11 +26,11 @@ const MainNavigator = () => {
           options={{ animationEnabled: false, header: () => null }}
           component={SplashScreen}
         />
-         <Stack.Screen
+        <Stack.Screen
           name="SignInPonctuelScreen"
           options={{ animationEnabled: true, header: () => null }}
           component={SignInPonctuelScreen}
-        />  
+        />
         <Stack.Screen
           name="MailScreen"
           options={{ animationEnabled: true, header: () => null }}
@@ -46,6 +47,11 @@ const MainNavigator = () => {
           component={ProfileCreation}
         />
         <Stack.Screen
+          name="ProfileAutomatedTagCreation"
+          options={{ animationEnabled: true, header: () => null }}
+          component={ProfileAutomatedTagCreation}
+        />
+        <Stack.Screen
           name="TagCreation"
           options={{ animationEnabled: true, header: () => null }}
           component={TagCreation}
@@ -60,11 +66,11 @@ const MainNavigator = () => {
           options={{ animationEnabled: true, header: () => null }}
           component={HomeScreen}
         />
-         <Stack.Screen
+        <Stack.Screen
           name="ContactsScreen"
           options={{ animationEnabled: true, header: () => null }}
           component={ContactsScreen}
-        /> 
+        />
 
         <Stack.Screen
           name="ContactAddManually"

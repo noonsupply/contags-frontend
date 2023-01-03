@@ -14,6 +14,7 @@ import ProfileCreation from "./screens/ProfileCreation";
 import TagCreation from "./screens/TagCreation";
 import ContactAddManually from "./screens/ContactAddManually";
 import HomeRechercheScreen from "./screens/HomeRechercheScreen";
+
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 //Persistore début import

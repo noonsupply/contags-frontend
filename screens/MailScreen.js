@@ -71,20 +71,19 @@ export default function MailScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.sav}>
       <StatusBar backgroundColor={"#FFFFFF"} barStyle={"dark-content"} />
-      <KeyboardAvoidingView
-        //  behavior="position"
-        style={styles.kav}
-      >
+
+      <KeyboardAvoidingView style={styles.kav}>
         <View style={styles.logoContainer}>
-          <Image
+          {/* <Image
             style={styles.logo}
             source={require("../assets/logo.png")}
-          ></Image>
+          ></Image> */}
         </View>
 
         <View style={styles.mainContainerWithLogo}>
+       
           <Text style={styles.textOverInput}>
-            Saisissez votre adresse mail personnel
+            Veuillez saisir une adresse mail personnelle :
           </Text>
           <TextInput
             style={styles.textInput}

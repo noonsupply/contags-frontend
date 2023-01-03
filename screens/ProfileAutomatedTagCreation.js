@@ -45,7 +45,7 @@ export default function TagCreation({ navigation }) {
       .then((data) => {
         if (data.result) {
           dispatch(updateTagsPerso(selectedTags));
-          navigation.navigate("HomeLoadContact");
+          navigation.navigate("TagCreation");
         }
       });
   };
@@ -167,9 +167,10 @@ export default function TagCreation({ navigation }) {
       </Modal>
 
       <View style={styles.mainContainerNoLogo}>
-        {/* <Text style={styles.simpleText}>
-          Et voilà, nous avons automatiquement créé les premiers tags associés à
-          votre profil.
+        <Text style={styles.h2}>Et voilà !</Text>
+
+        <Text style={styles.p}>
+          Les premiers tags associés à votre profil ont été créés automatiquement.
         </Text>
 
         <View style={styles.userTagsContainer}>
@@ -177,11 +178,35 @@ export default function TagCreation({ navigation }) {
           <UserLastName />
           <UserPhoneNumber />
           <UserMainEmail />
-        </View> */}
+        </View>
 
-        <Text style={styles.simpleText}>À vous de jouer !</Text>
+        <Text style={styles.h2}>À vous de jouer maintenant !</Text>
 
-        <Text style={styles.simpleText}>
+        <Text style={styles.p}>
+          Pour créer les tags de votre profil, appuyez sur le bouton en bas à droite de votre écran.
+        </Text>
+
+        <Text style={styles.p}>
+          Pour modifier les informations de votre profil, appuyez sur le bouton en bas à gauche de votre écran.
+        </Text>
+
+
+        <Text style={styles.p}>
+          Vous pouvez aussi passer l'étape de création de tags en cliquant sur le bouton
+          ci-dessous.
+        </Text>
+
+        <View style={styles.skipBtnView}>
+        <TouchableOpacity style={styles.skipBtn} onPress={() => handleSkip()}>
+          <Text style={styles.skipBtnText}>
+            Passer l'étape de création de tag
+          </Text>
+        </TouchableOpacity>
+        </View>
+
+
+
+        {/* <Text style={styles.simpleText}>
           Vous pouvez, par exemple, utiliser nos propositions pour ajouter d'autres tags à votre profil.
         </Text>
 
@@ -209,7 +234,10 @@ export default function TagCreation({ navigation }) {
           </TouchableOpacity>
         </View>
 
-
+        <Text style={styles.simpleText}>
+          Vous pouvez aussi passer cette étape en cliquant sur le bouton en bas
+          de l'écran.
+        </Text>
         <Text style={styles.simpleText}>Vos tags :</Text>
 
         <ScrollView
@@ -219,7 +247,7 @@ export default function TagCreation({ navigation }) {
           persistentScrollbar={true}
         >
           {DisplaySelectedTags}
-        </ScrollView>
+        </ScrollView> */}
       </View>
 
       <View style={styles.navigationContainer}>
@@ -230,9 +258,9 @@ export default function TagCreation({ navigation }) {
           <FontAwesome color="#FFFFFF" name="chevron-left" />
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.btnSkip} onPress={() => handleSkip()}>
+        {/* <TouchableOpacity style={styles.btnSkip} onPress={() => handleSkip()}>
           <Text style={styles.skipBtnText}>Passer cette étape</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
         <TouchableOpacity
           style={styles.navigationBtn}
