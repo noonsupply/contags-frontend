@@ -26,7 +26,7 @@ import {
 
 
 
-const tagColor = "#0031B8";
+const tagColor = "#0046CF";
 
 function TagSearchBar(props) {
   const [searchQuery, setSearchQuery] = useState("");
@@ -247,7 +247,7 @@ const styles = StyleSheet.create({
   },
 
   btn: {
-    backgroundColor: "#0031B8",
+    backgroundColor: "#0046CF",
     width: "15%",
     height: 35,
     borderTopRightRadius: 5,

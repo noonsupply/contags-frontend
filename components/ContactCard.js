@@ -14,7 +14,7 @@ function ContactCard(props) {
             onPress={() => props.goToContactScreen(props.lastName, props.firstName) }
         >
             <View style={styles.caseIcon}>
-                <FontAwesome name="user-circle" size={35} color="#0031B8" />
+                <FontAwesome name="user-circle" size={35} color="#0046CF" />
             </View>
             <Text style={styles.name}>
                 {props.lastName} {props.firstName}

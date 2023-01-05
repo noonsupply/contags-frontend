@@ -4,12 +4,10 @@ import {
   Text,
   ScrollView,
   StatusBar,
-  StyleSheet,
   TouchableOpacity,
   View,
   KeyboardAvoidingView,
   Modal,
-  Touchable,
 } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Tag from "../components/Tag";
@@ -57,43 +55,6 @@ export default function TagCreation({ navigation }) {
   const handleReturn = () => {
     navigation.navigate("ProfileCreation");
   };
-
-  // Fonctions d'affichage conditionnel (données saisies dans ProfileCreation)
-
-  function UserFirstName() {
-    return (
-      <View style={styles.tagFullDarkBlue}>
-        <Text style={styles.tagTextWhite}>{user.firstName}</Text>
-      </View>
-    );
-  }
-
-  function UserLastName() {
-    return (
-      <View style={styles.tagFullDarkBlue}>
-        <Text style={styles.tagTextWhite}>{user.lastName}</Text>
-      </View>
-    );
-  }
-
-  function UserPhoneNumber() {
-    const userPhoneNumber = user.phones.map((mainPhoneNumber) => {
-      return mainPhoneNumber.number;
-    });
-    return (
-      <View style={styles.tagFullDarkBlue}>
-        <Text style={styles.tagTextWhite}>{userPhoneNumber}</Text>
-      </View>
-    );
-  }
-
-  function UserMainEmail() {
-    return (
-      <View style={styles.tagFullDarkBlue}>
-        <Text style={styles.tagTextWhite}>{user.emailMain}</Text>
-      </View>
-    );
-  }
 
   useEffect(() => {
     fetch(`${BACKEND_ADDRESS}/getProposedTags`)
@@ -165,60 +126,62 @@ export default function TagCreation({ navigation }) {
         </View>
       </Modal>
 
-      <View style={styles.mainContainerNoLogo}>
-        {/* <Text style={styles.simpleText}>
-          Et voilà, nous avons automatiquement créé les premiers tags associés à
-          votre profil.
+      <View style={styles.tagCreationMainContainer}>
+
+        <View style={styles.tagCreationTextContainer}>
+        <Text style={styles.boldp}>Ajoutons des tags ensemble !</Text>
+
+        <Text style={styles.p}>
+          Vous pouvez utiliser nos propositions pour ajouter des tags à votre
+          profil...
         </Text>
+        </View>
 
-        <View style={styles.userTagsContainer}>
-          <UserFirstName />
-          <UserLastName />
-          <UserPhoneNumber />
-          <UserMainEmail />
-        </View> */}
 
-        <Text style={styles.simpleText}>À vous de jouer !</Text>
-
-        <Text style={styles.simpleText}>
-          Vous pouvez, par exemple, utiliser nos propositions pour ajouter d'autres tags à votre profil.
-        </Text>
-
-        <View style={styles.scrollViewContainer}>
+        <View style={styles.tagTemplatesScrollViewContainer}>
           <ScrollView
             style={styles.proposedTagsScrollView}
             contentContainerStyle={styles.contentContainer}
-            fadingEdgeLength={200}
+            // fadingEdgeLength={200}
             persistentScrollbar={true}
           >
             {ProposedTags}
           </ScrollView>
         </View>
 
-        <Text style={styles.simpleText}>
-          Vous pouvez également créer vos propres tags personnalisés, en appuyant sur le bouton ci-dessous.
+        <View style={styles.tagCreationTextContainer}>
+        <Text style={styles.p}>
+          ... et créer vos tags personnalisés en appuyant sur le bouton
+          ci-dessous.
         </Text>
+        </View>
 
-        <View style={styles.btnAddTagContainer}>
+        <View style={styles.addTagBtnContainer}>
           <TouchableOpacity
-            style={styles.btnAddTag}
+            style={styles.addTagBtn}
             onPress={() => handleOpenModal()}
           >
             <Text style={styles.btnWhiteText}>Créer un tag</Text>
           </TouchableOpacity>
         </View>
 
+        <View style={styles.tagCreationTextContainer}>
+        <Text style={styles.p}>
+          Supprimez les tags qui ne vous conviennent pas dans liste ci-dessous,
+          puis validez en appuyant sur le bouton en bas à droite de l'écran.
+        </Text>
+        </View>
 
-        <Text style={styles.simpleText}>Vos tags :</Text>
-
-        <ScrollView
-          style={styles.selectedTagsScrollView}
-          contentContainerStyle={styles.contentContainer}
-          fadingEdgeLength={200}
-          persistentScrollbar={true}
-        >
-          {DisplaySelectedTags}
-        </ScrollView>
+        <View style={styles.tagTemplatesScrollViewContainer}>
+          <ScrollView
+            style={styles.selectedTagsScrollView}
+            contentContainerStyle={styles.contentContainer}
+            // fadingEdgeLength={200}
+            persistentScrollbar={true}
+          >
+            {DisplaySelectedTags}
+          </ScrollView>
+        </View>
       </View>
 
       <View style={styles.navigationContainer}>
@@ -240,206 +203,7 @@ export default function TagCreation({ navigation }) {
           <FontAwesome color="#FFFFFF" name="chevron-right" />
         </TouchableOpacity>
       </View>
+      
     </SafeAreaView>
   );
 }
-
-// const styles = StyleSheet.create({
-//   //  Views & Global container
-
-//   sav: {
-//     flex: 1,
-//     height: "100%",
-//     width: "100%",
-//     alignItems: "center",
-//     justifyContent: "center",
-//   },
-
-//   globalContainer: {
-//     flex: 1,
-//     height: "100%",
-//     width: "100%",
-//     backgroundColor: "white",
-//     paddingTop: 15,
-//   },
-
-//   // Main
-
-//   mainContainer: {
-//     height: "90%",
-//   },
-
-//   userTagsContainer: {
-//     marginVertical: 5,
-//     marginHorizontal: 25,
-//     flexWrap: "wrap",
-//     flexDirection: "row",
-//     marginVertical: 10,
-//     // backgroundColor: "red",
-//   },
-
-//   scrollViewContainer: {
-//     height: "25%",
-//   },
-
-//   btnAddTagContainer: {
-//     alignItems: "center",
-//     justifyContent: "center",
-//     marginVertical: 15,
-//   },
-
-//   proposedTagsScrollView: {
-//     // flexWrap: "wrap",
-//     // flexDirection: "row",
-//     // borderWidth: 1,
-//     // borderColor: "#0031B8",
-//     // borderRadius: 10,
-//     paddingHorizontal: 3,
-//     marginVertical: 15,
-//     marginHorizontal: 25,
-//   },
-
-//   selectedTagsScrollView: {
-//     // flexWrap: "wrap",
-//     // flexDirection: "row",
-//     // borderWidth: 1,
-//     // borderColor: "#0031B8",
-//     // borderRadius: 10,
-//     paddingHorizontal: 3,
-//     marginVertical: 15,
-//     marginHorizontal: 25,
-//   },
-
-//   contentContainer: {
-//     flexWrap: "wrap",
-//     flexDirection: "row",
-//     // alignItems: "center",
-//     // justifyContent: "center",
-//   },
-
-//   // Text
-
-//   textContainer: {
-//     marginHorizontal: 25,
-//     // backgroundColor: "yellow",
-//   },
-
-//   text: {
-//     color: "#0031B8",
-//     fontSize: 16,
-//     fontWeight: "400",
-//   },
-
-//   input: {
-//     borderRadius: 5,
-//     backgroundColor: "#ffffff",
-//     height: 45,
-//     marginBottom: 25,
-//     paddingLeft: 15,
-//     paddingRight: 15,
-//   },
-
-//   inputText: {
-//     marginLeft: 25,
-//     marginRight: 25,
-//   },
-
-//   // Navigation
-
-//   navigationContainer: {
-//     // backgroundColor: "orange",
-//     height: "10%",
-//     flexDirection: "row",
-//     justifyContent: "space-between",
-//     alignItems: "center",
-//     paddingHorizontal: 25,
-//   },
-
-//   btnBack: {
-//     alignItems: "center",
-//     backgroundColor: "#0031B8",
-//     borderRadius: 50,
-//     height: 50,
-//     justifyContent: "center",
-//     width: 50,
-//   },
-
-//   btnForward: {
-//     alignItems: "center",
-//     backgroundColor: "#0031B8",
-//     borderRadius: 50,
-//     height: 50,
-//     justifyContent: "center",
-//     width: 50,
-//   },
-
-//   btnSkip: {
-//     alignItems: "center",
-//     backgroundColor: "#FFF",
-//     borderRadius: 50,
-//     height: 50,
-//     justifyContent: "center",
-//     paddingHorizontal: 10,
-//   },
-
-//   btnAddTag: {
-//     alignItems: "center",
-//     backgroundColor: "#0031B8",
-//     borderRadius: 50,
-//     height: 50,
-//     justifyContent: "center",
-//     width: 50,
-//   },
-
-//   btnText: {
-//     color: "#0031B8",
-//     fontSize: 14,
-//     fontWeight: "bold",
-//   },
-
-//   btnWhiteText: {
-//     color: "#FFFFFF",
-//     fontSize: 14,
-//     fontWeight: "bold",
-//   },
-
-//   // Tags
-
-//   // templateTagContainer: {
-//   //   alignItems: "flex-start",
-//   //   flexDirection: "row",
-//   //   flexWrap: "wrap",
-//   //   // justifyContent: "center",
-//   //   marginBottom: 15,
-//   //   marginTop: 15,
-//   //   paddingLeft: 25,
-//   //   paddingRight: 25,
-//   //   height: 250,
-//   // },
-
-//   tagTextBlue: {
-//     color: "#0031B8",
-//     fontSize: 14,
-//     fontWeight: "bold",
-//   },
-
-//   tagTextWhite: {
-//     color: "#FFFFFF",
-//     fontSize: 14,
-//     fontWeight: "bold",
-//   },
-
-//   tagFullDarkBlue: {
-//     backgroundColor: "#0031B8",
-//     alignItems: "center",
-//     borderRadius: 20,
-//     flexShrink: 1,
-//     height: 30,
-//     justifyContent: "center",
-//     marginLeft: 0,
-//     marginRight: 10,
-//     marginVertical: 3,
-//     paddingHorizontal: 10,
-//   },
-
-// });

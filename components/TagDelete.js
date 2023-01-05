@@ -26,7 +26,6 @@ function TagDelete(props) {
     <View
       style={[
         styles.container,
-        //  { width: theWidth }
       ]}
     >
       <View
@@ -57,8 +56,8 @@ function TagDelete(props) {
           onPress={() => handleDelete()}
           style={styles.iconDelete}
         >
-          {/* <Entypo name="cross" size={15} color= "#0031B8" /> */}
-          <Entypo name="circle-with-cross" size={15} color="#D90000" />
+          {/* <Entypo name="cross" size={15} color= "#0046CF" /> */}
+          <Entypo name="circle-with-cross" size={15} color="#EF2637" />
           {/* <Entypo name="circle-with-cross" size={24} color="blue" /> */}
         </TouchableOpacity>
       </View>
@@ -98,13 +97,12 @@ const styles = StyleSheet.create({
   },
 
   tagText: {
-    fontSize: 14,
-    fontWeight: "bold",
+fontFamily: "Poppins-Regular",
   },
 
   withBorder: {
     borderWidth: 2,
-    borderColor: "#0031B8",
+    borderColor: "#0046CF",
   },
 
   withoutBorder: {

@@ -2,6 +2,10 @@ import React, { useState, useEffect } from "react";
 import { View, StyleSheet, Text, Image } from "react-native";
 import { useSelector } from "react-redux";
 import { LogBox } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { StatusBar } from "expo-status-bar";
+import { styles } from "../assets/Style";
+
 LogBox.ignoreAllLogs();
 
 const SplashScreen = (props) => {
@@ -9,9 +13,7 @@ const SplashScreen = (props) => {
 
   const user = useSelector((state) => state.users.value);
 
-
-
-  useEffect(() => {  
+  useEffect(() => {
     setTimeout(() => {
       setAuthLoaded(true);
     }, 2000);
@@ -28,30 +30,25 @@ const SplashScreen = (props) => {
   }, [authLoaded, props.navigation]);
 
   return (
-    <View style={styles.container}>
-      <Image style={styles.logo} source={require("../assets/logo.png")} />
-      <Image style={styles.loader} source={require("../assets/loader.gif")} />
-    </View>
+    <SafeAreaView style={styles.savSplashScreen}>
+      <StatusBar backgroundColor={"#0046CF"} style={"light"} />
+
+      <View style={styles.loadingContainer}>
+        <View style={styles.logoContainer}>
+          <Image
+            style={styles.logo}
+            source={require("../assets/contags-HR-white-logo-transparent-background.png")}
+          />
+        </View>
+        <View style={styles.loaderContainer}>
+          <Image
+            style={styles.loader}
+            source={require("../assets/loader-no-bg.gif")}
+          />
+        </View>
+      </View>
+    </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#0031B8",
-  },
-
-  loader: {
-    width: 50,
-    height: 50,
-  },
-
-  logo: {
-    width: 300,
-    height: 100,
-  },
-});
 
 export default SplashScreen;

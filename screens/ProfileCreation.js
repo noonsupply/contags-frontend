@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   Button,
   Image,
   Text,
   TextInput,
-  StyleSheet,
   TouchableOpacity,
   View,
   StatusBar,
@@ -15,7 +14,6 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import users from "../reducers/users";
 import {
   updateDateOfBirth,
   updateLastName,
@@ -25,13 +23,11 @@ import {
 import { setAdress } from "../module/adressIP";
 import { styles } from "../assets/Style";
 
-<<<<<<< HEAD
 const BACKEND_ADDRESS = setAdress();
-=======
-const BACKEND_ADDRESS = setAdress(); 
->>>>>>> 875a421f8538c91070416af420f8e72e114605de
 
 export default function ProfileCreation({ navigation }) {
+  const nameInput = useRef(null);
+
   // useSelector & useDispatch
 
   const user = useSelector((state) => state.users.value);
@@ -153,7 +149,7 @@ export default function ProfileCreation({ navigation }) {
     if (dob) {
       return (
         <View style={styles.msgToUserContainer}>
-          <Text style={styles.validationMsg}>
+          <Text style={styles.validationMsgDatePicker}>
             Date de naissance sélectionnée : {dob}
           </Text>
         </View>
@@ -227,197 +223,99 @@ export default function ProfileCreation({ navigation }) {
     <SafeAreaView style={styles.sav}>
       <StatusBar backgroundColor={"#FFFFFF"} barStyle={"dark-content"} />
 
-      <KeyboardAvoidingView style={styles.kav}>
-        <View style={styles.logoContainer}>
-          {/* <Image
-            style={styles.logo}
-            source={require("../assets/contags_logo_white.png")}
-          /> */}
-        </View>
+      <KeyboardAvoidingView
+        style={styles.kav}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
+        <ScrollView
+          style={styles.scrollViewStyle}
+          contentContainerStyle={{ flexGrow: 1 }}
+        >
+          <View style={styles.innerContainer}>
+            <View style={styles.logoContainer}>
+              <Image
+                style={styles.logo}
+                source={require("../assets/contags-HR-blue-logo-transparent-background.png")}
+              ></Image>
+            </View>
 
-        <View style={styles.mainContainerWithLogo}>
-          <Text style={styles.simpleText}>
-            Et si vous nous parliez de vous ?
-          </Text>
+            <View style={styles.profileCreationMainContainer}>
+              <Text style={styles.p}>
+                Dites-nous en plus sur vous !
+              </Text>
 
-          <Text style={styles.textOverInput}>Prénom</Text>
-          <TextInput
-            style={styles.textInput}
-            placeholder={"Votre prénom"}
-            onChangeText={(e) => setFirstName(e)}
-            value={firstName}
-          ></TextInput>
-          <FirstNameAlert onceClicked={onClick} />
+              <Text style={styles.textOverInput}>Prénom</Text>
+              <TextInput
+                style={styles.textInput}
+                placeholder={"Votre prénom"}
+                autoCapitalize="none"
+                textContentType="name"
+                returnKeyType="next"
+                onSubmitEditing={() => nameInput.current.focus()}
+                onChangeText={(e) => setFirstName(e)}
+                value={firstName}
+              ></TextInput>
+              <FirstNameAlert onceClicked={onClick} />
 
-          <Text style={styles.textOverInput}>Nom</Text>
-          <TextInput
-            style={styles.textInput}
-            placeholder={"Votre nom"}
-            onChangeText={(e) => setLastName(e)}
-            value={lastName}
-          ></TextInput>
-          <LastNameAlert onceClicked={onClick} />
+              <Text style={styles.textOverInput}>Nom</Text>
+              <TextInput
+                style={styles.textInput}
+                placeholder={"Votre nom"}
+                autoCapitalize="none"
+                textContentType="familyName"
+                returnKeyType="next"
+                ref={nameInput}
+                onChangeText={(e) => setLastName(e)}
+                value={lastName}
+              ></TextInput>
+              <LastNameAlert onceClicked={onClick} />
 
-          <Text style={styles.textOverInput}>Date de naissance</Text>
+              <Text style={styles.textOverInput}>Date de naissance</Text>
 
-          <View style={styles.dateTimePickerBtnContainer}>
-            <Button
-              title="Sélectionnez votre date de naissance"
-              onPress={showDatePicker}
-              color={"#0031B8"}
-            />
+              <View style={styles.dateTimePickerBtnContainer}>
+                <Button
+                  title="Sélectionnez votre date de naissance"
+                  onPress={showDatePicker}
+                  color={"#0046CF"}
+                />
+              </View>
+
+              <DateTimePickerModal
+                isVisible={isDatePickerVisible}
+                mode="date"
+                onConfirm={handleConfirm}
+                onCancel={hideDatePicker}
+                maximumDate={today}
+              />
+
+              <DisplaySelectedDate />
+              <DobAlert onceClicked={onClick} />
+
+              <Text style={styles.textOverInput}>
+                Numéro de téléphone portable
+              </Text>
+              <TextInput
+                style={styles.textInput}
+                placeholder={"Votre numéro de téléphone"}
+                onChangeText={(e) => setPhoneNumber(e)}
+                value={phoneNumber}
+                keyboardType={"phone-pad"}
+              ></TextInput>
+              <PhoneNumberEmptyFieldAlert onceClicked={onClick} />
+              <PhoneNumberWrongFormatAlert onceClicked={onClick} />
+            </View>
+
+            <View style={styles.navigationContainerSubmitOnly}>
+              <TouchableOpacity
+                style={styles.navigationBtn}
+                onPress={() => handleSubmit()}
+              >
+                <FontAwesome color="#FFFFFF" name="chevron-right" />
+              </TouchableOpacity>
+            </View>
           </View>
-
-          <DateTimePickerModal
-            isVisible={isDatePickerVisible}
-            mode="date"
-            onConfirm={handleConfirm}
-            onCancel={hideDatePicker}
-            maximumDate={today}
-          />
-
-          <DisplaySelectedDate />
-          <DobAlert onceClicked={onClick} />
-
-          <Text style={styles.textOverInput}>Numéro de téléphone portable</Text>
-          <TextInput
-            style={styles.textInput}
-            placeholder={"Votre numéro de téléphone"}
-            onChangeText={(e) => setPhoneNumber(e)}
-            value={phoneNumber}
-            keyboardType={"phone-pad"}
-          ></TextInput>
-          <PhoneNumberEmptyFieldAlert onceClicked={onClick} />
-          <PhoneNumberWrongFormatAlert onceClicked={onClick} />
-        </View>
-
-        <View style={styles.navigationContainerSubmitOnly}>
-          <TouchableOpacity
-            style={styles.navigationBtn}
-            onPress={() => handleSubmit()}
-          >
-            <FontAwesome color="#FFFFFF" name="chevron-right" />
-          </TouchableOpacity>
-        </View>
+        </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }
-
-// const styles = StyleSheet.create({
-//   //  Views & Global container
-
-//   sav: {
-//     flex: 1,
-//     height: "100%",
-//     width: "100%",
-//     alignItems: "center",
-//     justifyContent: "center",
-//     backgroundColor: "#FFFFFF",
-//   },
-
-//   scrollView: {
-//     flex: 1,
-//   },
-
-//   kav: {
-//     flex: 1,
-//     height: "100%",
-//     width: "100%",
-//   },
-
-//   // Logo
-
-//   mainContainer: {
-//     height: "70%",
-//     paddingVertical: 25,
-//   },
-
-//   logoContainer: {
-//     alignItems: "center",
-//     justifyContent: "center",
-//     height: "20%",
-//   },
-
-//   logo: {
-//     height: 120,
-//     width: 335,
-//   },
-
-//   // Main
-
-//   welcomeTextContainer: {
-//     marginLeft: 25,
-//     marginBottom: 25,
-//   },
-
-//   welcomeText: {
-//     color: "#0031B8",
-//     fontSize: 18,
-//     fontWeight: "500",
-//   },
-
-//   inputTextContainer: {
-//     marginLeft: 25,
-//     marginRight: 25,
-//   },
-
-//   input: {
-//     borderRadius: 5,
-//     borderColor: "#0031B8",
-//     borderWidth: 1,
-//     color: "#5A5A5F",
-//     height: 45,
-//     marginTop: 5,
-//     paddingHorizontal: 15,
-//   },
-
-//   text: {
-//     color: "#0031B8",
-//     fontSize: 16,
-//     fontWeight: "600",
-//     marginTop: 10,
-//   },
-
-//   welcomeTextContainer: {
-//     marginLeft: 25,
-//     marginBottom: 25,
-//   },
-
-//   alertMsg: {
-//     color: "#D90000",
-//     fontSize: 14,
-//     fontWeight: "500",
-//   },
-
-//   displayDob: {
-//     color: "#21AC14",
-//     fontSize: 14,
-//     fontWeight: "500",
-//   },
-
-//   datePickerContainer: {
-//     marginVertical: 10,
-//   },
-
-//   // Navigation
-
-//   navigationContainer: {
-//     height: "10%",
-//     paddingVertical: 10,
-//     flexWrap: "wrap",
-//     flexDirection: "row",
-//     justifyContent: "flex-end",
-//     paddingLeft: 25,
-//     paddingRight: 25,
-//   },
-
-//   btnForward: {
-//     alignItems: "center",
-//     backgroundColor: "#0031B8",
-//     borderRadius: 50,
-//     height: 50,
-//     justifyContent: "center",
-//     width: 50,
-//   },
-// });

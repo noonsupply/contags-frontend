@@ -7,6 +7,7 @@ import {
   Image,
   TouchableOpacity,
   KeyboardAvoidingView,
+  ScrollView,
 } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useDispatch } from "react-redux";
@@ -46,7 +47,7 @@ export default function MailScreen({ navigation }) {
               navigation.navigate("PasswordScreen");
             }
           }
-        });//fin fetch
+        }); //fin fetch
     }
     // si l'email n'est pas valide on affiche un message d'erreur
     if (!EMAIL_REGEX.test(email)) {
@@ -54,106 +55,56 @@ export default function MailScreen({ navigation }) {
     }
   };
 
-
   return (
     <SafeAreaView style={styles.sav}>
       <StatusBar backgroundColor={"#FFFFFF"} barStyle={"dark-content"} />
 
-      <KeyboardAvoidingView style={styles.kav}>
-        <View style={styles.logoContainer}>
-          {/* <Image
-            style={styles.logo}
-            source={require("../assets/logo.png")}
-          ></Image> */}
-        </View>
+      <KeyboardAvoidingView
+        style={styles.kav}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
+        <ScrollView
+          style={styles.scrollViewStyle}
+          contentContainerStyle={{ flexGrow: 1 }}
+        >
+          <View style={styles.innerContainer}>
+            <View style={styles.logoContainer}>
+              <Image
+                style={styles.logo}
+                source={require("../assets/contags-HR-blue-logo-transparent-background.png")}
+              ></Image>
+            </View>
 
-        <View style={styles.mainContainerWithLogo}>
-       
-          <Text style={styles.textOverInput}>
-            Veuillez saisir une adresse mail personnelle :
-          </Text>
-          <TextInput
-            style={styles.textInput}
-            placeholder={"Email"}
-            autoCapitalize="none"
-            keyboardType="email-address"
-            textContentType="emailAddress"
-            autoComplete="email"
-            onChangeText={(value) => setEmail(value)}
-            value={email}
-          ></TextInput>
-          {emailError && (
-            <Text style={styles.alertMsg}>Adresse mail non valide</Text>
-          )}
-        </View>
+            <View style={styles.mainContainerWithLogo}>
+              <Text style={styles.textOverInput}>
+                Veuillez saisir une adresse mail personnelle :
+              </Text>
+              <TextInput
+                style={styles.textInput}
+                placeholder={"Email"}
+                autoCapitalize="none"
+                keyboardType="email-address"
+                textContentType="emailAddress"
+                autoComplete="email"
+                onChangeText={(value) => setEmail(value)}
+                value={email}
+              ></TextInput>
+              {emailError && (
+                <Text style={styles.alertMsg}>Adresse mail non valide</Text>
+              )}
+            </View>
 
-        <View style={styles.navigationContainerSubmitOnly}>
-          <TouchableOpacity
-            style={styles.navigationBtn}
-            onPress={() => handleSubmit()}
-          >
-            <FontAwesome color="#ffffff" name="chevron-right" />
-          </TouchableOpacity>
-        </View>
+            <View style={styles.navigationContainerSubmitOnly}>
+              <TouchableOpacity
+                style={styles.navigationBtn}
+                onPress={() => handleSubmit()}
+              >
+                <FontAwesome color="#ffffff" name="chevron-right" />
+              </TouchableOpacity>
+            </View>
+          </View>
+        </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }
-
-// const styles = StyleSheet.create({
-//   sav: {
-//     flex: 1,
-//     height: "100%",
-//     width: "100%",
-//     alignItems: "center",
-//     justifyContent: "center",
-//     backgroundColor: "#FFFFFF",
-//   },
-
-//   container: {
-//     flex: 1,
-//     backgroundColor: "#ffffff",
-//   },
-//   divImage: {
-//     alignItems: "center",
-//     justifyContent: "center",
-//     height: "20%",
-//   },
-
-//   logo: {
-//     width: "80%",
-//     height: "30%",
-//     top: "40%",
-//   },
-//   inputText: {
-//     marginTop: "30%",
-//     marginLeft: "10%",
-//     marginRight: "10%",
-//   },
-//   text: {
-//     color: "#0031B8",
-//   },
-//   input: {
-//     borderRadius: 5,
-//     borderColor: "#0031B8",
-//     borderWidth: 1,
-//     color: "#5A5A5F",
-//     height: 45,
-//     paddingHorizontal: 15,
-//   },
-//   caseButton: {
-//     marginLeft: "80%",
-//   },
-//   button2: {
-//     backgroundColor: "#0031b8",
-//     height: 50,
-//     width: 50,
-//     alignItems: "center",
-//     justifyContent: "center",
-//     borderRadius: 50,
-//     marginBottom: "500%",
-//   },
-//   error: {
-//     color: "#D90000",
-//   },
-// });

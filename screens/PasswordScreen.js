@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import {
-  StyleSheet,
+  ScrollView,
   Text,
   TextInput,
   View,
@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { Entypo } from "@expo/vector-icons";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useTogglePasswordVisibility } from "../module/useTogglePasswordVisibility";
 import { useTogglePasswordVisibility2 } from "../module/useTogglePasswordVisibility2";
@@ -36,6 +36,7 @@ export default function PasswordScreen({ navigation }) {
   const [Password1, setPassword1] = useState(null);
   const [Password2, setPassword2] = useState(null);
   const [onClick, setOnClick] = useState(false);
+  const passwordInput = useRef(null);
 
   const regexMdp =
     /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{7,}$/;
@@ -44,12 +45,7 @@ export default function PasswordScreen({ navigation }) {
     if (Password1 === Password2 && regexMdp.test(Password2)) {
       return (
         <View style={styles.msgToUserContainer}>
-          <Entypo
-            name="check"
-            size={20}
-            color="#21AC14"
-            style={styles.checkIcon}
-          />
+          <Entypo name="check" size={18} color="#21AC14" />
           <Text style={styles.validationMsg}>
             Parfait, vos mots de passe sont identiques !
           </Text>
@@ -62,12 +58,7 @@ export default function PasswordScreen({ navigation }) {
     if (Password1 !== Password2 && props.onceClicked) {
       return (
         <View style={styles.msgToUserContainer}>
-          <Entypo
-            name="cross"
-            size={25}
-            color="#D90000"
-            style={styles.crossIcon}
-          />
+          <Entypo name="cross" size={20} color="#D90000" />
           <Text style={styles.alertMsg}>
             Attention, vos mots de passe sont différents !
           </Text>
@@ -75,18 +66,20 @@ export default function PasswordScreen({ navigation }) {
       );
     }
   }
+
   function PwdFormatAlert(props) {
     if (!regexMdp.test(Password1) && props.onceClicked) {
       return (
         <View style={styles.msgToUserContainer}>
           <Text style={styles.alertMsg}>
-            Votre mot de passe doit contenir plus de sept caractères, dont une majuscule, une minuscule et un
-            caractère spécial.
+            Votre mot de passe doit contenir plus de sept caractères, dont une
+            majuscule, une minuscule et un caractère spécial.
           </Text>
         </View>
       );
     }
   }
+
   const handleSubmit = () => {
     setOnClick(true);
 
@@ -113,87 +106,116 @@ export default function PasswordScreen({ navigation }) {
     <SafeAreaView style={styles.sav}>
       <StatusBar backgroundColor={"#FFFFFF"} barStyle={"dark-content"} />
 
-      <KeyboardAvoidingView style={styles.kav}>
-        <View style={styles.logoContainer}>
-          {/* <Image
-            style={styles.logo}
-            source={require("../assets/logo.png")}
-          ></Image> */}
-        </View>
+      <KeyboardAvoidingView
+        style={styles.kav}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
 
-        <View style={styles.mainContainerWithLogo}>
-          <Text style={styles.simpleText}>
-            Pour finaliser votre inscription, veuillez choisir un mot de passe.
-          </Text>
+        <ScrollView
+          style={styles.scrollViewStyle}
+          contentContainerStyle={{ flexGrow: 1 }}
+        >
 
-          <Text style={styles.textOverInput}>Saisissez votre mot de passe :</Text>
+          <View style={styles.innerContainer}>
 
-          <View style={styles.inputAndEyeIconContainer}>
-            <View>
-              <TextInput
-                placeholder="Mot de passe"
-                style={styles.pwdInput}
-                autoCapitalize="none"
-                autoCorrect={false}
-                textContentType="newPassword"
-                secureTextEntry={passwordVisibility}
-                value={Password1}
-                onChangeText={(text) => {
-                  setPassword1(text);
-                }}
-              />
+            <View style={styles.logoContainer}>
+              <Image
+                style={styles.logo}
+                source={require("../assets/contags-HR-blue-logo-transparent-background.png")}
+              ></Image>
             </View>
 
-            <View>
-              <Pressable
-                style={styles.eyeIcon}
-                onPress={handlePasswordVisibility}
+            <View style={styles.mainContainerWithLogo}>
+              <Text style={styles.p}>
+                Pour finaliser votre inscription, veuillez choisir un mot de
+                passe.
+              </Text>
+              <Text style={styles.textOverInput}>
+                Saisissez votre mot de passe :
+              </Text>
+
+              <View style={styles.inputAndEyeIconContainer}>
+                <View>
+                  <TextInput
+                    placeholder="Mot de passe"
+                    style={styles.passwordInput}
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    returnKeyType="next"
+                    onSubmitEditing={() => passwordInput.current.focus()}
+                    textContentType="newPassword"
+                    secureTextEntry={passwordVisibility}
+                    value={Password1}
+                    onChangeText={(text) => {
+                      setPassword1(text);
+                    }}
+                  />
+                </View>
+
+                <View>
+                  <Pressable
+                    style={styles.eyeIcon}
+                    onPress={handlePasswordVisibility}
+                  >
+                    <FontAwesome name={rightIcon} size={22} color="#0046CF" />
+                  </Pressable>
+                </View>
+
+              </View>
+
+              <Text style={styles.textOverInput}>
+                Confirmez votre mot de passe :
+              </Text>
+
+              <View style={styles.inputAndEyeIconContainer}>
+
+                <TextInput
+                  placeholder="Mot de passe"
+                  style={styles.passwordInput}
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  textContentType="newPassword"
+                  secureTextEntry={passwordVisibility2}
+                  value={Password2}
+                  onChangeText={(text) => setPassword2(text)}
+                  ref={passwordInput}
+                  returnKeyType="done"
+                />
+
+                <Pressable
+                  style={styles.eyeIcon}
+                  onPress={handlePasswordVisibility2}
+                >
+                  <FontAwesome name={rightIcon2} size={22} color="#0046CF" />
+                </Pressable>
+
+              </View>
+
+              <PwdIdenticalAlert />
+              <PwdDifferentAlert onceClicked={onClick} />
+              <PwdFormatAlert onceClicked={onClick} />
+
+            </View>
+
+            <View style={styles.navigationContainer}>
+
+              <TouchableOpacity
+                style={styles.navigationBtn}
+                onPress={() => handleReturn()}
               >
-                <FontAwesome name={rightIcon} size={22} color="#0031b8" />
-              </Pressable>
+                <FontAwesome color="#ffffff" name="chevron-left" />
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={styles.navigationBtn}
+                onPress={() => handleSubmit()}
+              >
+                <FontAwesome color="#ffffff" name="chevron-right" />
+              </TouchableOpacity>
+              
             </View>
           </View>
-
-          <Text style={styles.textOverInput}>Confirmez votre mot de passe :</Text>
-
-          <View style={styles.inputAndEyeIconContainer}>
-            <TextInput
-              placeholder="Mot de passe"
-              style={styles.pwdInput}
-              autoCapitalize="none"
-              autoCorrect={false}
-              textContentType="newPassword"
-              secureTextEntry={passwordVisibility2}
-              value={Password2}
-              onChangeText={(text) => setPassword2(text)}
-            />
-
-            <Pressable
-              style={styles.eyeIcon}
-              onPress={handlePasswordVisibility2}
-            >
-              <FontAwesome name={rightIcon2} size={22} color="#0031b8" />
-            </Pressable>
-          </View>
-          <PwdIdenticalAlert />
-          <PwdDifferentAlert onceClicked={onClick} />
-          <PwdFormatAlert onceClicked={onClick} />
-        </View>
-
-        <View style={styles.navigationContainer}>
-          <TouchableOpacity
-            style={styles.navigationBtn}
-            onPress={() => handleReturn()}
-          >
-            <FontAwesome color="#ffffff" name="chevron-left" />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.navigationBtn}
-            onPress={() => handleSubmit()}
-          >
-            <FontAwesome color="#ffffff" name="chevron-right" />
-          </TouchableOpacity>
-        </View>
+        </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
