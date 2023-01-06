@@ -2,13 +2,10 @@ import React from "react";
 import {
   TextInput,
   KeyboardAvoidingView,
-  SafeAreaView,
   ScrollView,
-  StyleSheet,
   Text,
   TouchableOpacity,
   View,
-  Modal,
 } from "react-native";
 // import FontAwesome from 'react-native-vector-icons/FontAwesome';
 // import FontAwesomeIcon from '@expo/vector-icons'
@@ -149,67 +146,63 @@ function TagsDefinition(props) {
 
   return (
     <KeyboardAvoidingView style={styles.kav}>
+      <View style={styles.modalGlobalContainer}>
+        <ScrollView style={{ flex: 1 }}>
+          <View style={styles.closeIconContainer}>
+            <TouchableOpacity activeOpacity={0.8} onPress={() => handleClose()}>
+              <Entypo name="cross" size={25} color={"#0046CF"} />
+            </TouchableOpacity>
+          </View>
 
-              <View style={styles.globalContainer}>
-        <ScrollView style={{flex: 1} }>
+          <Text style={styles.p}>Ajoutez des tags à votre profil :</Text>
 
+          {/* ETAPE 1 */}
+          <Text style={styles.textOverInput}>
+            Étape 1 : choisissez un nom de tag
+          </Text>
+          <View style={styles.tagNameAndNumCharContainer}>
+            <TextInput
+              style={styles.tagInput}
+              placeholder={"Nom du tag"}
+              maxLength={10}
+              onChangeText={(value) => setInputTag(value)}
+              value={inputTag}
+            ></TextInput>
+            <Text style={styles.p}>{inputTag.length}/10</Text>
+          </View>
 
-        <View style={styles.closeIconContainer}>
-          <TouchableOpacity activeOpacity={0.8} onPress={() => handleClose()}>
-            <Entypo name="cross" size={25} color={writeColor} />
-          </TouchableOpacity>
-        </View>
+          {/* ETAPE 2 */}
+          <Text style={styles.textOverInput}>
+            Étape 2 : choisissez une couleur
+          </Text>
 
-        <Text style={styles.p}>Ajoutez des tags à votre profil :</Text>
+          <View style={styles.tagContainer}>{tagsChoiceDisplay}</View>
 
-
-        {/* ETAPE 1 */}
-        <Text style={styles.textOverInput}>
-          Étape 1 : choisissez un nom de tag
-        </Text>
-        <View style={styles.tagNameAndNumCharContainer}>
-          <TextInput
-            style={styles.tagInput}
-            placeholder={"Nom du tag"}
-            maxLength={10}
-            onChangeText={(value) => setInputTag(value)}
-            value={inputTag}
-          ></TextInput>
-          <Text style={styles.p}>{inputTag.length}/10</Text>
-        </View>
-
-        {/* ETAPE 2 */}
-        <Text style={styles.textOverInput}>
-          Étape 2 : choisissez une couleur
-        </Text>
-
-        <View style={styles.tagContainer}>{tagsChoiceDisplay}</View>
-
-
-        {/* ETAPE 3 */}
-        <Text style={styles.textOverInput}>
-          Étape 3 : visualisez les tags créés
-        </Text>
-        <ScrollView
-          style={styles.createdTagScrollView}
-          contentContainerStyle={styles.contentContainer}
-          persistentScrollbar={true}
-        >
-          <View style={styles.validateTagContainer}>{tagValidateDisplay}</View>
-        </ScrollView>
-
-        {/* BOUTON VALIDER */}
-        <View style={styles.containerBtn}>
-          <TouchableOpacity
-            style={styles.tagCreationValidateBtn}
-            onPress={() => handleValidate()}
+          {/* ETAPE 3 */}
+          <Text style={styles.textOverInput}>
+            Étape 3 : visualisez les tags créés
+          </Text>
+          <ScrollView
+            style={styles.createdTagScrollView}
+            contentContainerStyle={styles.contentContainer}
+            persistentScrollbar={true}
           >
-            <Text style={{ color: "#FFFFFF", fontFamily: "Poppins-Regular" }}>Valider</Text>
-          </TouchableOpacity>
-        </View>
+              {tagValidateDisplay}
+          </ScrollView>
 
-      </ScrollView>
-            </View>
+          {/* BOUTON VALIDER */}
+          <View style={styles.containerBtn}>
+            <TouchableOpacity
+              style={styles.tagCreationValidateBtn}
+              onPress={() => handleValidate()}
+            >
+              <Text style={{ color: "#FFFFFF", fontFamily: "Poppins-Regular" }}>
+                Valider
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+      </View>
     </KeyboardAvoidingView>
   );
 }

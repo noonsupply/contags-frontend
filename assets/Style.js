@@ -3,21 +3,19 @@ import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
   /* The style items are sorted by type of items :
       1. VIEWS
-        A. SAFEAREAVIEWS
-        B. KEYBOARDAVOIDINGVIEW
       2. CONTAINERS
-
       3. INPUTS
       4. TEXTS
       5. NAVIGATION ITEMS
       6. TAGS
-      
+      7. LOGO & LOADER
+      8. ICON
+      9. DATETIMEPICKER MODULE
+      10. TAG CREATION MODAL
       
       */
 
   // 1. VIEWS
-
-  // A. SAFEAREAVIEWS
 
   // SafeAreaView for the Splash screen (from react-native-safe-area-context)
 
@@ -33,13 +31,15 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
   },
 
-  // B. KEYBOARDAVOIDINGVIEW
+// KeyboardAvoidingView
 
   kav: {
-    flex: 1,
+    height: "100%",
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
   },
 
-  // C. SCROLLVIEW
 
   scrollViewStyle: {
     flex: 1,
@@ -53,25 +53,34 @@ const styles = StyleSheet.create({
 
   proposedTagsScrollView: {
     flex: 1,
-    // paddingHorizontal: 3,
-    // marginTop: 10,
-    // marginBottom: 20,
-    // marginHorizontal: 10,
-    // borderColor: "red",
-    // borderWidth: 2,
   },
 
   // Selected templates and created tags view
 
   selectedTagsScrollView: {
     flex: 1,
-    // paddingHorizontal: 3,
-    // marginTop: 10,
-    // marginBottom: 20,
-    // marginHorizontal: 10,
   },
 
   // 2. CONTAINERS
+
+  // Splash screen containers
+
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  loaderContainer: {
+    height: "20%",
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 20,
+    paddingHorizontal: 20,
+    // borderColor: "red",
+    // borderWidth: 2,
+  },
 
   // Inner container if KeyboardAvoidingView
 
@@ -225,13 +234,27 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
 
-  tagCreationMainContainer: {
+  // User tags container
 
+  userTagsContainer: {
+    marginVertical: 5,
+    marginHorizontal: 5,
+    flexWrap: "wrap",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  // Tag creation screen main container
+
+  tagCreationMainContainer: {
     height: "85%",
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
   },
+
+  // Tag creation screen text container
 
   tagCreationTextContainer: {
     paddingHorizontal: 10,
@@ -420,83 +443,7 @@ const styles = StyleSheet.create({
     borderWidth: 0,
   },
 
-  //////////////////////////////////////////////////////////////////////
-
-  // B. SCROLLVIEWS
-
-  // KeyboardAwareScrollView
-
-  kas: {
-    // flex: 1,
-  },
-
-  // Content container for Scroll Views
-
-  scrollViewContentContainerStyle: {
-    justifyContent: "space-between",
-  },
-
-  scrollView: {
-    maxHeight: "100%",
-    // borderColor: "maroon",
-    // borderWidth: 2,
-  },
-
-  // 2. CONTAINERS
-
-  loaderContainer: {
-    height: "20%",
-    width: "100%",
-    alignItems: "center",
-    justifyContent: "center",
-    paddingVertical: 20,
-    paddingHorizontal: 20,
-    // borderColor: "red",
-    // borderWidth: 2,
-  },
-
-  loadingContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-
-  mainContainerWithLogoProfileCreation: {
-    // height: "62%",
-    width: "100%",
-    alignItems: "flex-start",
-    justifyContent: "center",
-    paddingHorizontal: 5,
-    paddingVertical: 5,
-    // borderColor: "green",
-    // borderWidth: 2,
-  },
-
-  // User tags container
-
-  userTagsContainer: {
-    marginVertical: 5,
-    marginHorizontal: 5,
-    flexWrap: "wrap",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-
-  // Tag templates container
-
-  templateTagContainer: {
-    alignItems: "flex-start",
-    flexDirection: "row",
-    flexWrap: "wrap",
-    marginBottom: 15,
-    marginTop: 15,
-    paddingLeft: 25,
-    paddingRight: 25,
-    height: 250,
-  },
-
-  // 3. LOGO & LOADER
+  // 7. LOGO & LOADER
 
   // Logo
 
@@ -514,37 +461,7 @@ const styles = StyleSheet.create({
     height: 50,
   },
 
-  // Password input
-
-  pwdInput: {
-    borderRadius: 5,
-    borderColor: "#0046CF",
-    borderWidth: 1,
-    color: "#5A5A5F",
-    height: 45,
-    width: 270,
-    marginVertical: 5,
-    marginHorizontal: 5,
-    paddingHorizontal: 15,
-    paddingVertical: 1,
-  },
-
-  // 5. TEXTS
-
-  // Simple Text
-
-  simpleText: {
-    color: "#0046CF",
-    marginLeft: 7,
-    marginRight: 5,
-    marginTop: 5,
-    marginBottom: 10,
-    fontFamily: "Poppins-Regular",
-  },
-
-  // 6. NAVIGATION ITEMS
-
-  // 7. ICONS
+  // 8. ICON
 
   // Eye icon
 
@@ -555,197 +472,156 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
 
-  // 8. MODULES
+    // 9. DATETIMEPICKER MODULE
 
-  // DateTimePicker module
+    dateTimePickerBtnContainer: {
+      alignItems: "center",
+      justifyContent: "center",
+      paddingVertical: 5,
+      marginHorizontal: 6,
+    },
 
-  dateTimePickerBtnContainer: {
-    alignItems: "center",
-    justifyContent: "center",
-    // width: "96%",
-    paddingVertical: 5,
-    marginHorizontal: 6,
-  },
+    // 10. TAG CREATION MODAL
 
-  // TAGS
+    modalGlobalContainer: {
+      height: "87%",
+      width: "90%",
+      backgroundColor: "#FFFFFF",
+      paddingVertical: 5,
+      paddingHorizontal: 10,
+      borderColor: "#0046CF",
+      borderWidth: 2,
+      borderRadius: 10,
+    },
+  
+    titles: {
+      color: "#0046CF",
+      fontFamily: "Poppins-Regular",
+    },
+  
+    closeIconContainer: {
+      flexDirection: "row",
+      justifyContent: "flex-end",
+      alignItems: "center",
+    },
+  
+    noTagCreatedYetMsg: {
+      color: "#0046CF",
+      marginLeft: 7,
+      marginRight: 5,
+      marginTop: 7,
+      marginBottom: 5,
+      fontFamily: "Poppins-Regular",
+    },
+  
+    tagCreationValidateBtn: {
+      backgroundColor: "#0046CF",
+      borderRadius: 10,
+      width: 80,
+      height: 35,
+      justifyContent: "center",
+      alignItems: "center",
+    },
+  
+    //  ETAPE 1
 
-  btnAddTag: {
-    backgroundColor: "#0046CF",
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 5,
-    flexShrink: 1,
-    height: 30,
-    marginVertical: 3,
-    paddingHorizontal: 10,
-  },
+    tagNameAndNumCharContainer: {
+      alignItems: "center",
+      justifyContent: "flex-start",
+      flexDirection: "row",
+    },
 
-  // BORDEL
+    tagInput: {
+      borderRadius: 5,
+      borderColor: "#0046CF",
+      borderWidth: 1,
+      color: "#5A5A5F",
+      height: 45,
+      width: 250,
+      marginVertical: 5,
+      marginHorizontal: 5,
+      paddingLeft: 10,
+      paddingTop: 5,
+      fontFamily: "Poppins-Regular",
+    },
+  
+    //   ETAPE 2
+  
+    tagContainer: {
+      justifyContent: "flex-start",
+      alignItems: "center",
+      flexDirection: "row",
+      flexWrap: "wrap",
+      marginVertical: 5,
+    },
+  
+    // ETAPE 3
+    createdTagScrollView: {
+      flex: 1,
+      height: 95,
+      marginBottom: 10,
+      borderColor: "#0046CF",
+      borderWidth: 1,
+      borderRadius: 10,
+    },
 
-  kav: {
-    height: "100%",
-    width: "100%",
-    justifyContent: "center",
-    alignItems: "center",
-  },
+  
+    //   BOUTON
+    containerBtn: {
+      width: "100%",
+      justifyContent: "flex-end",
+      alignItems: "flex-end",
+      paddingTop: 5,
+    },
 
-  globalContainer: {
-    height: "83%",
-    width: "90%",
-    // alignItems: "center",
-    // justifyContent: "space-between",
-    backgroundColor: "#FFFFFF",
-    paddingVertical: 10,
-    paddingHorizontal: 10,
-    borderColor: "#0046CF",
-    borderWidth: 2,
-    borderRadius: 10,
-  },
+    // DELETE TAG FEATURE
 
-  titles: {
-    color: "#0046CF",
-    fontFamily: "Poppins-Regular",
-    marginTop: 0,
-    marginBottom: 0,
-  },
+    container: {
+      marginHorizontal: 5,
+      marginVertical: 5,
+      flexDirection: "row",
+    },
+  
+    form: {
+      zIndex: 0,
+      alignItems: "center",
+      borderRadius: 20,
+      flexShrink: 1,
+      height: 30,
+      justifyContent: "center",
+      paddingHorizontal: 10,
+    },
+  
+    iconDelete: {
+      alignItems: "center",
+      justifyContent: "center",
+      zIndex: 1,
+      marginLeft: -10,
+      marginTop: -5,
+      backgroundColor: "white",
+      height: 17,
+      width: 17,
+      borderRadius: 17,
+      borderWidth: 1,
+      borderColor: "rgba(0,0,0,0)",
+    },
+  
+    tagText: {
+  fontFamily: "Poppins-Regular",
+    },
+  
+    withBorder: {
+      borderWidth: 2,
+      borderColor: "#0046CF",
+    },
+  
+    withoutBorder: {
+      borderWidth: 0,
+    },
 
-  closeIconContainer: {
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    alignItems: "center",
-  },
+  
 
-  //  ETAPE 1
-  firstContainer: {
-    width: "100%",
-    marginTop: 5,
-  },
 
-  inputContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-around",
-    marginTop: 10,
-    marginBottom: 10,
-  },
-
-  input: {
-    width: "80%",
-    height: 30,
-    borderRadius: 100,
-    paddingLeft: 5,
-    borderRadius: 5,
-    borderColor: "#0046CF",
-    borderWidth: 1.5,
-  },
-
-  //   ETAPE 2 : TAGS
-  secondContainer: {
-    height: "45%",
-  },
-
-  tagContainerContainer: {
-    justifyContent: "center",
-    alignItems: "center",
-  },
-
-  tagContainer: {
-    justifyContent: "flex-start",
-    alignItems: "center",
-    flexDirection: "row",
-    flexWrap: "wrap",
-
-    // marginBottom: 0,
-    // marginTop: 0,
-    // paddingLeft: 0,
-    // paddingRight: 0,
-  },
-
-  // ETAPE 3
-  visualContainer: {
-    height: "25%",
-    width: "100%",
-  },
-
-  ScrollView: {
-    height: 100,
-    flex: 1,
-    marginTop: 5,
-  },
-
-  validateTagContainer: {
-    flexDirection: "row",
-    width: "100%",
-    flexWrap: "wrap",
-  },
-
-  //   BOUTON
-  containerBtn: {
-    width: "100%",
-    justifyContent: "flex-end",
-    alignItems: "flex-end",
-    paddingTop: 5,
-  },
-
-  btnBack: {
-    borderWidth: 2,
-    borderColor: "#0046CF",
-    borderRadius: 10,
-    width: 80,
-    height: 30,
-    justifyContent: "center",
-    alignItems: "center",
-    marginRight: 10,
-  },
-
-  tagNameAndNumCharContainer: {
-    alignItems: "center",
-    justifyContent: "flex-start",
-    flexDirection: "row",
-  },
-
-  tagInput: {
-    borderRadius: 5,
-    borderColor: "#0046CF",
-    borderWidth: 1,
-    color: "#5A5A5F",
-    height: 45,
-    width: 250,
-    marginVertical: 5,
-    marginHorizontal: 5,
-    paddingLeft: 10,
-    paddingTop: 5,
-    fontFamily: "Poppins-Regular",
-  },
-
-  createdTagScrollView: {
-    maxHeight: 90,
-    height: 50,
-    marginBottom: 20,
-    borderColor: "#0046CF",
-    borderWidth: 1,
-    borderRadius: 10,
-  },
-
-  noTagCreatedYetMsg: {
-    color: "#0046CF",
-    marginLeft: 7,
-    marginRight: 5,
-    marginTop: 7,
-    marginBottom: 5,
-    fontFamily: "Poppins-Regular",
-  },
-
-  tagCreationValidateBtn: {
-    // borderWidth: 2,
-    // borderColor: "#0046CF",
-    backgroundColor: "#0046CF",
-    borderRadius: 10,
-    width: 80,
-    height: 35,
-    justifyContent: "center",
-    alignItems: "center",
-  },
 });
 
 export { styles };

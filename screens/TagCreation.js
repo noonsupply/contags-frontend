@@ -110,100 +110,113 @@ export default function TagCreation({ navigation }) {
     <SafeAreaView style={styles.sav}>
       <StatusBar backgroundColor={"#FFFFFF"} barStyle={"dark-content"} />
 
-      <Modal
-        transparent={true}
-        visible={modalVisible}
-        animationType={"fade"}
-        onRequestClose={() => {
-          setModalVisible(!modalVisible);
-        }}
+      <KeyboardAvoidingView
+        style={styles.kav}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
-        <View>
-          <TagsDefinition
-            handleCloseModal={handleCloseModal}
-            addTags={addTags}
-          />
-        </View>
-      </Modal>
-
-      <View style={styles.tagCreationMainContainer}>
-
-        <View style={styles.tagCreationTextContainer}>
-        <Text style={styles.boldp}>Ajoutons des tags ensemble !</Text>
-
-        <Text style={styles.p}>
-          Vous pouvez utiliser nos propositions pour ajouter des tags à votre
-          profil...
-        </Text>
-        </View>
-
-
-        <View style={styles.tagTemplatesScrollViewContainer}>
-          <ScrollView
-            style={styles.proposedTagsScrollView}
-            contentContainerStyle={styles.contentContainer}
-            // fadingEdgeLength={200}
-            persistentScrollbar={true}
-          >
-            {ProposedTags}
-          </ScrollView>
-        </View>
-
-        <View style={styles.tagCreationTextContainer}>
-        <Text style={styles.p}>
-          ... et créer vos tags personnalisés en appuyant sur le bouton
-          ci-dessous.
-        </Text>
-        </View>
-
-        <View style={styles.addTagBtnContainer}>
-          <TouchableOpacity
-            style={styles.addTagBtn}
-            onPress={() => handleOpenModal()}
-          >
-            <Text style={styles.btnWhiteText}>Créer un tag</Text>
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.tagCreationTextContainer}>
-        <Text style={styles.p}>
-          Supprimez les tags qui ne vous conviennent pas dans liste ci-dessous,
-          puis validez en appuyant sur le bouton en bas à droite de l'écran.
-        </Text>
-        </View>
-
-        <View style={styles.tagTemplatesScrollViewContainer}>
-          <ScrollView
-            style={styles.selectedTagsScrollView}
-            contentContainerStyle={styles.contentContainer}
-            // fadingEdgeLength={200}
-            persistentScrollbar={true}
-          >
-            {DisplaySelectedTags}
-          </ScrollView>
-        </View>
-      </View>
-
-      <View style={styles.navigationContainer}>
-        <TouchableOpacity
-          style={styles.navigationBtn}
-          onPress={() => handleReturn()}
+        <ScrollView
+          style={styles.scrollViewStyle}
+          contentContainerStyle={{ flexGrow: 1 }}
         >
-          <FontAwesome color="#FFFFFF" name="chevron-left" />
-        </TouchableOpacity>
+          <View style={styles.innerContainer}>
+            <Modal
+              transparent={true}
+              visible={modalVisible}
+              animationType={"fade"}
+              onRequestClose={() => {
+                setModalVisible(!modalVisible);
+              }}
+            >
+              <View>
+                <TagsDefinition
+                  handleCloseModal={handleCloseModal}
+                  addTags={addTags}
+                />
+              </View>
+            </Modal>
 
-        <TouchableOpacity style={styles.btnSkip} onPress={() => handleSkip()}>
-          <Text style={styles.skipBtnText}>Passer cette étape</Text>
-        </TouchableOpacity>
+            <View style={styles.tagCreationMainContainer}>
+              <View style={styles.tagCreationTextContainer}>
+                <Text style={styles.boldp}>Ajoutons des tags ensemble !</Text>
 
-        <TouchableOpacity
-          style={styles.navigationBtn}
-          onPress={() => handleSubmit()}
-        >
-          <FontAwesome color="#FFFFFF" name="chevron-right" />
-        </TouchableOpacity>
-      </View>
-      
+                <Text style={styles.p}>
+                  Vous pouvez utiliser nos propositions pour ajouter des tags à
+                  votre profil...
+                </Text>
+              </View>
+
+              <View style={styles.tagTemplatesScrollViewContainer}>
+                <ScrollView
+                  style={styles.proposedTagsScrollView}
+                  contentContainerStyle={styles.contentContainer}
+                  // fadingEdgeLength={200}
+                  persistentScrollbar={true}
+                >
+                  {ProposedTags}
+                </ScrollView>
+              </View>
+
+              <View style={styles.tagCreationTextContainer}>
+                <Text style={styles.p}>
+                  ... et créer vos tags personnalisés en appuyant sur le bouton
+                  ci-dessous.
+                </Text>
+              </View>
+
+              <View style={styles.addTagBtnContainer}>
+                <TouchableOpacity
+                  style={styles.addTagBtn}
+                  onPress={() => handleOpenModal()}
+                >
+                  <Text style={styles.btnWhiteText}>Créer un tag</Text>
+                </TouchableOpacity>
+              </View>
+
+              <View style={styles.tagCreationTextContainer}>
+                <Text style={styles.p}>
+                  Supprimez les tags qui ne vous conviennent pas dans liste
+                  ci-dessous, puis validez en appuyant sur le bouton en bas à
+                  droite de l'écran.
+                </Text>
+              </View>
+
+              <View style={styles.tagTemplatesScrollViewContainer}>
+                <ScrollView
+                  style={styles.selectedTagsScrollView}
+                  contentContainerStyle={styles.contentContainer}
+                  // fadingEdgeLength={200}
+                  persistentScrollbar={true}
+                >
+                  {DisplaySelectedTags}
+                </ScrollView>
+              </View>
+            </View>
+
+            <View style={styles.navigationContainer}>
+              <TouchableOpacity
+                style={styles.navigationBtn}
+                onPress={() => handleReturn()}
+              >
+                <FontAwesome color="#FFFFFF" name="chevron-left" />
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={styles.btnSkip}
+                onPress={() => handleSkip()}
+              >
+                <Text style={styles.skipBtnText}>Passer cette étape</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={styles.navigationBtn}
+                onPress={() => handleSubmit()}
+              >
+                <FontAwesome color="#FFFFFF" name="chevron-right" />
+              </TouchableOpacity>
+            </View>
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }

@@ -3,11 +3,10 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  TextInput,
 } from "react-native";
 
 import { Entypo } from "@expo/vector-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { styles } from "../assets/Style";
 
 // la props contient un objet tag et une fonction handleDeleteTag qui sert à supprimer le tag
 function TagDelete(props) {
@@ -17,11 +16,6 @@ function TagDelete(props) {
     props.handleDeleteTag(props.tag);
   };
 
-  // gestion de la taille du tag le *10 vient de la police et de la fontsize
-  // let theWidth = 102;
-  // if (props.tag.title) {
-  //   theWidth = props.tag.title.length * 10;
-  // }
   return (
     <View
       style={[
@@ -56,59 +50,12 @@ function TagDelete(props) {
           onPress={() => handleDelete()}
           style={styles.iconDelete}
         >
-          {/* <Entypo name="cross" size={15} color= "#0046CF" /> */}
           <Entypo name="circle-with-cross" size={15} color="#EF2637" />
-          {/* <Entypo name="circle-with-cross" size={24} color="blue" /> */}
         </TouchableOpacity>
       </View>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    marginHorizontal: 5,
-    marginVertical: 5,
-    flexDirection: "row",
-  },
-
-  form: {
-    zIndex: 0,
-    alignItems: "center",
-    borderRadius: 20,
-    flexShrink: 1,
-    height: 30,
-    justifyContent: "center",
-    paddingHorizontal: 10,
-  },
-
-  iconDelete: {
-    alignItems: "center",
-    justifyContent: "center",
-    zIndex: 1,
-    marginLeft: -10,
-    marginTop: -5,
-    backgroundColor: "white",
-    height: 17,
-    width: 17,
-    borderRadius: 17,
-    borderWidth: 1,
-    borderColor: "rgba(0,0,0,0)",
-  },
-
-  tagText: {
-fontFamily: "Poppins-Regular",
-  },
-
-  withBorder: {
-    borderWidth: 2,
-    borderColor: "#0046CF",
-  },
-
-  withoutBorder: {
-    borderWidth: 0,
-  },
-});
 
 export default TagDelete;
 
