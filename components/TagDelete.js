@@ -1,7 +1,6 @@
 import {
   View,
   Text,
-  StyleSheet,
   TouchableOpacity,
 } from "react-native";
 
@@ -56,6 +55,7 @@ function TagDelete(props) {
     </View>
   );
 }
+
 
 export default TagDelete;
 
